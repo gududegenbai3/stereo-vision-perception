@@ -7,11 +7,16 @@ venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+build/
+dist/
 
-# Local capture and experiment outputs
+# 本地采集与运行产物（不进版本库）
 data/captures/
 data/calibrations/
+data/
 artifacts/
+*.npy
+*.npz
 
 # OS metadata
 .DS_Store

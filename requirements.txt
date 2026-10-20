@@ -1,0 +1,9 @@
+# 运行环境（Python 3.10+）
+numpy>=1.24
+opencv-python>=4.8
+
+# 可选：只有需要生成 PNG 曲线时才用到；缺失时程序只写 CSV，不报错
+matplotlib>=3.7
+
+# 测试
+pytest>=7.0
