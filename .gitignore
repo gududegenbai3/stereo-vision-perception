@@ -1,22 +1,57 @@
-# Python
+# Python bytecode and virtual environments
 __pycache__/
 *.py[cod]
-*.egg-info/
 .venv/
 venv/
+env/
+
+# Python build and packaging outputs
+/build/
+/dist/
+*.egg-info/
+.eggs/
+
+# Test, type-check and lint caches
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+.coverage.*
+/htmlcov/
+/coverage.xml
+.tox/
+.nox/
+.ipynb_checkpoints/
 
-# Local capture and experiment outputs
-data/captures/
-data/calibrations/
-artifacts/
+# Local capture, calibration and demo outputs
+# Keep these scoped: documentation images and shared sample files remain trackable.
+/data/captures/
+/data/calibrations/
+/artifacts/
+/outputs/
+/logs/
+*.log
+
+# Local environment settings; share templates instead
+.env
+.env.*
+!.env.example
+!.env.template
+/config/local/
+/config/*.local.*
 
 # OS metadata
 .DS_Store
+._*
 Thumbs.db
+Desktop.ini
 
-# Editor settings
+# Local editor settings and temporary files
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# Source, shared config, dependency manifests/lockfiles and doc/ stay trackable.
+# Ignore rules do not untrack files already committed to Git.
