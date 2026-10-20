@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local capture and experiment outputs
+data/captures/
+data/calibrations/
+artifacts/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
