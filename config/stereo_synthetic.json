@@ -1,0 +1,18 @@
+{
+  "_comment": "合成图冒烟配置：无设备时验证程序行为。num_disparities 需覆盖合成图的视差（默认 4.0~9.5 px）。",
+  "sgbm": {
+    "num_disparities": 64,
+    "block_size": 7,
+    "mode": "sgbm_3way",
+    "uniqueness_ratio": 10,
+    "disp12_max_diff": 1,
+    "speckle_window": 100,
+    "speckle_range": 2,
+    "pre_filter_cap": 31,
+    "p1_scale": 8,
+    "p2_scale": 32
+  },
+  "geometry": {},
+  "threads": 1,
+  "roi_margin_px": 0
+}

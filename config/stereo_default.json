@@ -1,0 +1,18 @@
+{
+  "_comment": "真实（已校正）图像起步配置。num_disparities 由量程反推：d_max = fx_px*B/Z_min，向上取 16 的倍数；几何未标定时 geometry 留空，只输出视差。",
+  "sgbm": {
+    "num_disparities": 256,
+    "block_size": 5,
+    "mode": "sgbm_3way",
+    "uniqueness_ratio": 10,
+    "disp12_max_diff": 1,
+    "speckle_window": 100,
+    "speckle_range": 2,
+    "pre_filter_cap": 31,
+    "p1_scale": 8,
+    "p2_scale": 32
+  },
+  "geometry": {},
+  "threads": 1,
+  "roi_margin_px": 0
+}

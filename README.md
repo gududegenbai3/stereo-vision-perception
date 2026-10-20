@@ -4,7 +4,12 @@
 
 ## 当前状态
 
-当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则和执行计划；`src/`、依赖清单与可运行 demo 尚未建立，真实设备和算法精度尚无验证结论。
+当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则和执行计划；**离线视差最小实现已加入 `src/`**（SGBM 视差、有效掩码、视差→深度、视差域指标，见[实现说明](doc/algorithm/stereo_min.md)），依赖清单与验收门已就位，真实设备数据与算法精度尚无验证结论。
+
+```sh
+pip install -r requirements.txt
+python src/check.py     # 验收门：零数据自检 → 单元测试 → 小尺寸实验 → 卫生检查
+```
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
@@ -16,7 +21,9 @@
 ├── shortcuts.md                自然语言对应的 Git / GitHub 操作
 ├── .gitignore                  本地环境、缓存与运行产物的忽略规则
 ├── doc/
-│   ├── algorithm/algorithm.md  算法流程、接口与验收要求
+│   ├── algorithm/
+│   │   ├── algorithm.md        算法流程、接口与验收要求
+│   │   └── stereo_min.md       已实现的最小视差链路的接口、口径与实测结果
 │   ├── hardware/               硬件说明与规格图片
 │   ├── literature/             论文资料，按明确指令读取
 │   ├── chat/                   组内谈话记录，按明确指令读取
@@ -25,8 +32,16 @@
 │       ├── active/             未完成计划及当前进展
 │       └── completed/          已验收归档的计划
 ├── config/
-│   └── hardware.json           机器可读硬件参数与已知状态
-└── src/                        Python demo 与实现模块，待建立
+│   ├── hardware.json           机器可读硬件参数与已知状态
+│   ├── stereo_synthetic.json   合成图实验参数
+│   └── stereo_default.json     真实（已校正）图像起步参数
+├── requirements.txt            依赖清单
+├── run_experiment.py           运行入口：一次实验产出全部证据
+└── src/                        Python demo 与实现模块
+    ├── stereo_min/             配置校验 / SGBM 视差 / 深度换算 / 视差域指标
+    ├── tests/                  单元测试
+    ├── check.py                验收门
+    └── selftest.py             零数据自检
 ```
 
 `doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为维护入口；含义、来源、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。

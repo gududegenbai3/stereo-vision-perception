@@ -32,6 +32,10 @@ env/
 /logs/
 *.log
 
+# Numerical arrays produced by experiments (disparity/depth dumps)
+*.npy
+*.npz
+
 # Local environment settings; share templates instead
 .env
 .env.*
