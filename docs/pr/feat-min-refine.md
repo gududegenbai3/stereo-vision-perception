@@ -1,6 +1,6 @@
 # PR：置信度驱动精算的最小可运行实现（harness 版）
 
-> 分支：`codex/min-refine-harness`　｜　涉及：`src/`、`tests/`、`configs/`、`docs/`、`AGENTS.md`
+> 分支：`feat/min-refine`　｜　涉及：`src/`、`tests/`、`configs/`、`docs/`、`AGENTS.md`
 > 对应计划：`plans/phase-1/plan.md` 第四节（三步流程）与第五节（三条曲线 + 速度）
 
 ## 一、变更内容
@@ -9,7 +9,7 @@
 2. **`tests/`**：13 个单元测试（LRC 语义、预算数量精确性、指标口径）。
 3. **`selftest.py`**：零数据自检 17 项，含结构不变量"预算 100% 时自适应与随机必须选中同一批像素"。
 4. **`configs/`**：`synthetic.json`（合成图）与 `default.json`（真实数据起步参数），参数外置、无本机路径。
-5. **`AGENTS.md`**：AI 协作规则（工作循环、验收门、红线、证据与计划的对应表）。
+5. **`AGENTS.md`**：稳定的 AI 协作约束（目录归属、验收门、红线、PR 格式）。
 6. **`docs/pr/` + `docs/research/notes/`**：PR 四段模板落地、论文笔记按既有模板与命名给出样例。
 
 ## 二、验证命令与输出

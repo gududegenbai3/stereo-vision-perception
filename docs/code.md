@@ -138,12 +138,12 @@ src/stereo_min/
 ## 后续改动怎么走
 
 ```bash
-git switch -c codex/<主题>        # 不在 main 上开发
+git switch -c feat/<主题>        # 不在 main 上开发
 # 改代码 / 加参数档 / 补测试
 python scripts/check.py           # 门必须全绿（CI 跑的是同一条）
 git add <明确列出文件>             # 不要 git add -A，避免误加产物
 git commit -m "feat: <做了什么>（check.py 全绿）"
-git push -u origin codex/<主题>
+git push -u origin feat/<主题>
 ```
 
 PR 描述取 `docs/pr/feat-min-refine.md` 的四段结构：变更内容 / 验证命令与输出 / 已知未知项 / 风险。

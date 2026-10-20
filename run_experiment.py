@@ -75,7 +75,7 @@ def git_state() -> tuple[str, bool]:
 
 
 def auto_out_dir(topic: str) -> Path:
-    """证据归档命名：artifacts/<YYYYMMDD-HHMM>_<topic>_<sha7>/（见 AGENTS.md 第 4 节）。"""
+    """证据归档命名：artifacts/<YYYYMMDD-HHMM>_<topic>_<sha7>/（口径见 docs/code.md）。"""
     sha, _ = git_state()
     stamp = datetime.now().strftime("%Y%m%d-%H%M")
     safe_topic = "".join(c if c.isalnum() or c in "-_" else "-" for c in topic) or "run"
