@@ -1,8 +1,8 @@
 {
-  "schema_version": "2.1.0",
+  "schema_version": "2.2.0",
   "artifact": "camera_parameters",
   "generated_at": "2026-10-21",
-  "updated_at": "2026-10-22",
+  "updated_at": "2026-10-25",
   "language": "zh-CN",
   "rig_id": "hbvcam-4m2403hd-v22",
   "vendor": "深圳市汇博视捷科技有限公司",
@@ -58,8 +58,8 @@
     "source": "spec_page3",
     "type": "USB 2.0",
     "class": "UVC",
-    "class_status": "inferred",
-    "class_evidence": "规格书 OS 列表写 Linux with uvc；设备类型为 USB 摄像头，但规格表没有单独列出 UVC class。",
+    "class_status": "confirmed",
+    "class_evidence": "2026-10-25 设备枚举为 USB Camera（VID_1BCF&PID_0B15），Windows 驱动为 USB Video Device / usbvideo；OpenCV 可通过 DirectShow 采集。",
     "power_source": "USB bus power",
     "supply_voltage": {
       "nominal_v": 5.0,
@@ -173,7 +173,28 @@
       {"format": "YUY2", "width_px": 3840, "height_px": 1080, "max_fps": 1},
       {"format": "YUY2", "width_px": 3840, "height_px": 1520, "max_fps": 1}
     ],
-    "supported_modes_note": "max_fps 是规格书标称上限，不是实测帧率；实际可用模式必须由设备 probe 确认。规格书格式名为 MJPEG；采集 FourCC 常用 MJPG。"
+    "supported_modes_note": "max_fps 是规格书标称上限，不是实测帧率；实际可用模式必须由设备 probe 确认。规格书格式名为 MJPEG；采集 FourCC 常用 MJPG。",
+    "probe_observations": {
+      "date": "2026-10-25",
+      "device": "USB Camera VID_1BCF&PID_0B15",
+      "driver": "USB Video Device / usbvideo",
+      "single_view_modes": [[640, 480], [1280, 720]],
+      "side_by_side_modes": [
+        [1280, 480],
+        [2560, 720],
+        [3840, 1080],
+        [3040, 1520],
+        [3840, 1520]
+      ],
+      "side_by_side_split": "half width",
+      "per_eye_size_for_1280x480": [640, 480],
+      "left_half": "left camera",
+      "right_half": "right camera",
+      "left_right_confirmed_by": "covering the left camera darkened the left half",
+      "fourcc_reported_by_opencv": "YUY2",
+      "transport_note": "OpenCV DirectShow 报告 YUY2；3840×1080/3840×1520 等模式实际传输很可能为 MJPEG，实际格式与持续帧率仍需单独测量。",
+      "note": "设备拓扑已确认：单个 UVC 设备输出左右拼图；640×480、1280×720 为单画面，不能用于双目。"
+    }
   },
   "mechanical": {
     "source": ["spec_page3", "spec_page4"],
@@ -205,13 +226,14 @@
     "baseline_range_mm": null,
     "baseline_locked": false,
     "mount_type": "flexible_soft_connection",
-    "device_topology": null,
+    "device_topology": "single_uvc_side_by_side",
     "device_topology_candidates": ["dual_uvc", "single_uvc_side_by_side"],
     "topology_hypothesis": "single_uvc_side_by_side",
-    "topology_hypothesis_confidence": "medium",
-    "topology_hypothesis_evidence": "规格书所有模式的最大宽度为 3840；3840=2×1920，3840×1520=2×1920×1520，符合左右拼图特征；但尚未 probe，不能当作已验证事实。",
-    "left_right_order": null,
-    "left_right_order_note": "左右目顺序未确认；接反会导致视差符号和深度异常。",
+    "topology_hypothesis_confidence": "confirmed",
+    "topology_hypothesis_evidence": "2026-10-25 OpenCV probe：设备枚举为单个 USB Camera；1280×480/2560×720/3840×1080/3040×1520/3840×1520 输出左右拼图，640×480/1280×720 为单画面。",
+    "left_right_order": "left_half_is_left_camera",
+    "left_right_order_note": "2026-10-25 遮挡验证：遮住左相机时拼图左半变黑、右半正常；因此左半=左相机，右半=右相机。",
+    "left_right_order_candidates": ["left_half_is_left_camera", "left_half_is_right_camera"],
     "drawing_46mm_note": "第 4 页图中 46.00 mm 标注位于两个相机头之间，看起来是柔性段/头间距，不是两镜头光心距；不得直接当作 baseline_mm。",
     "notes": "两摄像头为软连接、基线可调；基线必须实测并锁死。改变基线或相对姿态后旧标定立即失效。143.6 mm 是模组长度；46.00 mm 标注位于两相机头之间（柔性段/头间距），二者都不是光学基线。基线确定后建议 rig_id 加 -b<baseline_mm>mm 后缀并重新标定。"
   },
@@ -231,7 +253,41 @@
     "distortion": null,
     "extrinsics": null,
     "baseline_mm": null,
-    "calibration_file": null
+    "calibration_file": null,
+    "dry_run": {
+      "version": "v1_dryrun_display",
+      "date": "2026-10-25",
+      "status": "provisional",
+      "target_type": "display",
+      "board_cols": 9,
+      "board_rows": 6,
+      "square_size_m": 0.028,
+      "image_size_wh": [640, 480],
+      "pairs_captured": 15,
+      "pairs_used": 10,
+      "source_files_used": [
+        "IMG_0021.jpg", "IMG_0022.jpg", "IMG_0023.jpg", "IMG_0024.jpg", "IMG_0025.jpg",
+        "IMG_0026.jpg", "IMG_0027.jpg", "IMG_0028.jpg", "IMG_0029.jpg", "IMG_0030.jpg"
+      ],
+      "excluded_files": ["IMG_0013.jpg", "IMG_0016.jpg", "IMG_0018.jpg", "IMG_0019.jpg", "IMG_0020.jpg"],
+      "selection_reason": "全 15 对混合标定 RMS 1.068 px、垂直残差均值 1.84 px；前 5 对与后 10 对几何不一致，后 10 对内部一致且留一验证稳定。",
+      "rms_left_px": 0.0525,
+      "rms_right_px": 0.0591,
+      "rms_stereo_px": 0.3144,
+      "baseline_estimate_mm": 128.04,
+      "vertical_residual_mean_px": 0.668,
+      "vertical_residual_p95_px": 0.923,
+      "leave_one_out_mean_px": 0.746,
+      "leave_one_out_p95_px": 1.006,
+      "fx_left_px": 562.60,
+      "fx_right_px": 566.32,
+      "artifacts_dir": "data/calibrations/hbvcam-4m2403hd-v22/display_dryrun_v1/",
+      "source_dataset": "本地标定数据集目录，未提交到 Git",
+      "note": "显示屏目标；源 JPG 缺少文件尾，已用 Pillow 容错解码并转 PNG；仅用于流程验证，不得用于米制深度精度结论。"
+    },
+    "next_version": "v2_final_bracket",
+    "versioning_note": "支架到位、基线/相对姿态变化后创建 v2；不覆盖 v1，不复用 v1 的 calibration.npz。",
+    "calibration_log": "doc/hardware/calibration_log.md"
   },
   "compliance": {
     "source": "spec_page3",
@@ -301,34 +357,37 @@
       "id": "U4",
       "field": "stereo.device_topology / stereo.left_right_order",
       "type": "unknown",
-      "status": "pending",
+      "status": "resolved",
       "problem": "尚未确认是单个 UVC 左右拼图还是两个独立 UVC 设备；左右目顺序也未确认。",
-      "current_handling": "device_topology 和 left_right_order 均为 null；只保留 hypothesis，不作为已验证事实。",
-      "needed": "probe 设备数量与画面布局；用有明显前后关系的场景确认左右顺序。",
+      "current_handling": "已确认：单个 UVC 左右拼图；左半=左相机、右半=右相机。",
+      "needed": "已确认，无需继续 probe；基线仍需独立测量（U3）。",
       "impact": ["采集适配方式", "视差符号", "深度正确性"],
       "target_fields": ["stereo.device_topology", "stereo.left_right_order"],
       "resolution": {
-        "value": null,
-        "evidence": null,
-        "recorded_at": null,
-        "note": null
+        "value": {
+          "device_topology": "single_uvc_side_by_side",
+          "left_right_order": "left_half_is_left_camera"
+        },
+        "evidence": "2026-10-25 OpenCV probe：单个 USB Camera；1280×480 及以上为左右拼图；遮住左相机时左半变黑、右半正常。",
+        "recorded_at": "2026-10-25",
+        "note": "640×480 和 1280×720 为单画面，不能用于双目。"
       }
     },
     {
       "id": "U5",
       "field": "interface.class",
       "type": "inferred",
-      "status": "pending",
+      "status": "resolved",
       "problem": "规格书没有单独列出 UVC class，只在 OS 支持中写 Linux with uvc。",
-      "current_handling": "class 写 UVC，并标记 inferred；不作为已验证事实。",
-      "needed": "接入后确认设备枚举信息。",
+      "current_handling": "已确认：设备以 USB Video Device / usbvideo 枚举，OpenCV DirectShow 可采集。",
+      "needed": "已确认，无需继续 probe。",
       "impact": ["采集后端选择"],
       "target_fields": ["interface.class", "interface.class_status"],
       "resolution": {
-        "value": null,
-        "evidence": null,
-        "recorded_at": null,
-        "note": null
+        "value": "UVC",
+        "evidence": "2026-10-25 Windows PnP：USB Camera VID_1BCF&PID_0B15，驱动 USB Video Device / usbvideo；OpenCV 5.0.0 可通过 DirectShow 打开并读帧。",
+        "recorded_at": "2026-10-25",
+        "note": "设备类确认，但实际传输格式/帧率仍见 U8。"
       }
     },
     {
@@ -385,8 +444,9 @@
   ],
   "pending_summary": {
     "status": "pending",
-    "count": 8,
-    "ids": ["U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8"],
+    "count": 6,
+    "ids": ["U1", "U2", "U3", "U6", "U7", "U8"],
+    "resolved": ["U4", "U5"],
     "update_policy": "确认后填写对应 uncertainties[].resolution.value、evidence、recorded_at，并按 target_fields 同步数据字段；原始值、来源和 current_handling 保留。",
     "maintenance": "count 与 ids 必须与 uncertainties 的 id 集合一致；新增或关闭未决项时同步更新。"
   },
@@ -414,9 +474,12 @@
       "uncertainties.U1.resolution.value 为 null 时不得把任一页原始值当作畸变系数。",
       "output.supported_modes 是标称模式；实际采集前必须 probe 设备。",
       "mechanical.module_size_mm 的 143.6 mm 是模组长度，不是光学基线。",
-      "第 4 页的 46.00 mm 是相机头之间的柔性段/头间距，不是两镜头光心距；不得当作 baseline_mm。"
+      "第 4 页的 46.00 mm 是相机头之间的柔性段/头间距，不是两镜头光心距；不得当作 baseline_mm。",
+      "640×480 和 1280×720 是单画面模式，不能用于双目。",
+      "calibration.dry_run 为 provisional；不得用于米制深度或精度结论，正式标定须等待 v2_final_bracket。",
+      "stereo.left_right_order = left_half_is_left_camera；拆分时不得交换左右。"
     ],
-    "capture_guidance": "高分辨率优先 MJPEG（FourCC 常用 MJPG）；YUY2 在高分辨率下标称帧率很低。单设备左右拼图时总宽度是单目宽度的两倍；拆分后左右尺寸必须一致。",
+    "capture_guidance": "使用左右拼图模式（1280×480 起步；每目 640×480）；640×480/1280×720 是单画面，不能用于双目。高分辨率优先 MJPEG（FourCC 常用 MJPG）；YUY2 在高分辨率下标称帧率很低。单设备左右拼图时总宽度是单目宽度的两倍；拆分后左右尺寸必须一致，左半=左相机。",
     "unit_contract": "长度 mm；角度 degree；分辨率 [width_px, height_px]；运行时深度 m、视差 px。",
     "error_handling": "读取层应校验 schema_version、单位、数组顺序与必需字段；遇到 null 或 uncertainties 中 status=pending 的项时，明确报错或要求实测，不得静默使用默认值。resolution 是预留编辑区，未填写前不得当作已确认数据。"
   }

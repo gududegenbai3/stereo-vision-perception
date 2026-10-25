@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则和执行计划；相机参数已从规格书第 3、4 页整理为 `schema_version: 2.1.0` 的 JSON，包含来源、原始值、冲突/未知项与 AI 使用约束。U1–U8 统一标记为 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`，并有 `target_fields` 指向待回填的数据字段。`src/`、依赖清单与可运行 demo 尚未建立，真实设备和算法精度尚无验证结论。
+当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则和执行计划；相机参数已从规格书第 3、4 页整理为 `schema_version: 2.2.0` 的 JSON，包含来源、原始值、冲突/未知项与 AI 使用约束。U1–U8 中 U4/U5 已确认，其余未决项统一 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`。2026-10-25 已完成显示屏目标上的 `v1_dryrun_display` 临时标定：10 对有效图、双目 RMS 0.314 px、基线估计 128.04 mm；该结果仅为 provisional。`src/`、依赖清单与可运行 demo 尚未建立，正式标定和算法精度尚无验证结论。
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
@@ -17,7 +17,9 @@
 ├── .gitignore                  本地环境、缓存与运行产物的忽略规则
 ├── doc/
 │   ├── algorithm/algorithm.md  算法流程、接口与验收要求
-│   ├── hardware/               硬件说明与规格图片
+│   ├── hardware/
+│   │   ├── hardware.md         硬件说明与规格图片
+│   │   └── calibration_log.md  标定版本、指标、限制与 v2 计划
 │   ├── literature/             论文资料，按明确指令读取
 │   ├── chat/                   组内谈话记录，按明确指令读取
 │   └── exe_plans/
@@ -29,7 +31,7 @@
 └── src/                        Python demo 与实现模块，待建立
 ```
 
-`doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.1）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的 `pending` 状态、`target_fields` 与 `resolution` 预留字段，`pending_summary` 汇总未决项，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
+`doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.2）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的状态与 `resolution` 预留字段，`pending_summary` 汇总未决项，`calibration.dry_run` 记录 v1 临时标定，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)；标定版本与 v2 计划见[标定记录](doc/hardware/calibration_log.md)。
 
 ## V0 开发路线
 
@@ -72,8 +74,9 @@ python3.11 -m json.tool config/hardware.json
 ## 已知限制
 
 - 双目为软连接且基线可调；采集期间需要固定，改变基线或相对姿态后重新标定（U3）。
-- 单设备左右拼图或双设备模式、光学基线、左右顺序、手动控制能力与实际帧率仍需实测（U3、U4、U6、U8）。
+- 单设备左右拼图与左右顺序已确认（U4 resolved）；光学基线、手动控制能力与实际帧率仍需实测（U3、U6、U8）。
 - 规格书存在畸变参数冲突（U1）和最大分辨率与模式表不一致（U2）；配置保留原始值，未采用任一值。
+- `v1_dryrun_display` 只是显示屏目标上的 provisional 标定，且没有同一几何下的独立验证集；不得用于米制深度或精度结论，正式标定等待支架和 v2。
 - 未决项在 JSON 中统一为 `status: pending`，`resolution.value/evidence/recorded_at/note` 为预留字段；在实测或供应商确认后回填，未填写时不得当作已确认数据。
 - 设备读取时间不代表真实曝光同步；V0 优先使用静态场景。
 - 理论焦距和模组外形尺寸不能替代真实标定参数，测距精度需由独立参考评价。

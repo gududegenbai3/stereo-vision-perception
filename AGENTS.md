@@ -21,6 +21,7 @@
 │   │   └── algorithm.md       算法流程、模块接口、输出与评估要求
 │   ├── hardware/
 │   │   ├── hardware.md        相机参数 JSON 的字段解释、使用约束与待实测事项
+│   │   ├── calibration_log.md 标定版本、数据、指标、限制与 v2 计划
 │   │   └── assets/            规格书图片：specs-page3.jpg、specs-page4.jpg
 │   └── exe_plans/             执行计划与进度记录
 │       ├── README.md          计划索引、状态与归档约定
@@ -31,7 +32,7 @@
     └── hardware.json          相机参数 JSON：规范单位、来源、原始值、冲突/未知项、pending 预留与 AI 使用约束
 ```
 
-`doc/` 解释方案与事实，`src/` 实现算法，`config/` 保存运行参数。后续 demo 的相机、分辨率、棋盘格、匹配参数和输入输出路径等配置归入 `config/`。`config/hardware.json` 当前为 `schema_version: 2.1.0`，是相机参数的唯一机器可读来源；来源页、`null` 语义、`uncertainties` 与 `pending_summary` 均由该文件承载。未决项统一使用 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`，并列出 `target_fields` 供后续实测或供应商确认后回填；不在 Markdown 中重复维护完整参数表。
+`doc/` 解释方案与事实，`src/` 实现算法，`config/` 保存运行参数。后续 demo 的相机、分辨率、棋盘格、匹配参数和输入输出路径等配置归入 `config/`。`config/hardware.json` 当前为 `schema_version: 2.2.0`，是相机参数的唯一机器可读来源；来源页、`null` 语义、`uncertainties`、`pending_summary` 与 `calibration.dry_run` 均由该文件承载。未决项统一使用 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`，并列出 `target_fields` 供后续实测或供应商确认后回填；标定版本、指标和 v2 计划见 [`doc/hardware/calibration_log.md`](doc/hardware/calibration_log.md)，不在 Markdown 中重复维护完整参数表。
 
 ## 3. 技术栈
 
@@ -49,7 +50,7 @@ OpenCV、NumPy 的具体版本尚未锁定；依赖清单与运行入口在实�
 - 用户要求同步、拉取、提交、推送、建分支、创建 PR 或合并：先阅读 `shortcuts.md`，按对应流程使用 Git CLI 与 GitHub 插件。
 - 需要了解整体目标和使用入口：查看根目录 `README.md`。
 - 不清楚算法步骤、接口、数据格式或评估方法：查看 `doc/algorithm/algorithm.md`。
-- 需要读取相机参数：先看 `config/hardware.json` 的 `conventions` 与 `ai_usage`，再按分组读取；来源页、原始值、冲突/未知项在 `document`、`raw`、`uncertainties`，未决项汇总与回填规则在 `pending_summary`。未决项统一 `status: pending`，`target_fields` 指向回填位置，`resolution` 为预留编辑区。字段解释、实测流程与风险查看 `doc/hardware/hardware.md`，原始规格图片位于 `doc/hardware/assets/`（`specs-page3.jpg`、`specs-page4.jpg`）。
+- 需要读取相机参数：先看 `config/hardware.json` 的 `conventions` 与 `ai_usage`，再按分组读取；来源页、原始值、冲突/未知项在 `document`、`raw`、`uncertainties`，未决项汇总与回填规则在 `pending_summary`，临时标定摘要与 v2 版本在 `calibration.dry_run`。未决项统一 `status: pending`，已确认项 `status: resolved`；`target_fields` 指向回填位置，`resolution` 为回填区。字段解释、实测流程与风险查看 `doc/hardware/hardware.md`，标定版本与指标查看 `doc/hardware/calibration_log.md`，原始规格图片位于 `doc/hardware/assets/`（`specs-page3.jpg`、`specs-page4.jpg`）。
 - 仅在用户明确要求查阅论文时，读取 `doc/literature/` 中与指令相关的资料；日常开发优先使用算法说明、配置和执行计划。
 - `doc/` 中的 `chat` 文件用于保存组内谈话，仅在用户明确要求时读取相关内容。
 - 需要了解执行计划和进展：先查看 `doc/exe_plans/README.md`，再阅读 `active/` 中的活动计划；当前 V0 入口为 `doc/exe_plans/active/V0_stereo_pipeline.md`，历史已完成计划在 `completed/`。
@@ -66,7 +67,8 @@ rg --files doc/algorithm doc/hardware doc/exe_plans  # 列出日常开发文档
 rg -n '基线|曝光|分辨率' doc/hardware/hardware.md
 rg -n '标定|SGBM|评估' doc/algorithm/algorithm.md
 python3.11 -m json.tool config/hardware.json  # 校验并查看相机参数 JSON
-rg -n '"schema_version"|"uncertainties"|"pending_summary"|"ai_usage"' config/hardware.json  # 定位版本、未决项与 AI 约束
+rg -n '"schema_version"|"uncertainties"|"pending_summary"|"calibration"|"ai_usage"' config/hardware.json  # 定位版本、未决项、标定与 AI 约束
+rg -n 'v1_dryrun|v2_final|RMS|基线' doc/hardware/calibration_log.md  # 查看标定版本与指标
 git status --short                          # 查看当前工作区变更
 ```
 
