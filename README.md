@@ -9,8 +9,8 @@
 在仓库根目录运行：
 
 ```sh
-conda activate SVP_env
-python run_experiment.py --scene Adirondack
+conda run -n SVP_env python run_experiment.py --scene Adirondack
+conda run -n SVP_env python -m unittest discover -s tests -v
 ```
 
 默认输出到 `artifacts/middlebury/trainingQ/Adirondack/`：`disparity_px.npy`、`depth_m.npy`、`xyz_m.npy`、有效掩码、伪彩 PNG、RGB `cloud.ply` 及 JSON/CSV 运行记录。输入是 Middlebury 已校正图像；深度使用场景 `calib.txt` 中的焦距、`doffs` 与毫米基线，不使用本项目尚未测得的相机参数。测试场景可用 `--split testQ --scene <名称> --out <目录>`，该划分没有公开真值，记录中将评价状态标为未评估。参数来自 `config/middlebury.json`；Notebook 入口为 `src/offline_middlebury.ipynb`，详细接口和指标口径见 [离线实现说明](doc/algorithm/offline_middlebury.md)。
@@ -63,7 +63,7 @@ python run_experiment.py --scene Adirondack
 - 标准库：配置解析、路径、CSV/JSON 记录与 PLY 输出。
 - 开发环境：JupyterLab，使用 ipykernel 执行 Python，Matplotlib 显示图像、深度预览与指标。
 
-依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11、OpenCV 4.10.0 和清单中的其他 Python 包可导入；JupyterLab 界面与内核启动待验证。新机器首次创建环境时，在仓库根目录执行：
+依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。当前实现已在 Python 3.11.18、OpenCV 4.13.0、NumPy 2.4.6 及清单中的 Notebook 依赖上验证；8 项检查、两个数据集样例和真实 Notebook 内核执行均通过。JupyterLab 图形界面仍待手工检查。完整证据见[目标环境验证](doc/algorithm/target_environment_verification.md)。新机器首次创建环境时，在仓库根目录执行：
 
 ```sh
 conda env create -f environment.yml
@@ -86,6 +86,8 @@ python -m json.tool config/hardware.json
 ```
 
 后续按依赖清单补装或更新现有环境使用 `conda env update -n SVP_env -f environment.yml`，由使用者自行执行。Notebook 用于实验与展示，可复用函数仍放入 `src/`，参数从 `config/` 或数据集标定读取。Notebook 中优先使用 Matplotlib 显示图像，OpenCV 的 BGR 彩色图显示前转换成 RGB。离线入口命令见上文。
+
+Windows 用户如需复现本次完整依赖，可在新建环境时使用 `conda create -n SVP_env --file environment-win-64.explicit.txt`。该清单固定 271 个 conda-forge 包的下载地址与 MD5，仅用于 win-64；`environment.yml` 继续维护项目的依赖范围。
 
 配置读取与校验由调用层负责，核心算法接收明确类型的输入并返回结构化结果。后续 function calling 的工具声明、参数 schema 与实现适配层分别维护，硬件 JSON 作为配置数据使用。
 

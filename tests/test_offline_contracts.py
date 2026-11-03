@@ -8,6 +8,7 @@ import unittest
 from dataclasses import replace
 from pathlib import Path
 
+import cv2
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -27,6 +28,13 @@ class OfflineContracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         (ROOT / "artifacts").mkdir(exist_ok=True)
+
+    def test_project_python_and_opencv_versions(self) -> None:
+        """Reject verification performed outside the project's required runtime."""
+        self.assertEqual(sys.version_info[:2], (3, 11), "Run tests in SVP_env (Python 3.11)")
+        opencv_version: tuple[int, ...] = tuple(int(value) for value in cv2.__version__.split(".")[:2])
+        self.assertGreaterEqual(opencv_version, (4, 10))
+        self.assertLess(opencv_version, (5, 0), "environment.yml requires OpenCV >=4.10,<5")
 
     def test_config_rejects_unknown_fields_and_boolean_parameters(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT / "artifacts") as directory:

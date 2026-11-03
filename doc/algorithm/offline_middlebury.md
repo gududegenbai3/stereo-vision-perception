@@ -5,10 +5,9 @@
 对应 A0 离线入口、A3 已校正数据重建及 A4 的视差评价部分。算法仍为 OpenCV SGBM 基线，采集、棋盘格标定、原始图像校正及独立测距尚待完成。
 
 ```sh
-conda activate SVP_env
-python run_experiment.py
-python run_experiment.py --scene Australia --split testQ
-python -m unittest discover -s tests -v
+conda run -n SVP_env python run_experiment.py
+conda run -n SVP_env python run_experiment.py --scene Australia --split testQ
+conda run -n SVP_env python -m unittest discover -s tests -v
 ```
 
 Notebook 使用 `src/offline_middlebury.ipynb`，选择 Python 3.11 (SVP_env) 内核。CLI 与 Notebook 共用以下顺序：
@@ -61,6 +60,6 @@ SGBM 定点视差除以 16。有效点同时满足固定几何搜索域、有效
 
 ## 当前验证
 
-2026-11-03：Python 3.13、OpenCV 5.0.0、NumPy 2.5.1，7 项回归检查通过。Adirondack 参考域 295457 像素，参与评价 289052 像素，EPE 1.147992 px、P95 2.648650 px、bad2 0.057671、覆盖率 0.978322。Australia 无 GT 流程运行成功。旧版将 `mask > 0` 视作非遮挡的结果已被此口径取代。
+2026-11-03：按原始 `environment.yml` 重建目标环境，Python 3.11.18 / OpenCV 4.13.0 / NumPy 2.4.6 下的 8 项检查通过，Notebook 的 4 个代码单元格经真实 SVP_env 内核全部执行通过。此前 Python 3.13 / OpenCV 5 的结果仅保留为开发历史，当前验收以目标环境记录为准。Adirondack 参考域 295457 像素，参与评价 289052 像素，EPE 1.147992 px、P95 2.648650 px、bad2 0.057671、覆盖率 0.978322。Australia 无 GT 流程运行成功。旧版将 `mask > 0` 视作非遮挡的结果已被此口径取代。
 
-目标 Python 3.11 / OpenCV 4.x、Notebook 内核、真实相机及独立测距尚待验证；不据此宣布 V0 完成或精度达标。
+目标环境与 Notebook 内核的详细版本、命令及结果见[验证记录](target_environment_verification.md)。JupyterLab 图形界面、真实相机及独立测距尚待验证；不据此宣布 V0 完成或精度达标。

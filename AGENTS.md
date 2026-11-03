@@ -45,7 +45,7 @@
 - Python 标准库：处理路径、配置、记录与文件输出。
 - IDE：JupyterLab；ipykernel 提供 Python 内核，Matplotlib 用于 Notebook 图像与指标展示。
 
-Conda 依赖及版本范围记录在 `environment.yml`，环境名为 `SVP_env`；本地环境已通过依赖导入和 Adirondack 读图检查，JupyterLab 界面与内核启动待验证，具体解析版本未锁定。Notebook 负责实验与展示，可复用函数仍保存于 `src/`。安装、内核注册和启动命令见 README。
+Conda 依赖及版本范围记录在 `environment.yml`，环境名为 `SVP_env`；目标环境已通过依赖导入、8 项检查、Adirondack/Australia 离线流程及 Notebook 内核执行；JupyterLab 界面待手工检查。完整 Windows 依赖快照在 `environment-win-64.explicit.txt`，验证证据见 `doc/algorithm/target_environment_verification.md`。Notebook 负责实验与展示，可复用函数仍保存于 `src/`。安装、内核注册和启动命令见 README。
 
 ## 4. 问题导航与快捷命令
 

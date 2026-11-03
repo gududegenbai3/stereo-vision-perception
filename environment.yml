@@ -11,4 +11,5 @@ dependencies:
   - "ipykernel>=6,<8"
 
 # Version ranges describe intended dependencies, not a solved environment lock.
-# The environment exists; dependency installation and runtime checks are unverified.
+# Windows runtime, CLI tests and Notebook kernel verified; see doc/algorithm/target_environment_verification.md.
+# Exact win-64 package URLs/hashes are recorded in environment-win-64.explicit.txt.

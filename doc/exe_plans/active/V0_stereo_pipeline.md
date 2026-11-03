@@ -13,12 +13,12 @@
 ## 2. 当前进展判断
 
 - 已有：项目协作规则、Git 操作指南、算法实现规格、硬件说明、独立硬件 JSON 和论文资料；本次建立执行计划目录。
-- 软件状态：已有 `environment.yml` 和 `src/stereo_vision/` 包；离线 Adirondack 训练场景已完成读图、SGBM、深度换算与非遮挡区域视差评价。JupyterLab 内核、真实相机标定、校正及独立测距仍待验证。
+- 软件状态：已有 `environment.yml` 和 `src/stereo_vision/` 包；离线 Adirondack 训练场景已完成读图、SGBM、深度换算与非遮挡区域视差评价。目标 Python 3.11/OpenCV 4.x 环境、8 项检查与 Notebook 内核执行已验证；JupyterLab 图形界面、真实相机标定、校正及独立测距仍待验证。
 - 离线数据：本地 Middlebury Stereo v3 Q 版已就绪。15 个训练场景均有同名左视差真值和掩码，另有 15 个测试场景，路径见 [README](../../../README.md#离线验证数据)。
 - 硬件状态：仓库配置仍为基线未知、未锁定、左右布局未知、未标定；尚无设备探测、采集或测距实测记录。这表示未有证据验证，并不推断设备是否已接在主机上。
 - 总体判断：离线已校正数据的最简链路已跑通；硬件实测、完整算法流程和真实数据验收均未完成。
 - 当前阻碍：真实设备验证需要设备与实测操作，真实精度评价需要独立距离参考；这些不阻止软件环境、接口和离线流程开发。
-- 下一步：硬件路线从 H1 开始，软件路线先在目标环境验收现有离线入口，再推进 A1/A2；双方继续按第 4 节数据契约交付；A0 读取 `config/hardware.json` 时应先落实 `conventions` 与 `ai_usage.hard_constraints`，遇到 `null` 或 `status: pending` 项明确报错。
+- 下一步：硬件路线从 H1 开始，软件路线基于已验证的目标环境和离线入口推进 A1/A2；双方继续按第 4 节数据契约交付；A0 读取 `config/hardware.json` 时应先落实 `conventions` 与 `ai_usage.hard_constraints`，遇到 `null` 或 `status: pending` 项明确报错。
 
 以上为仓库证据快照，后续工作需要重新核对，不作为永久状态。
 
@@ -96,7 +96,7 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 
 ### A0：环境、配置校验与离线入口
 
-状态：进行中（依赖清单与 `SVP_env` 环境已建立，依赖导入与样例解码已通过，JupyterLab 内核和离线入口待验收）；依赖：无硬件依赖。
+状态：进行中（目标环境、离线入口、配置/数据校验和 Notebook 内核已验证；JupyterLab 图形界面待手工检查）；依赖：无硬件依赖。
 
 工作：建立 Python 3.11 环境与依赖清单，固定可用 OpenCV、NumPy 版本；按 [架构约定](../../../ARCHITECTURE.md) 在 `src/` 下实现 Python 包，细化有类型的接口、配置校验、配对读取及 CLI 入口。函数说明明确数组元素类型、形状、单位和失败方式。
 
@@ -190,3 +190,6 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 
 - 2026-11-03：按规划重新整理离线实现：新增严格 JSON 配置及带元素类型的共享数据/结果类，Middlebury 适配层保留双目内参、主点偏移和毫米基线的几何关系并生成米制 Q；匹配层使用 `getValidDisparityROI`，重投影使用 `reprojectImageTo3D`，输出补齐 XYZ、搜索域、RGB PLY、参数/环境/阶段计时与逐样本记录。修正非遮挡掩码为 `==255`，旧版 `>0` 包含遮挡值 128，旧指标不再作为非遮挡基线。Adirondack 的固定搜索域内非遮挡参考像素 295457、有效预测 289052，EPE 1.147992 px、P95 2.648650 px、bad2 0.057671、覆盖率 0.978322。此为本地 Q 分辨率诊断，不是官方全分辨率榜单结果。
 - 本次验证：`python -m unittest discover -s tests -v` 的 7 项检查通过（米制 Q/doffs、无效值、遮挡与缺预测口径、PFM 字节序/行序、RGB PLY、真值不影响重建、缺文件/尺寸错误）；Adirondack 与 Australia 离线运行成功，缺失场景明确报错并生成 failure.json。环境仍为 Python 3.13 / OpenCV 5.0.0 / NumPy 2.5.1，尚未在目标 Python 3.11 / OpenCV 4.x 环境及 Jupyter 内核验证。Notebook 已提供共享接口调用与展示；下一步在目标环境验收，再推进真实标定和独立距离评价。A0/A3/A4 均保持进行中。
+
+- 2026-11-03：撤回 PR #8 后，按用户要求重新进行目标环境验收。在本机按原 `environment.yml` 用 conda-forge 创建独立 SVP_env，未改变直接依赖范围；实际 Python 3.11.18、OpenCV 4.13.0、NumPy 2.4.6、Matplotlib 3.11.2、JupyterLab 4.6.5、ipykernel 7.4.0 均满足声明。新增环境门禁检查，Python 3.13/OpenCV 5 不再能通过完整测试。目标环境 8 项检查通过，Adirondack/Australia 重新运行成功，299953 个 PLY 顶点与掩码一致；Notebook 4 个代码单元格在真实目标内核全部执行通过。
+- 验证证据位于 `artifacts/target_environment_verification/`，汇总见 `doc/algorithm/target_environment_verification.md`；271 个 Windows 包的 URL/MD5 快照为 `environment-win-64.explicit.txt`。环境创建时通过项目内缓存、短路径别名及可写临时目录解决本机 Windows 安装/ZeroMQ 问题，没有切换至其他版本范围或包渠道。JupyterLab 图形界面和真实设备仍未验收；准备以 `V0_yingdalei_3` 提交并上传原工作分支，PR #8 保持关闭。
