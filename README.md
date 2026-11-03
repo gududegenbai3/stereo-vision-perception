@@ -33,7 +33,7 @@
 └── src/                        已有实验 Notebook，Python 模块待实现
 ```
 
-`doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为维护入口；含义、来源、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
+`doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.1）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的 `pending` 状态、`target_fields` 与 `resolution` 预留字段，`pending_summary` 汇总未决项，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
 
 ## V0 开发路线
 
@@ -107,8 +107,9 @@ Python 模块的命名、职责和导入方向见 [ARCHITECTURE.md](ARCHITECTURE
 
 ## 已知限制
 
-- 双目为软连接且基线可调；采集期间需要固定，改变基线或相对姿态后重新标定。
-- 单设备左右拼图或双设备模式、光学基线、左右顺序及手动控制能力仍需实测。
-- 规格书存在畸变参数冲突，配置保留原始值，待确认后更新。
+- 双目为软连接且基线可调；采集期间需要固定，改变基线或相对姿态后重新标定（U3）。
+- 单设备左右拼图或双设备模式、光学基线、左右顺序、手动控制能力与实际帧率仍需实测（U3、U4、U6、U8）。
+- 规格书存在畸变参数冲突（U1）和最大分辨率与模式表不一致（U2）；配置保留原始值，未采用任一值。
+- 未决项在 JSON 中统一为 `status: pending`，`resolution.value/evidence/recorded_at/note` 为预留字段；在实测或供应商确认后回填，未填写时不得当作已确认数据。
 - 设备读取时间不代表真实曝光同步；V0 优先使用静态场景。
 - 理论焦距和模组外形尺寸不能替代真实标定参数，测距精度需由独立参考评价。

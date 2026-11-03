@@ -1,4 +1,9 @@
 {
+  "schema_version": "2.1.0",
+  "artifact": "camera_parameters",
+  "generated_at": "2026-10-21",
+  "updated_at": "2026-10-22",
+  "language": "zh-CN",
   "rig_id": "hbvcam-4m2403hd-v22",
   "vendor": "深圳市汇博视捷科技有限公司",
   "model": "HBVCAM-4M2403HD V22",
@@ -7,86 +12,412 @@
     "title": "Key Specifications / Module Mechanical Dimension",
     "revision": "A",
     "date": "2024-10-30",
-    "pages_used": [3, 4]
+    "pages_used": [3, 4],
+    "sources": [
+      {
+        "id": "spec_page3",
+        "title": "1. Key Specifications (主要规格)",
+        "path": "doc/hardware/assets/specs-page3.jpg",
+        "page": "3 of 9",
+        "size_px": [1166, 1661],
+        "sha256": "766453f23dc5a00737d367bcdb5ec4d4c9f2d7668d142c8c6438e5f10d359f83"
+      },
+      {
+        "id": "spec_page4",
+        "title": "2. Module Mechanical Dimension (模组结构图)",
+        "path": "doc/hardware/assets/specs-page4.jpg",
+        "page": "4 of 9",
+        "size_px": [2124, 3006],
+        "sha256": "9c4562d911eb29dce0d2547aa6b3cf0f86a4d8ec231d01bd70f3a0873e83c515"
+      }
+    ]
+  },
+  "conventions": {
+    "value_source": "每个分组用 source 标明来源；raw 保留规格书原文；null 表示规格书未给出或尚未实测；冲突与推断统一记录在 uncertainties。",
+    "source_values": "spec_page3/spec_page4 指 document.sources 中的规格页；user 指用户确认；project 指项目当前状态，不是规格书数据。",
+    "units": {
+      "length": "mm；字段名后缀为 _um、_nm、_cm、_px 时按后缀解释",
+      "angle": "degree",
+      "resolution": "[width_px, height_px]",
+      "module_size_keys": ["length", "width", "height"],
+      "sensitivity": "mV/(lux·s)",
+      "power": "mW",
+      "temperature": "°C"
+    },
+    "raw_rule": "raw 字段只用于追溯原文，不参与数值计算；需要数值时使用同组的规范化字段。",
+    "null_rule": "null 不等于 0；不得用模组尺寸、理论焦距、图纸尺寸或猜测值代填未知参数。",
+    "pending_rule": "所有未决项统一使用 uncertainties[].status = pending，并在同名 resolution 对象中预留 value/evidence/recorded_at/note；确认后按 target_fields 同步数据字段，保留原始值和来源。",
+    "do_not_use_as_calibration": [
+      "lens.efl_mm",
+      "calibration.nominal_focal_px",
+      "stereo.baseline_mm",
+      "mechanical.module_size_mm"
+    ]
   },
   "interface": {
+    "source": "spec_page3",
     "type": "USB 2.0",
     "class": "UVC",
+    "class_status": "inferred",
+    "class_evidence": "规格书 OS 列表写 Linux with uvc；设备类型为 USB 摄像头，但规格表没有单独列出 UVC class。",
     "power_source": "USB bus power",
-    "supply_voltage": "DC 5V ±5%",
+    "supply_voltage": {
+      "nominal_v": 5.0,
+      "tolerance_percent": 5.0,
+      "raw": "DC 5V±5%"
+    },
     "max_power_mw": 790,
-    "os_support": "Windows XP/7/8/Vista, Android 4.0+, macOS, Linux with UVC"
+    "os_support": {
+      "raw": "Win XP/Win 7、8/vista/android 4.0/ mac /Linux with uvc",
+      "normalized": [
+        "Windows XP",
+        "Windows 7",
+        "Windows 8",
+        "Windows Vista",
+        "Android 4.0+",
+        "macOS",
+        "Linux with UVC"
+      ],
+      "note": "原始 OS 列表存在拼写和分隔符不规范；normalized 只是解释结果，不改变 raw。"
+    }
   },
   "sensor": {
+    "source": "spec_page3",
     "model": "OV4689",
     "optical_format": "1/3 inch",
     "package": "CSP, bare die",
-    "pixel_size_um": 2.0,
     "shutter": "electronic rolling shutter",
-    "max_output_resolution_px": [3840, 1080],
-    "sensitivity_mv_per_lux_s": 1900,
+    "pixel_size_um": {
+      "x": 2.0,
+      "y": 2.0,
+      "shape": "square"
+    },
+    "sensitivity_mv_per_lux_s": 1900.0,
     "snr_db": 38.3,
-    "dynamic_range_db": 64.6
+    "dynamic_range_db": 64.6,
+    "max_output_resolution_note": "规格书的 Maximum resolution 是模组输出分辨率，不是 sensor 原生分辨率；见 output.max_resolution_px。",
+    "raw": {
+      "model": "OV4689 (1/3 inch)",
+      "package": "CSP,Bare Die",
+      "pixel_size": "2μm x 2μm",
+      "sensitivity": "1900mV / (lux·sec)",
+      "snr": "38.3db",
+      "dynamic_range": "64.6db"
+    }
   },
   "lens": {
+    "source": ["spec_page3", "spec_page4"],
     "construction": "2G2P",
     "efl_mm": 3.0,
     "f_number": 2.4,
-    "fov_diagonal_deg": 80,
+    "fov_deg": 80.0,
+    "fov_measure": "diagonal",
+    "fov_evidence": "spec_page4 镜头表写 FOV(D)=80；spec_page3 写 FOV 80°。",
     "focus": "fixed",
-    "object_distance_cm": "30 to infinity",
-    "center_resolution_lw_ph": 600,
-    "tv_distortion": {
-      "page3_raw": "<97.2%",
-      "page4_raw": "<3%",
-      "status": "conflicting_in_datasheet",
-      "likely_value": "<3% (pending vendor confirmation)"
+    "object_distance_cm": {
+      "min": 30.0,
+      "max": null,
+      "max_is_infinity": true,
+      "raw": "30CM-infinity"
     },
-    "ir_filter_nm": "650 ± 10",
-    "relative_illumination_percent": 70
+    "center_resolution_lw_ph": 600,
+    "center_resolution_note": "规格书写作 Resolution 600LW/PH (Center)；这是模组中心分辨率指标，不是图像像素分辨率。",
+    "tv_distortion": {
+      "page3_raw": "<-97.2%",
+      "page4_raw": "<5%",
+      "status": "pending",
+      "resolution_ref": "uncertainties.U1.resolution.value",
+      "handling": "保留两页原始值，不采用任一值；待供应商确认或实测，见 uncertainties 的 U1。",
+      "page3_reading_note": "第 3 页 97.2% 前可见负号；若原稿实际为 <97.2%，仍与第 4 页 <5% 冲突。",
+      "page4_reading_note": "第 4 页镜头表 TV Distortion 写作 <5%；放大核对后确认数字是 5，不是 3。"
+    },
+    "ir_filter_nm": {
+      "center": 650.0,
+      "tolerance": 10.0,
+      "raw": "650±10nm"
+    },
+    "relative_illumination_percent": 70.0
   },
   "output": {
-    "formats": ["MJPG", "YUY2"],
-    "default_ae_agc_awb": "Auto",
+    "source": "spec_page3",
+    "formats": ["MJPEG", "YUY2"],
+    "format_aliases": {
+      "MJPEG": ["MJPG"],
+      "YUY2": []
+    },
+    "fourcc": {
+      "MJPEG": "MJPG",
+      "YUY2": "YUY2"
+    },
+    "formats_raw": "YUY2/MJPEG",
+    "default_controls": {
+      "agc": "auto",
+      "aec": "auto",
+      "white_balance": "auto",
+      "raw": "AGC/AEC/Whiter balance Auto"
+    },
     "microphone": false,
+    "max_resolution_px": [3840, 1080],
+    "max_resolution_note": "规格书 Maximum resolution 写 3840*1080；但 Maximum Image Transfer Rate 表包含 3840*1520，后者像素更多。两处均保留，见 uncertainties 的 U2。",
     "supported_modes": [
-      {"format": "MJPG", "resolution_px": [1280, 480], "max_fps": 30},
-      {"format": "MJPG", "resolution_px": [2160, 1080], "max_fps": 30},
-      {"format": "MJPG", "resolution_px": [2560, 720], "max_fps": 30},
-      {"format": "MJPG", "resolution_px": [3040, 1520], "max_fps": 30},
-      {"format": "MJPG", "resolution_px": [3840, 1080], "max_fps": 30},
-      {"format": "MJPG", "resolution_px": [3840, 1520], "max_fps": 11},
-      {"format": "YUY2", "resolution_px": [1280, 480], "max_fps": 10},
-      {"format": "YUY2", "resolution_px": [2160, 1080], "max_fps": 3},
-      {"format": "YUY2", "resolution_px": [2560, 720], "max_fps": 3},
-      {"format": "YUY2", "resolution_px": [3040, 1520], "max_fps": 1},
-      {"format": "YUY2", "resolution_px": [3840, 1080], "max_fps": 1},
-      {"format": "YUY2", "resolution_px": [3840, 1520], "max_fps": 1}
-    ]
+      {"format": "MJPEG", "width_px": 1280, "height_px": 480, "max_fps": 30},
+      {"format": "MJPEG", "width_px": 2160, "height_px": 1080, "max_fps": 30},
+      {"format": "MJPEG", "width_px": 2560, "height_px": 720, "max_fps": 30},
+      {"format": "MJPEG", "width_px": 3040, "height_px": 1520, "max_fps": 30},
+      {"format": "MJPEG", "width_px": 3840, "height_px": 1080, "max_fps": 30},
+      {"format": "MJPEG", "width_px": 3840, "height_px": 1520, "max_fps": 11},
+      {"format": "YUY2", "width_px": 1280, "height_px": 480, "max_fps": 10},
+      {"format": "YUY2", "width_px": 2160, "height_px": 1080, "max_fps": 3},
+      {"format": "YUY2", "width_px": 2560, "height_px": 720, "max_fps": 3},
+      {"format": "YUY2", "width_px": 3040, "height_px": 1520, "max_fps": 1},
+      {"format": "YUY2", "width_px": 3840, "height_px": 1080, "max_fps": 1},
+      {"format": "YUY2", "width_px": 3840, "height_px": 1520, "max_fps": 1}
+    ],
+    "supported_modes_note": "max_fps 是规格书标称上限，不是实测帧率；实际可用模式必须由设备 probe 确认。规格书格式名为 MJPEG；采集 FourCC 常用 MJPG。"
   },
   "mechanical": {
-    "module_size_mm": [143.6, 22.0, 16.5],
-    "module_size_tolerance_mm": 0.5,
+    "source": ["spec_page3", "spec_page4"],
+    "module_size_mm": {
+      "length": 143.6,
+      "width": 22.0,
+      "height": 16.5
+    },
+    "module_size_note": "143.6 mm 是模组整体长度，不是光学基线；不能直接代入深度公式。",
+    "module_size_tolerance": {
+      "explicit_height_mm": 0.5,
+      "unmarked_linear_mm": 0.1,
+      "raw": "第 3 页 16.5mm±0.5MM；第 4 页 16.50±0.5；第 4 页注 未标注线性尺寸公差 ±0.1mm",
+      "note": "不能确认 ±0.5 是否也适用于长度和宽度；不要把它自动套到所有轴。"
+    },
     "lens_barrel_diameter_mm": 14.0,
     "pcb_thickness_mm": 1.60,
     "fpc_thickness_mm": 0.15,
-    "operating_temperature_c": [-30, 70],
-    "stable_image_temperature_c": [0, 50]
+    "steel_sheet_thickness_mm": 0.20,
+    "connector": "24P-0.5翻盖连接器",
+    "unmarked_linear_tolerance_mm": 0.1,
+    "operating_temperature_c": [-30.0, 70.0],
+    "stable_image_temperature_c": [0.0, 50.0]
   },
   "stereo": {
+    "source": ["user", "spec_page3", "spec_page4"],
     "baseline_mm": null,
     "baseline_adjustable": true,
     "baseline_range_mm": null,
-    "mount_type": "flexible_soft_connection",
     "baseline_locked": false,
-    "left_right_layout": "unknown",
-    "expected_layout": "unknown_dual_or_side_by_side",
-    "notes": "两摄像头为软连接、基线可调；可能是两个独立 UVC 设备，也可能是单设备左右拼图。3840x1080 看起来像左右拼图，但接入后必须用 probe 确认。"
+    "mount_type": "flexible_soft_connection",
+    "device_topology": null,
+    "device_topology_candidates": ["dual_uvc", "single_uvc_side_by_side"],
+    "topology_hypothesis": "single_uvc_side_by_side",
+    "topology_hypothesis_confidence": "medium",
+    "topology_hypothesis_evidence": "规格书所有模式的最大宽度为 3840；3840=2×1920，3840×1520=2×1920×1520，符合左右拼图特征；但尚未 probe，不能当作已验证事实。",
+    "left_right_order": null,
+    "left_right_order_note": "左右目顺序未确认；接反会导致视差符号和深度异常。",
+    "drawing_46mm_note": "第 4 页图中 46.00 mm 标注位于两个相机头之间，看起来是柔性段/头间距，不是两镜头光心距；不得直接当作 baseline_mm。",
+    "notes": "两摄像头为软连接、基线可调；基线必须实测并锁死。改变基线或相对姿态后旧标定立即失效。143.6 mm 是模组长度；46.00 mm 标注位于两相机头之间（柔性段/头间距），二者都不是光学基线。基线确定后建议 rig_id 加 -b<baseline_mm>mm 后缀并重新标定。"
   },
   "calibration": {
+    "source": "project",
     "required": true,
     "status": "not_calibrated",
-    "nominal_focal_px": 1500,
-    "nominal_focal_note": "EFL 3.0 mm / pixel 2 µm = 1500 px；这是理论值，实际以标定结果为准。"
+    "nominal_focal_px": 1500.0,
+    "nominal_focal_formula": "efl_mm / (pixel_size_um / 1000) = 3.0 / 0.002 = 1500",
+    "nominal_focal_assumptions": [
+      "lens.efl_mm = 3.0 mm",
+      "sensor.pixel_size_um = 2.0 µm x 2.0 µm",
+      "no binning, cropping, or upscaling"
+    ],
+    "nominal_focal_note": "理论值，仅用于 sanity check；真实焦距以标定结果的 K 或校正后的 P1[0,0] 为准。",
+    "intrinsics": null,
+    "distortion": null,
+    "extrinsics": null,
+    "baseline_mm": null,
+    "calibration_file": null
+  },
+  "compliance": {
+    "source": "spec_page3",
+    "assembly": "SMT",
+    "pcb_printing_ink": "Black",
+    "module_package": "Anti-electrostatic tray",
+    "certifications": ["FCC", "CE", "RoHS"],
+    "raw": {
+      "assembly": "SMT (ROSH)",
+      "certifications": "FCC/CE/ROSH"
+    },
+    "note": "原始规格书把 RoHS 写作 ROSH；本字段使用规范拼写 RoHS。"
+  },
+  "uncertainties": [
+    {
+      "id": "U1",
+      "field": "lens.tv_distortion",
+      "type": "conflict",
+      "status": "pending",
+      "problem": "第 3 页写作 <-97.2%，第 4 页镜头表写作 <5%；两值不一致，且 -97.2% 对 80° 低畸变镜头不合常理。",
+      "current_handling": "U1.resolution.value 为 null；两页原始值均保留；不用于去畸变或质量判断。",
+      "needed": "供应商确认或实测畸变；确认后填写 resolution.value，并按 target_fields 同步。",
+      "impact": ["镜头质量预期", "去畸变模型选择"],
+      "target_fields": ["lens.tv_distortion"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U2",
+      "field": "output.max_resolution_px / output.supported_modes",
+      "type": "inconsistency",
+      "status": "pending",
+      "problem": "Maximum resolution 写 3840×1080，但 Maximum Image Transfer Rate 表包含 3840×1520；后者像素更多。",
+      "current_handling": "max_resolution_px 采用 3840×1080；supported_modes 保留 3840×1520；两者不互相改写。",
+      "needed": "probe 实际可用模式；以设备枚举结果为准。",
+      "impact": ["采集模式选择", "单目分辨率", "SGBM 搜索范围"],
+      "target_fields": ["output.max_resolution_px", "output.supported_modes"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U3",
+      "field": "stereo.baseline_mm",
+      "type": "unknown",
+      "status": "pending",
+      "problem": "基线可调且尚未测量；规格书未给出光学基线。第 4 页图中 46.00 mm 标注位于两个相机头之间，不是已确认的光心距。",
+      "current_handling": "baseline_mm 为 null；不得用 143.6 mm 模组长度或 46.00 mm 图纸尺寸代填。",
+      "needed": "设定基线后用卷尺或卡尺测量两镜头光心距，锁死并记录；改变后重新标定。",
+      "impact": ["深度尺度", "标定有效性", "测距精度"],
+      "target_fields": ["stereo.baseline_mm", "stereo.baseline_locked"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U4",
+      "field": "stereo.device_topology / stereo.left_right_order",
+      "type": "unknown",
+      "status": "pending",
+      "problem": "尚未确认是单个 UVC 左右拼图还是两个独立 UVC 设备；左右目顺序也未确认。",
+      "current_handling": "device_topology 和 left_right_order 均为 null；只保留 hypothesis，不作为已验证事实。",
+      "needed": "probe 设备数量与画面布局；用有明显前后关系的场景确认左右顺序。",
+      "impact": ["采集适配方式", "视差符号", "深度正确性"],
+      "target_fields": ["stereo.device_topology", "stereo.left_right_order"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U5",
+      "field": "interface.class",
+      "type": "inferred",
+      "status": "pending",
+      "problem": "规格书没有单独列出 UVC class，只在 OS 支持中写 Linux with uvc。",
+      "current_handling": "class 写 UVC，并标记 inferred；不作为已验证事实。",
+      "needed": "接入后确认设备枚举信息。",
+      "impact": ["采集后端选择"],
+      "target_fields": ["interface.class", "interface.class_status"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U6",
+      "field": "output.default_controls",
+      "type": "unknown",
+      "status": "pending",
+      "problem": "规格书只写 AGC/AEC/白平衡为 Auto；是否能手动锁定未知。",
+      "current_handling": "记录默认 Auto；不假设可手动控制。",
+      "needed": "用 UVC 控制工具或厂商软件检查手动能力并记录实际值。",
+      "impact": ["可复现性", "左右亮度一致性", "SGBM 稳定性"],
+      "target_fields": ["output.default_controls"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U7",
+      "field": "mechanical.module_size_tolerance",
+      "type": "ambiguity",
+      "status": "pending",
+      "problem": "第 3 页将 ±0.5 mm 写在 16.5 mm 后；第 4 页只对 16.50 标 ±0.5，并注明未标注线性公差 ±0.1；不能确定 ±0.5 是否适用于长度和宽度。",
+      "current_handling": "分别记录 explicit_height_mm=0.5 与 unmarked_linear_mm=0.1；不把 0.5 套到所有轴。",
+      "needed": "如用于安装设计，向供应商确认或实测。",
+      "impact": ["机械安装公差"],
+      "target_fields": ["mechanical.module_size_tolerance"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    },
+    {
+      "id": "U8",
+      "field": "output.supported_modes.max_fps",
+      "type": "unknown",
+      "status": "pending",
+      "problem": "规格书给的是标称最大帧率；USB 带宽、曝光时间、主机和驱动可能使实际帧率更低。",
+      "current_handling": "max_fps 只作为标称上限；不作为实测帧率。",
+      "needed": "连续读取 300 帧统计成功率和实际帧率。",
+      "impact": ["采集帧率", "实时性", "曝光时间"],
+      "target_fields": ["output.supported_modes"],
+      "resolution": {
+        "value": null,
+        "evidence": null,
+        "recorded_at": null,
+        "note": null
+      }
+    }
+  ],
+  "pending_summary": {
+    "status": "pending",
+    "count": 8,
+    "ids": ["U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8"],
+    "update_policy": "确认后填写对应 uncertainties[].resolution.value、evidence、recorded_at，并按 target_fields 同步数据字段；原始值、来源和 current_handling 保留。",
+    "maintenance": "count 与 ids 必须与 uncertainties 的 id 集合一致；新增或关闭未决项时同步更新。"
+  },
+  "ai_usage": {
+    "read_order": [
+      "conventions",
+      "document",
+      "rig_id",
+      "model",
+      "sensor",
+      "lens",
+      "output",
+      "interface",
+      "mechanical",
+      "stereo",
+      "calibration",
+      "compliance",
+      "uncertainties",
+      "pending_summary",
+      "ai_usage"
+    ],
+    "hard_constraints": [
+      "stereo.baseline_mm 为 null 时不得计算米制深度或宣称测距精度。",
+      "calibration 未完成时不得把 calibration.nominal_focal_px 当作真实焦距；真实焦距来自标定结果。",
+      "uncertainties.U1.resolution.value 为 null 时不得把任一页原始值当作畸变系数。",
+      "output.supported_modes 是标称模式；实际采集前必须 probe 设备。",
+      "mechanical.module_size_mm 的 143.6 mm 是模组长度，不是光学基线。",
+      "第 4 页的 46.00 mm 是相机头之间的柔性段/头间距，不是两镜头光心距；不得当作 baseline_mm。"
+    ],
+    "capture_guidance": "高分辨率优先 MJPEG（FourCC 常用 MJPG）；YUY2 在高分辨率下标称帧率很低。单设备左右拼图时总宽度是单目宽度的两倍；拆分后左右尺寸必须一致。",
+    "unit_contract": "长度 mm；角度 degree；分辨率 [width_px, height_px]；运行时深度 m、视差 px。",
+    "error_handling": "读取层应校验 schema_version、单位、数组顺序与必需字段；遇到 null 或 uncertainties 中 status=pending 的项时，明确报错或要求实测，不得静默使用默认值。resolution 是预留编辑区，未填写前不得当作已确认数据。"
   }
 }
