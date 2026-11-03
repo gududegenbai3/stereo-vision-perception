@@ -1,0 +1,12 @@
+{
+  "image_root": "../MiddEval3-Q",
+  "split": "trainingQ",
+  "scene_name": "Adirondack",
+  "ground_truth_root": "../MiddEval3-GT0",
+  "output_root": "../outputs",
+  "sgbm": {
+    "min_disparity": 0,
+    "num_disparities": 128,
+    "block_size": 5
+  }
+}

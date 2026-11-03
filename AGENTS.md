@@ -4,7 +4,7 @@
 
 本 Agent 负责实现双目立体成像的 Python demo，依据项目文档完成图像采集、相机标定、极线校正、视差计算、深度与点云重建及结果评估。
 
-本指南适用于整个仓库。当前处于文档准备阶段，算法说明是实现规格，不代表已有可运行代码或已验证的硬件结果。
+本指南适用于整个仓库。当前 V0 已验证 Middlebury 单场景离线流程。真实设备采集、标定、校正和独立测距的状态以活动计划为准。
 
 ## 2. 项目结构
 
@@ -30,12 +30,14 @@
 │       ├── README.md          计划索引、状态与归档约定
 │       ├── active/            当前未完成的执行计划
 │       └── completed/         已验收并归档的执行计划
-├── src/                       已有实验 Notebook，Python 模块待实现
+├── notebook/environment.ipynb 分步实验与结果展示
+├── src/                       算法模块、流程编排及 CLI
 └── config/                    demo 运行所需配置文件
-    └── hardware.json          相机参数 JSON：规范单位、来源、原始值、冲突/未知项、pending 预留与 AI 使用约束
+    ├── hardware.json          相机参数、来源、冲突及未决项
+    └── offline.json           Middlebury 场景、数据路径与 SGBM 参数
 ```
 
-`doc/` 解释方案与事实，`src/` 实现算法，`config/` 保存运行参数。后续 demo 的相机、分辨率、棋盘格、匹配参数和输入输出路径等配置归入 `config/`。`config/hardware.json` 当前为 `schema_version: 2.1.0`，是相机参数的唯一机器可读来源；来源页、`null` 语义、`uncertainties` 与 `pending_summary` 均由该文件承载。未决项统一使用 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`，并列出 `target_fields` 供后续实测或供应商确认后回填；不在 Markdown 中重复维护完整参数表。
+`doc/` 解释方案与事实，`src/` 实现算法，`config/` 保存运行参数。`config/offline.json` 保存离线场景、SGBM 和产物路径。CLI 通过 `pipeline.py` 串联各阶段，Notebook 可直接调用各模块查看中间结果。 `config/hardware.json` 当前为 `schema_version: 2.1.0`，是相机参数的唯一机器可读来源；来源页、`null` 语义、`uncertainties` 与 `pending_summary` 均由该文件承载。未决项统一使用 `status: pending`，每项在 `resolution` 中预留 `value/evidence/recorded_at/note`，并列出 `target_fields` 供后续实测或供应商确认后回填；不在 Markdown 中重复维护完整参数表。
 
 ## 3. 技术栈
 
@@ -45,7 +47,7 @@
 - Python 标准库：处理路径、配置、记录与文件输出。
 - IDE：JupyterLab；ipykernel 提供 Python 内核，Matplotlib 用于 Notebook 图像与指标展示。
 
-Conda 依赖及版本范围记录在 `environment.yml`，环境名为 `SVP_env`；本地环境已通过依赖导入和 Adirondack 读图检查，JupyterLab 界面与内核启动待验证，具体解析版本未锁定。Notebook 负责实验与展示，可复用函数仍保存于 `src/`。安装、内核注册和启动命令见 README。
+Conda 依赖及版本范围记录在 `environment.yml`，环境名为 `SVP_env`；本地环境已通过依赖导入和 Adirondack 读图检查，离线 Notebook 已用 `SVP_env` 内核验证，具体解析版本未锁定。Notebook 负责实验与展示，可复用函数仍保存于 `src/`。安装、内核注册和启动命令见 README。
 
 ## 4. 问题导航与快捷命令
 
@@ -78,7 +80,25 @@ rg -n '"schema_version"|"uncertainties"|"pending_summary"|"ai_usage"' config/har
 git status --short                          # 查看当前工作区变更
 ```
 
-当前没有 demo 运行命令；实现入口及配置文件后，在这里登记真实可用的命令与对应用途。
+激活 `SVP_env` 后，从仓库根目录运行以下 CLI 命令。
+
+```sh
+python -m src.cli                              # 默认读取 config/offline.json 并按配置导出
+python -m src.cli --help                       # 查看参数
+python -m src.cli --config config/offline.json  # 显式指定配置
+python -m src.cli --no-export                  # 仅运行计算与评估
+python -m src.cli --preview --no-export        # 在桌面查看视差和深度
+```
+
+可用 `--split trainingQ|testQ` 和 `--scene 场景名` 选择图像对。例如：
+
+```sh
+python -m src.cli --split testQ --scene Australia --no-export
+```
+
+数据位于其他位置时，使用 `--image-root 路径` 和 `--ground-truth-root 路径` 覆盖配置中的根目录。训练场景需使用与图像匹配的真值目录。CLI 路径相对于当前工作目录，JSON 内的相对路径仍以配置文件所在目录为准。当前读取器支持 Middlebury Q 版目录结构。
+
+成功时输出场景、指标和产物目录的 JSON。预览需要交互式 Matplotlib 后端。参数和退出码见 [CLI 指令](ARCHITECTURE.md#cli-指令)。
 
 ## 5. 严格规则（仅用户可添加）
 
