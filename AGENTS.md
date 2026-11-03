@@ -11,9 +11,13 @@
 ```text
 项目根目录/
 ├── AGENTS.md                  Agent 职责、项目导航与用户指定的严格规则
+├── ARCHITECTURE.md            Python 模块职责、命名与依赖约定
 ├── .gitignore                 Git 忽略规则：本地环境、缓存、私有配置与运行产物
 ├── shortcuts.md               自然语言请求对应的 Git / GitHub 协作操作
 ├── README.md                  项目简介与使用入口
+├── environment.yml            Conda 依赖声明与 JupyterLab 环境
+├── MiddEval3-Q/               本地 Middlebury 双目图与标定
+├── MiddEval3-GT0/             本地 Middlebury 左视差真值与遮挡掩码
 ├── doc/                       论文、算法、硬件与项目进度信息
 │   ├── literature/            论文全文及相关资料，仅在用户明确要求时读取
 │   ├── chat                   组内谈话记录，仅在用户明确要求时读取
@@ -26,7 +30,7 @@
 │       ├── README.md          计划索引、状态与归档约定
 │       ├── active/            当前未完成的执行计划
 │       └── completed/         已验收并归档的执行计划
-├── src/                       Python demo 及其实现模块（待建立）
+├── src/                       已有实验 Notebook，Python 模块待实现
 └── config/                    demo 运行所需配置文件
     └── hardware.json          独立的机器可读硬件参数与已知状态
 ```
@@ -39,8 +43,9 @@
 - OpenCV：负责图像采集、相机标定、极线校正、SGBM 视差计算及三维重投影，Python 导入名为 `cv2`。
 - NumPy：按现有算法规格处理图像数组、视差、深度与标定参数。
 - Python 标准库：处理路径、配置、记录与文件输出。
+- IDE：JupyterLab；ipykernel 提供 Python 内核，Matplotlib 用于 Notebook 图像与指标展示。
 
-OpenCV、NumPy 的具体版本尚未锁定；依赖清单与运行入口在实现 demo 时补充。
+Conda 依赖及版本范围记录在 `environment.yml`，环境名为 `SVP_env`；本地环境已通过依赖导入和 Adirondack 读图检查，JupyterLab 界面与内核启动待验证，具体解析版本未锁定。Notebook 负责实验与展示，可复用函数仍保存于 `src/`。安装、内核注册和启动命令见 README。
 
 ## 4. 问题导航与快捷命令
 
@@ -48,12 +53,15 @@ OpenCV、NumPy 的具体版本尚未锁定；依赖清单与运行入口在实�
 
 - 用户要求同步、拉取、提交、推送、建分支、创建 PR 或合并：先阅读 `shortcuts.md`，按对应流程使用 Git CLI 与 GitHub 插件。
 - 需要了解整体目标和使用入口：查看根目录 `README.md`。
+- 需要离线验证样例：从 `MiddEval3-Q/trainingQ/<场景>/` 读取左右图与标定，从 `MiddEval3-GT0/trainingQ/<场景>/` 读取同名场景的左视差真值与掩码。下载方式与测试集路径见 [README](README.md#离线验证数据)。
 - 不清楚算法步骤、接口、数据格式或评估方法：查看 `doc/algorithm/algorithm.md`。
 - 需要读取硬件配置字段：查看 `config/hardware.json`；摄像头连接、字段解释、实测流程与风险查看 `doc/hardware/hardware.md`，原始图片位于 `doc/hardware/assets/`。
 - 仅在用户明确要求查阅论文时，读取 `doc/literature/` 中与指令相关的资料；日常开发优先使用算法说明、配置和执行计划。
 - `doc/` 中的 `chat` 文件用于保存组内谈话，仅在用户明确要求时读取相关内容。
 - 需要了解执行计划和进展：先查看 `doc/exe_plans/README.md`，再阅读 `active/` 中的活动计划；当前 V0 入口为 `doc/exe_plans/active/V0_stereo_pipeline.md`，历史已完成计划在 `completed/`。
-- 需要定位 demo 的实现：查看 `src/`（尚待建立）；需要调整其运行参数：查看 `config/`。
+- 需要定位 demo 的实现：查看 `src/`，模块规划见 [ARCHITECTURE.md](ARCHITECTURE.md)；需要调整其运行参数：查看 `config/`。
+
+Python 模块的命名、职责和导入方向见 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
 ### 常用命令
 
