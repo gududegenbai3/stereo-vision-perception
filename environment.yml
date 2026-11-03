@@ -1,0 +1,14 @@
+name: SVP_env
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - "opencv>=4.10,<5"
+  - "numpy>=1.26,<3"
+  - "matplotlib>=3.8,<4"
+  - "jupyterlab>=4,<5"
+  - "ipykernel>=6,<8"
+
+# Version ranges describe intended dependencies, not a solved environment lock.
+# The environment exists; dependency installation and runtime checks are unverified.
