@@ -4,7 +4,7 @@
 
 本 Agent 负责实现双目立体成像的 Python demo，依据项目文档完成图像采集、相机标定、极线校正、视差计算、深度与点云重建及结果评估。
 
-本指南适用于整个仓库。当前处于文档准备阶段，算法说明是实现规格，不代表已有可运行代码或已验证的硬件结果。
+本指南适用于整个仓库。当前已具备 Middlebury 已校正图像的离线最简链路；算法说明仍是完整流程规格，真实设备与测距精度尚未验证。
 
 ## 2. 项目结构
 
@@ -30,7 +30,7 @@
 │       ├── README.md          计划索引、状态与归档约定
 │       ├── active/            当前未完成的执行计划
 │       └── completed/         已验收并归档的执行计划
-├── src/                       已有实验 Notebook，Python 模块待实现
+├── src/                       实验 Notebook 与 stereo_vision 离线 Python 包
 └── config/                    demo 运行所需配置文件
     └── hardware.json          相机参数 JSON：规范单位、来源、原始值、冲突/未知项、pending 预留与 AI 使用约束
 ```
@@ -78,7 +78,7 @@ rg -n '"schema_version"|"uncertainties"|"pending_summary"|"ai_usage"' config/har
 git status --short                          # 查看当前工作区变更
 ```
 
-当前没有 demo 运行命令；实现入口及配置文件后，在这里登记真实可用的命令与对应用途。
+离线 demo 在仓库根目录执行 `python run_experiment.py --scene Adirondack`；输出在 `artifacts/middlebury/trainingQ/Adirondack/`。运行所需的完整依赖见 `environment.yml`。
 
 ## 5. 严格规则（仅用户可添加）
 

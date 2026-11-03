@@ -1,0 +1,16 @@
+{
+  "data_root": "..",
+  "output_root": "../artifacts/middlebury",
+  "scene": "Adirondack",
+  "split": "trainingQ",
+  "threads": 1,
+  "sgbm": {
+    "block_size": 5,
+    "p1_scale": 8,
+    "p2_scale": 32,
+    "uniqueness_ratio": 0,
+    "speckle_window_size": 0,
+    "speckle_range": 0,
+    "disp12_max_diff": -1
+  }
+}

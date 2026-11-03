@@ -1,6 +1,6 @@
 # V0 双目立体成像执行计划
 
-版本：V0；建立及最近核对日期：2026-10-22；计划状态：活动中，准备阶段。
+版本：V0；最近核对日期：2026-11-03；计划状态：活动中，离线最简链路已跑通。
 
 依据：[算法规格](../../algorithm/algorithm.md)、[硬件说明](../../hardware/hardware.md)、[硬件配置](../../../config/hardware.json)。
 
@@ -13,12 +13,12 @@
 ## 2. 当前进展判断
 
 - 已有：项目协作规则、Git 操作指南、算法实现规格、硬件说明、独立硬件 JSON 和论文资料；本次建立执行计划目录。
-- 软件状态：已有 `environment.yml` 声明 Python 3.11、OpenCV、NumPy 与 JupyterLab 相关依赖，`SVP_env` 环境已建立并由 Conda 环境列表确认；本地依赖导入及 Adirondack 文件解码已通过，JupyterLab 界面与内核启动仍待验证，`src/` 已建立并含实验 Notebook，Python 模块、可运行 demo 和算法验证结果待完成。
+- 软件状态：已有 `environment.yml` 和 `src/stereo_vision/` 包；离线 Adirondack 训练场景已完成读图、SGBM、深度换算与非遮挡区域视差评价。JupyterLab 内核、真实相机标定、校正及独立测距仍待验证。
 - 离线数据：本地 Middlebury Stereo v3 Q 版已就绪。15 个训练场景均有同名左视差真值和掩码，另有 15 个测试场景，路径见 [README](../../../README.md#离线验证数据)。
 - 硬件状态：仓库配置仍为基线未知、未锁定、左右布局未知、未标定；尚无设备探测、采集或测距实测记录。这表示未有证据验证，并不推断设备是否已接在主机上。
-- 总体判断：文档与接口准备阶段；硬件实测、离线算法实现和真实数据验收均未完成。
+- 总体判断：离线已校正数据的最简链路已跑通；硬件实测、完整算法流程和真实数据验收均未完成。
 - 当前阻碍：真实设备验证需要设备与实测操作，真实精度评价需要独立距离参考；这些不阻止软件环境、接口和离线流程开发。
-- 下一步：硬件路线从 H1 开始，软件路线从 A0 开始，双方先对齐第 4 节的数据契约；A0 读取 `config/hardware.json` 时应先落实 `conventions` 与 `ai_usage.hard_constraints`，遇到 `null` 或 `status: pending` 项明确报错。
+- 下一步：硬件路线从 H1 开始，软件路线先在目标环境验收现有离线入口，再推进 A1/A2；双方继续按第 4 节数据契约交付；A0 读取 `config/hardware.json` 时应先落实 `conventions` 与 `ai_usage.hard_constraints`，遇到 `null` 或 `status: pending` 项明确报错。
 
 以上为仓库证据快照，后续工作需要重新核对，不作为永久状态。
 
@@ -120,7 +120,7 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 
 ### A3：视差、深度、有效掩码与点云
 
-状态：待开始；依赖：A0、A2 或已说明约定的校正样例与匹配参数。
+状态：进行中（Middlebury 离线视差、深度、掩码与彩色点云已实现，真实数据仍待验证）；依赖：A0、A2 或已说明约定的校正样例与匹配参数。
 
 工作：使用 OpenCV SGBM，校验搜索范围、块大小及惩罚参数；定点视差除以 16 后重投影；结合几何搜索有效 ROI、合法视差、有限三维坐标与正深度构建掩码。导出数值数组、预览和 RGB 彩色 PLY。
 
@@ -128,7 +128,7 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 
 ### A4：评估与复现记录
 
-状态：待开始；依赖：A1–A3 的输出及对应评价输入。
+状态：进行中（已实现数据集视差评价和单样本运行记录，独立测距、标定评价及重复计时仍待完成）；依赖：A1–A3 的输出及对应评价输入。
 
 工作：输出左右重投影 RMSE、独立校正垂直残差、距离 MAE/RMSE/相对误差、固定 ROI 覆盖率、重复性和分阶段耗时。记录总样本数、成功/失败数及计时范围；参考距离和 ROI 从配置/数据记录传入。
 
@@ -162,6 +162,12 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 
 ## 9. 进展记录
 
+- 2026-11-03：按用户要求准备将离线基线提交并上传 `codex/opencv-minimal-v0`；本次提交命名为 `V0_yingdalei_2`（此前的 `_1` 已使用）。上传范围为源码、配置、Notebook、回归检查及同步文档；数据集、缓存和运行产物没有新增到本次提交。验证沿用已完成的 7 项检查、Adirondack/Australia 运行和点云一致性检查；目标 Python 3.11/OpenCV 4.x、Notebook 内核与真实设备仍待验证，A0/A3/A4 保持进行中。
+
+- 2026-11-03：按用户要求以仓库 Adirondack 数据重新运行 `python run_experiment.py --scene Adirondack --out artifacts/dataset_preview/Adirondack`，生成左右原图、真值/预测视差、非遮挡评价误差和深度的六图对照 `comparison.png`。EPE 1.147992 px、P95 2.648650 px、bad2 5.7671%、评价覆盖率 97.8322%；单次匹配/重投影合计约 56.21 ms（不含读写与显示）。可见物体边界附近仍有错误，左侧搜索域外及无效点显示为黑色；未将单场景结果解释为真实设备测距精度，A0/A3/A4 状态不变。
+
+- 2026-11-03：按新架构将最简 SGBM 演示整理为 `src/stereo_vision/` 包与 `run_experiment.py` 入口；读取 Middlebury Adirondack 图像、标定、PFM 真值和非遮挡掩码，并按 `fx × baseline / (disparity + doffs)` 输出米单位深度。本机 Python 3.13、OpenCV 5.0.0、NumPy 2.5.1 运行 `python run_experiment.py --out artifacts/middlebury/Adirondack`，当时得到 EPE 1.644 px、bad2 0.084、覆盖率 0.851；后续核对发现这版包含掩码值 128 的遮挡像素，且覆盖率未限制固定搜索域，见下方修正记录。该结果仅是数据集离线基线；项目目标 Python 3.11 环境、本机 JupyterLab 内核和真实设备均未在本次验证。下一步完善几何有效 ROI、点云和真实标定流程。
+
 - 2026-11-03：用户已建立 `SVP_env`，通过 Conda 环境列表确认存在；将环境名称及 README、Agent 指南中的命令同步为 `SVP_env`。本次仅更新配置和说明，未安装或更新依赖、未注册内核，依赖完整性和运行结果仍待验证；A0 保持进行中。
 - 2026-11-03：按用户要求建立 `environment.yml`，选用 Python 3.11、OpenCV、NumPy、Matplotlib、JupyterLab 和 ipykernel；同步安装、内核注册与启动说明。仅声明依赖并检查 YAML，未执行安装、依赖求解或运行测试；A0 进入进行中，仍待用户安装后验收。
 - 2026-10-20：建立 V0 活动计划与归档目录；核对算法规格、硬件 JSON 和现有仓库结构。结论：尚无算法实现与设备验证证据；Python 3.11 环境待建立。下一步并行推进 H1 与 A0。本次未执行采集、算法实现或精度测试。
@@ -181,3 +187,6 @@ H3 与软件路线通过共享格式对接；硬件不阻塞算法开发，但 I
 - 2026-11-03：核对本地 Middlebury 图像与标定目录 `MiddEval3-Q/` 及真值目录 `MiddEval3-GT0/`，确认训练与测试各 15 个场景的输入文件齐备，训练场景均有配套真值和掩码。用 `SVP_env` 的 Python 3.11.11 导入 OpenCV 4.10.0、NumPy、Matplotlib、JupyterLab 和 ipykernel；用 `cv2.imread(..., cv2.IMREAD_UNCHANGED)` 成功解码 Adirondack 左右图、左视差真值和掩码，空间尺寸均与标定的 718×496 一致。A0 仍进行中，A3 仍待开始。本次未启动 JupyterLab 界面或内核、未运行 SGBM 或硬件实验。下一步验证 Notebook 内核并完成离线读取入口。
 
 - 2026-11-03：确认 `src/` 已建立且当前只有实验 Notebook，新增架构说明并同步 README 与 Agent 指南。检查文档链接、依赖图方向与差异格式。A0 保持进行中；本次未新增 Python 模块或执行算法测试。下一步实现 Adirondack 离线读取及配套校验。
+
+- 2026-11-03：按规划重新整理离线实现：新增严格 JSON 配置及带元素类型的共享数据/结果类，Middlebury 适配层保留双目内参、主点偏移和毫米基线的几何关系并生成米制 Q；匹配层使用 `getValidDisparityROI`，重投影使用 `reprojectImageTo3D`，输出补齐 XYZ、搜索域、RGB PLY、参数/环境/阶段计时与逐样本记录。修正非遮挡掩码为 `==255`，旧版 `>0` 包含遮挡值 128，旧指标不再作为非遮挡基线。Adirondack 的固定搜索域内非遮挡参考像素 295457、有效预测 289052，EPE 1.147992 px、P95 2.648650 px、bad2 0.057671、覆盖率 0.978322。此为本地 Q 分辨率诊断，不是官方全分辨率榜单结果。
+- 本次验证：`python -m unittest discover -s tests -v` 的 7 项检查通过（米制 Q/doffs、无效值、遮挡与缺预测口径、PFM 字节序/行序、RGB PLY、真值不影响重建、缺文件/尺寸错误）；Adirondack 与 Australia 离线运行成功，缺失场景明确报错并生成 failure.json。环境仍为 Python 3.13 / OpenCV 5.0.0 / NumPy 2.5.1，尚未在目标 Python 3.11 / OpenCV 4.x 环境及 Jupyter 内核验证。Notebook 已提供共享接口调用与展示；下一步在目标环境验收，再推进真实标定和独立距离评价。A0/A3/A4 均保持进行中。

@@ -1,10 +1,10 @@
 # V0 Python 代码架构
 
-`src/` 已建立，当前有实验 Notebook，Python 模块待实现。下文定义计划中的模块和依赖方向。算法、数据单位与验收指标以 [算法规格](doc/algorithm/algorithm.md) 为准，开发顺序见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
+`src/` 已建立，包含实验 Notebook 和 `stereo_vision` 包。离线 Middlebury 最简链路已实现，其余模块仍按下文职责逐步落地。算法、数据单位与验收指标以 [算法规格](doc/algorithm/algorithm.md) 为准，开发顺序见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
 
 ## 模块职责
 
-计划使用 `src/stereo_vision/` 作为 Python 包。Notebook 负责选择场景、调用函数与展示结果，CLI 和 Notebook 共用包内接口。
+使用 `src/stereo_vision/` 作为 Python 包。Notebook 负责选择场景、调用函数与展示结果，CLI 和 Notebook 共用包内接口。
 
 | 模块 | 职责 |
 |---|---|
@@ -60,3 +60,14 @@ flowchart TD
 - 缺失文件抛出 `FileNotFoundError`，非法形状、配置或数据格式抛出 `ValueError`。错误信息应能定位路径、场景或参数。批量实验在入口记录失败，保留样本身份。
 
 第一批实现从读取 `Adirondack` 开始，验证左右图、标定、真值和掩码的形状配套，以及缺文件和尺寸不符时的报错。
+
+## 当前已实现范围
+
+离线入口为 `run_experiment.py` 和 `src/offline_middlebury.ipynb`。两者使用同一个配置读取器、Middlebury 适配器及 `reconstruct_scene`，输入与实验参数来自 `config/middlebury.json`。配置相对路径按配置文件所在目录解析。
+
+- `models.py` 定义 `RunConfig`、`SgbmConfig`、`RectifiedPair`、`RectifiedGeometry`、`GroundTruth`、`StereoScene` 及各阶段结果类型，数组以 `NDArray` 明确元素类型。
+- `datasets.py` 负责 PFM、掩码、图像与标定的格式约定，将毫米基线及主点偏移转换为以米为单位的 Q。原始数据集字段不泄漏到匹配和重投影模块。
+- `disparity.py` 返回像素视差、匹配有效掩码及固定搜索域；`reprojection.py` 使用 Q 返回深度、三维坐标与重建掩码。
+- `pipeline.py` 组合匹配、重投影和可选的真值评价，返回 `PipelineResult`；真值只传给评价函数。输出模块接收结果保存数值、伪彩预览、彩色 PLY、指标与逐样本记录。
+
+采集、真实双目标定和原始图像校正模块随 A1/A2 与硬件路线实现。当前公开入口只接收 `RectifiedPair`；实现原始图像流程时再增加对应类型和校正入口。Notebook 保留参数选择、函数调用和 Matplotlib 展示。具体数据口径与已验证范围见 [离线实现说明](doc/algorithm/offline_middlebury.md)。

@@ -4,7 +4,16 @@
 
 ## 当前状态
 
-当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则、执行计划及 Conda 依赖声明；`SVP_env` 环境已建立，已通过依赖导入和 Adirondack 读图检查，`src/` 已建立，Python 模块与可运行 demo 待实现，真实设备和算法精度尚无验证结论。
+当前版本为 **V0**。已有 Conda 环境声明、Middlebury 样例与离线 OpenCV SGBM 最简实现。Adirondack 训练场景已跑通视差、深度及非遮挡区域的视差评价；真实设备采集、标定、校正和独立测距仍待完成。
+
+在仓库根目录运行：
+
+```sh
+conda activate SVP_env
+python run_experiment.py --scene Adirondack
+```
+
+默认输出到 `artifacts/middlebury/trainingQ/Adirondack/`：`disparity_px.npy`、`depth_m.npy`、`xyz_m.npy`、有效掩码、伪彩 PNG、RGB `cloud.ply` 及 JSON/CSV 运行记录。输入是 Middlebury 已校正图像；深度使用场景 `calib.txt` 中的焦距、`doffs` 与毫米基线，不使用本项目尚未测得的相机参数。测试场景可用 `--split testQ --scene <名称> --out <目录>`，该划分没有公开真值，记录中将评价状态标为未评估。参数来自 `config/middlebury.json`；Notebook 入口为 `src/offline_middlebury.ipynb`，详细接口和指标口径见 [离线实现说明](doc/algorithm/offline_middlebury.md)。
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
@@ -30,7 +39,8 @@
 │       └── completed/          已验收归档的计划
 ├── config/
 │   └── hardware.json           机器可读硬件参数与已知状态
-└── src/                        已有实验 Notebook，Python 模块待实现
+├── run_experiment.py            离线命令行入口
+└── src/                        实验 Notebook 与 stereo_vision Python 包
 ```
 
 `doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.1）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的 `pending` 状态、`target_fields` 与 `resolution` 预留字段，`pending_summary` 汇总未决项，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
@@ -75,7 +85,7 @@ python -c "import cv2, numpy, matplotlib, jupyterlab, ipykernel; print(cv2.__ver
 python -m json.tool config/hardware.json
 ```
 
-后续按依赖清单补装或更新现有环境使用 `conda env update -n SVP_env -f environment.yml`，由使用者自行执行。Notebook 用于实验与展示，可复用函数仍放入 `src/`，参数从 `config/` 读取。Notebook 中优先使用 Matplotlib 显示图像，OpenCV 的 BGR 彩色图显示前转换成 RGB。目前仍无算法 demo 运行命令。
+后续按依赖清单补装或更新现有环境使用 `conda env update -n SVP_env -f environment.yml`，由使用者自行执行。Notebook 用于实验与展示，可复用函数仍放入 `src/`，参数从 `config/` 或数据集标定读取。Notebook 中优先使用 Matplotlib 显示图像，OpenCV 的 BGR 彩色图显示前转换成 RGB。离线入口命令见上文。
 
 配置读取与校验由调用层负责，核心算法接收明确类型的输入并返回结构化结果。后续 function calling 的工具声明、参数 schema 与实现适配层分别维护，硬件 JSON 作为配置数据使用。
 
