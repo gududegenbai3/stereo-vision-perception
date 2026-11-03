@@ -4,7 +4,7 @@
 
 ## 当前状态
 
-当前版本为 **V0**，处于文档与接口准备阶段。已有算法规格、独立硬件配置、协作规则、执行计划及 Conda 依赖声明；`SVP_env` 环境已建立，已通过依赖导入和 Adirondack 读图检查，`src/` 已建立，Python 模块与可运行 demo 待实现，真实设备和算法精度尚无验证结论。
+当前版本为 **V0**。已在本地 `SVP_env` 验证 Middlebury 单场景离线流程，包括读图、SGBM、米制重投影、视差评估与产物导出。CLI 提供一键运行，Notebook 用于逐步检查中间结果。真实设备采集、标定、校正及独立测距仍待联调，具体状态见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
@@ -29,8 +29,10 @@
 │       ├── active/             未完成计划及当前进展
 │       └── completed/          已验收归档的计划
 ├── config/
-│   └── hardware.json           机器可读硬件参数与已知状态
-└── src/                        已有实验 Notebook，Python 模块待实现
+│   ├── hardware.json           机器可读硬件参数与已知状态
+│   └── offline.json            Middlebury 场景、数据路径与 SGBM 参数
+├── notebook/environment.ipynb  分步运行和结果展示
+└── src/                        数据模型、算法模块、流程编排及 CLI
 ```
 
 `doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.1）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的 `pending` 状态、`target_fields` 与 `resolution` 预留字段，`pending_summary` 汇总未决项，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
@@ -53,7 +55,7 @@
 - 标准库：配置解析、路径、CSV/JSON 记录与 PLY 输出。
 - 开发环境：JupyterLab，使用 ipykernel 执行 Python，Matplotlib 显示图像、深度预览与指标。
 
-依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11、OpenCV 4.10.0 和清单中的其他 Python 包可导入；JupyterLab 界面与内核启动待验证。新机器首次创建环境时，在仓库根目录执行：
+依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11、OpenCV 4.10.0 和清单中的其他 Python 包可导入；离线 Notebook 已用 `SVP_env` 内核验证。新机器首次创建环境时，在仓库根目录执行：
 
 ```sh
 conda env create -f environment.yml
@@ -75,7 +77,7 @@ python -c "import cv2, numpy, matplotlib, jupyterlab, ipykernel; print(cv2.__ver
 python -m json.tool config/hardware.json
 ```
 
-后续按依赖清单补装或更新现有环境使用 `conda env update -n SVP_env -f environment.yml`，由使用者自行执行。Notebook 用于实验与展示，可复用函数仍放入 `src/`，参数从 `config/` 读取。Notebook 中优先使用 Matplotlib 显示图像，OpenCV 的 BGR 彩色图显示前转换成 RGB。目前仍无算法 demo 运行命令。
+后续按依赖清单补装或更新现有环境使用 `conda env update -n SVP_env -f environment.yml`，由使用者自行执行。Notebook 用于实验与展示，可复用函数仍放入 `src/`，参数从 `config/` 读取。Notebook 中优先使用 Matplotlib 显示图像，OpenCV 的 BGR 彩色图显示前转换成 RGB。
 
 配置读取与校验由调用层负责，核心算法接收明确类型的输入并返回结构化结果。后续 function calling 的工具声明、参数 schema 与实现适配层分别维护，硬件 JSON 作为配置数据使用。
 
@@ -92,6 +94,57 @@ python -m json.tool config/hardware.json
 首轮可用两个 `trainingQ` 目录中的 `Adirondack`。按同名场景配对，沿用图像自带的校正几何；深度换算使用配套 `calib.txt` 的主点偏移 `doffs` 与毫米基线 `baseline`。本地数据需单独获取。
 
 Python 模块的命名、职责和导入方向见 [ARCHITECTURE.md](ARCHITECTURE.md)。
+
+在 JupyterLab 打开 [environment.ipynb](notebook/environment.ipynb)，选择 `Python 3.11 (SVP_env)` 并从头运行。Notebook 会从仓库根目录或 `notebook/` 定位项目，直接调用 `src` 的 SGBM 和重投影实现，显示预测视差、匹配有效率和米制深度图。有真值时，还会显示真值对照、非遮挡真值覆盖率，以及在预测与真值有效交集上的视差 MAE 和 RMSE。无真值的测试场景仍显示全图与搜索 ROI 的有效匹配率。也可以在仓库根目录使用 `SVP_env` 调用单场景离线流程。
+
+```python
+from pathlib import Path
+
+from src.config import OfflineConfig, load_offline_config
+from src.pipeline import OfflineRunResult, run_offline_pipeline
+
+settings: OfflineConfig = load_offline_config(Path("config/offline.json"))
+run: OfflineRunResult = run_offline_pipeline(settings)
+print(run.metrics)
+print(run.output_dir)
+```
+
+Notebook 的最后一个单元格按 `output_root` 导出结果。默认每次运行写入新的 `outputs/<划分>/<场景>/run-*/`，并打印完整路径。将 `output_root` 设为 `null` 可跳过导出。
+
+| 文件 | 内容 |
+|---|---|
+| `disparity.npy`、`depth.npy`、`valid_mask.npy` | 原分辨率像素视差、米制深度、布尔重建掩码 |
+| `valid_mask.png`、`disparity_preview.png`、`depth_preview.png` | 0/255 掩码及按各图有效值范围着色的预览 |
+| `point_cloud.ply` | 有效点的米制 XYZ 和左校正图 RGB |
+| `metrics.json`、`samples.csv` | 本次场景指标与单样本记录，JSON 另附搜索 ROI、参数和版本 |
+
+修改 `src/` 中的模块后，在 Notebook 中重启内核并运行全部单元格，使配置、数据和算法对象都使用同一版本的代码。
+
+场景、数据与产物路径、SGBM 起始参数维护在 [offline.json](config/offline.json)。配置中的相对数据路径以配置文件所在目录为准。
+
+`scene.geometry` 提供米制重投影矩阵和图像尺寸。`scene.ground_truth` 提供像素视差、全部真值有效掩码与非遮挡掩码，读取 `testQ` 时为 `None`。路径由调用方传入。文件缺失报 `FileNotFoundError`，场景名、格式或尺寸有误报 `ValueError`。
+
+## 离线命令行入口
+
+在仓库根目录激活 `SVP_env`，按需选择命令。
+
+| 命令 | 用途 |
+|---|---|
+| `python -m src.cli` | 读取 `config/offline.json`，运行离线重建和评估，按配置导出 |
+| `python -m src.cli --help` | 查看可用参数 |
+| `python -m src.cli --config config/offline.json` | 显式指定配置文件，可替换为其他 JSON 路径 |
+| `python -m src.cli --no-export` | 计算重建和评估，跳过写文件 |
+| `python -m src.cli --preview --no-export` | 在桌面窗口查看视差和米制深度，跳过写文件 |
+
+可用 `--split trainingQ|testQ` 和 `--scene 场景名` 选择图像对。例如：
+
+```sh
+python -m src.cli --split testQ --scene Australia --no-export
+```
+
+数据位于其他位置时，使用 `--image-root 路径` 和 `--ground-truth-root 路径` 覆盖配置中的根目录。训练场景需使用与图像匹配的真值目录。CLI 路径相对于当前工作目录，JSON 内的相对路径仍以配置文件所在目录为准。当前读取器支持 Middlebury Q 版目录结构。
+
+CLI 打印场景、指标与导出目录的 JSON，跳过导出时 `output_dir` 为 `null`。预览需要交互式 Matplotlib 后端。已验证图像与色条生成及无交互后端的报错，桌面弹窗待实测。退出码与模块职责见 [CLI 指令](ARCHITECTURE.md#cli-指令)。
 
 ## 协作方式
 

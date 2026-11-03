@@ -2,7 +2,7 @@
 
 - `active/`：尚未完成的计划，包括进行中、待启动及局部受阻的任务。
 - `completed/`：通过计划完成条件、保留验收证据后归档的计划。
-- 当前 V0 计划：[V0_stereo_pipeline.md](active/V0_stereo_pipeline.md)。
+- 当前 V0 计划：[V0_stereo_pipeline.md](active/V0_stereo_pipeline.md)。Middlebury 单场景离线流程已验证，真实相机流程和精度验收仍在活动计划中。
 
 每份计划维护任务状态、依赖、验收依据、当前阻碍和下一步。项目进展以当前活动计划的状态摘要为入口，不另维护重复的 `progress.md`。
 
