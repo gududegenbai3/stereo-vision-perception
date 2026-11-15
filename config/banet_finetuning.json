@@ -1,0 +1,37 @@
+{
+  "model_config": "banet.json",
+  "data_root": "../artifacts/banet/data/eth3d",
+  "output_root": "../artifacts/banet/finetuning/eth3d-v1",
+  "dataset": "ETH3D low-res two-view official training set",
+  "dataset_url": "https://www.eth3d.net/datasets",
+  "license": "CC BY-NC-SA 4.0",
+  "archives": [
+    {"filename": "two_view_training.7z", "url": "https://www.eth3d.net/data/two_view_training.7z", "sha256": "cb7683a01ba037759f30b5a4f561d302453e20f1f7095cbdc51c8564b218224b"},
+    {"filename": "two_view_training_gt.7z", "url": "https://www.eth3d.net/data/two_view_training_gt.7z", "sha256": "e440f7ec4444dfd2af33a44495f325a3aed06762432e2419277596ba7dcb9b40"}
+  ],
+  "split_groups": {
+    "train": ["delivery_area", "electro", "forest"],
+    "validation": ["terrains"],
+    "test": ["facade", "playground", "terrace"]
+  },
+  "expected_split_counts": {"train": 14, "validation": 4, "test": 9},
+  "seed": 20261115,
+  "crop_hw": [256, 512],
+  "batch_size": 4,
+  "steps": 1000,
+  "validation_interval": 100,
+  "log_interval": 25,
+  "max_learning_rate": 0.00002,
+  "weight_decay": 0.00001,
+  "one_cycle_pct_start": 0.1,
+  "auxiliary_loss_weight": 0.3,
+  "gradient_clip_norm": 1.0,
+  "freeze_batch_norm_statistics": true,
+  "brightness_range": [0.8, 1.2],
+  "gamma_range": [0.9, 1.1],
+  "max_disparity": 192,
+  "precision": "float32",
+  "selection_metric": "validation_pixel_pooled_mae_px",
+  "training_mask": "finite GT, mask>0, 0<d<192, right correspondence inside shared crop",
+  "evaluation_mask": "finite non-occluded GT (mask=255), 0<d<192; fixed GT domain, raw predictions without correctness filtering"
+}

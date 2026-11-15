@@ -3,6 +3,14 @@
 - `active/`：尚未完成的计划，包括进行中、待启动及局部受阻的任务。
 - `completed/`：通过计划完成条件、保留验收证据后归档的计划。
 - 当前 V0 计划：[V0_stereo_pipeline.md](active/V0_stereo_pipeline.md)。Middlebury 单场景离线流程已验证，真实相机流程和精度验收仍在活动计划中。
+- 研究审阅：[成果、证据与复现边界](../algorithm/research_review.md)。汇总独立研究入口、负结果、六张随机实图及本轮整理验证。
+- 置信度研究：[置信度与低置信视差重估计](active/confidence_extension.md)。4开发/11评价场景，改善未达预设门槛，保留原默认；待研究复核。
+- 已完成诊断：[V0 SGBM误差诊断](completed/error_diagnosis.md)。15场景结果与分层统计已核验；未修改匹配器，精度修复尚未实施。
+- 传统机制对照：[SGM机制补充与比较](active/sgm_comparison.md)。对照已实现并完成15场景实验；OpenCV筛选存在覆盖率代价，当前自适应P2方案未改善，保留原默认。
+- 深度学习试跑：[BANet-2D预训练推理](completed/banet_inference.md)。5060完成15场景推理和独立数值核验；部分场景改善、整体误差更高，保留默认SGBM，未训练。
+- 监督微调：[BANet微调与5060训练实测](completed/banet_finetuning.md)。14/4/9对场景分组，完成1000步本地训练；固定末步测试改善但验证退步，主选择保留预训练，原SGBM不改。
+- 扩大对照：[微调BANet与SGBM及泄漏审计](completed/banet_sgbm_comparison.md)。48对、含24对新mobile外部图，6个预抽随机场景；本次训练混入审计通过，新集泛化失败，不替换SGBM。
+- 失误机制研究：[BANet边界与粗匹配诊断](completed/banet_failure_mechanisms.md)。约80%大错远离GT边界，粗视差阶段已形成错误；优先验证几何+迭代候选，尚无参数不足的受控证据，替代模型未接入。
 
 每份计划维护任务状态、依赖、验收依据、当前阻碍和下一步。项目进展以当前活动计划的状态摘要为入口，不另维护重复的 `progress.md`。
 

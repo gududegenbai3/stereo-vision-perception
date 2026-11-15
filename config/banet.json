@@ -1,0 +1,19 @@
+{
+  "baseline_config": "offline.json",
+  "diagnosis_config": "error_diagnosis.json",
+  "source_root": "../artifacts/banet/upstream/banet-2d/core",
+  "upstream_commit": "7cb83f7cca99a249e1fcec8ff556e4ac73facd70",
+  "runtime_root": "../artifacts/banet/runtime_core",
+  "checkpoint": "../artifacts/banet/weights/banet_2d_sceneflow.pth",
+  "checkpoint_sha256": "5d5264db6f1bcad27e59333621c75e04dc529221635627ad8774eb33be334fd1",
+  "checkpoint_url": "https://drive.google.com/file/d/1z5QgTU1lMb74SpbHyBA26CEILYrru77O/view",
+  "output_root": "../artifacts/banet/results",
+  "scenes": ["Adirondack", "ArtL", "Jadeplant", "Motorcycle", "MotorcycleE", "Piano", "PianoL", "Pipes", "Playroom", "Playtable", "PlaytableP", "Recycle", "Shelves", "Teddy", "Vintage"],
+  "max_disparity": 192,
+  "range_control_num_disparities": 192,
+  "warmup_runs": 1,
+  "timed_runs": 5,
+  "precision": "float32",
+  "input_convention": "BGR to RGB; float32 values 0..255; symmetric replicate padding to multiple of 32; no resizing",
+  "training": false
+}

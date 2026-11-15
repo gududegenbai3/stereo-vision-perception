@@ -93,3 +93,39 @@ class ReconstructionResult:
     depth_m: DepthMap
     xyz_m: PointMap
     valid_mask: ValidMask
+
+
+@dataclass(frozen=True, eq=False)
+class ConfidenceResult:
+    """float32 (H,W) score/residual px; unknown entries NaN, bool known mask.
+
+    score=2**(-residual_px) is a consistency ranking, not a calibrated probability.
+    """
+
+    score: DisparityMap
+    residual_px: DisparityMap
+    known_mask: ValidMask
+
+
+@dataclass(frozen=True, eq=False)
+class ReestimationResult:
+    """Candidate selection preserves baseline coverage; replaced_mask is bool (H,W)."""
+
+    disparity: DisparityResult
+    replaced_mask: ValidMask
+
+
+@dataclass(frozen=True, eq=False)
+class ConfidenceExperimentResult:
+    """GT-free experiment predictions; all disparity/score arrays align to left view."""
+
+    baseline: DisparityResult
+    candidate: DisparityResult
+    baseline_lrc: ConfidenceResult
+    baseline_dps: ConfidenceResult
+    candidate_lrc: ConfidenceResult
+    candidate_dps: ConfidenceResult
+    baseline_combined: ConfidenceResult
+    candidate_combined: ConfidenceResult
+    refined: ReestimationResult
+    timing_ms: dict[str, float]

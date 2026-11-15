@@ -1,0 +1,2 @@
+# Keep shared CSV evidence hashes stable across platform checkouts.
+doc/algorithm/assets/research_v0_yingdalei_4/per_scene.csv text eol=lf

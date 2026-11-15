@@ -1,0 +1,12 @@
+{
+  "baseline_config": "offline.json",
+  "output_root": "../artifacts/confidence_extension",
+  "development_scenes": ["Adirondack", "ArtL", "Motorcycle", "MotorcycleE"],
+  "evaluation_scenes": ["Jadeplant", "Piano", "PianoL", "Pipes", "Playroom", "Playtable", "PlaytableP", "Recycle", "Shelves", "Teddy", "Vintage"],
+  "shifts": [-2, -1, 1, 2],
+  "candidate_blocks": [3, 7, 9],
+  "threshold": 0.5,
+  "margin": 0.15,
+  "retained_fractions": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "random_seed": 17
+}
