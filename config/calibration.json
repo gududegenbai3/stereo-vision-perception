@@ -1,0 +1,32 @@
+{
+  "source_dir": "../data/captures/calib_set2_10cm",
+  "output_dir": "../data/calibrations/hbvcam-4m2403hd-v22/calib_set2_v2",
+  "image_glob": "*.jpg",
+  "capture_layout": "side_by_side",
+  "targets": [
+    {
+      "type": "chessboard",
+      "cols": 9,
+      "rows": 6,
+      "square_size_mm": 21.0
+    },
+    {
+      "type": "asymmetric_circle_grid",
+      "rows": 8,
+      "max_per_row": 6,
+      "spacing_mm": 16.95,
+      "diameter_mm": 13.5
+    }
+  ],
+  "distortion": {
+    "fix_k3": true
+  },
+  "baseline_mm": null,
+  "min_pairs": 8,
+  "rectify": {
+    "alpha": 0.0,
+    "zero_disparity": true
+  },
+  "near_depth_m": 0.4,
+  "provisional": false
+}

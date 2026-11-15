@@ -4,7 +4,9 @@
 
 ## 当前状态
 
-当前版本为 **V0**。已在本地 `SVP_env` 验证 Middlebury 单场景离线流程，包括读图、SGBM、米制重投影、视差评估与产物导出。CLI 提供一键运行，Notebook 用于逐步检查中间结果。真实设备采集、标定、校正及独立测距仍待联调，具体状态见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
+当前版本为 **V0**。已在本地 `SVP_env` 验证 Middlebury 单场景离线流程，包括读图、SGBM、米制重投影、视差评估与产物导出。CLI 提供一键运行，Notebook 用于逐步检查中间结果。
+
+2026-11-15 用新采集的 `标定集2`（20 幅 3840×1080 左右拼图）完成一次真实双目标定：15 对使用 9×6 棋盘格（格长实测 21.0 mm）、5 对使用圆点阵列（行距 16.95 mm、行内间距 33.9 mm、直径 13.5 mm），20 对全部有效；单目 RMS 0.75 / 0.77 px，双目 RMS 1.01 px，校正后垂直残差均值 1.15 px（P95 2.51 px），光学基线 108.82 mm，与“两摄像头间隔约 10 cm”的说明相符。产物按 `data/calibrations/hbvcam-4m2403hd-v22/calib_set2_v2/` 归档，详见[双目标定命令行入口](#双目标定命令行入口)。采集、标定与校正的代码已在 `src/`，独立测距评价仍待完成。
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
@@ -19,6 +21,7 @@
 ├── environment.yml             Python、算法与 JupyterLab 的 Conda 依赖
 ├── MiddEval3-Q/                 Middlebury 四分之一分辨率双目图和标定（本地）
 ├── MiddEval3-GT0/               Middlebury 左视差真值和遮挡掩码（本地）
+├── data/                       本机采集与标定产物，Git 忽略
 ├── doc/
 │   ├── algorithm/algorithm.md  算法流程、接口与验收要求
 │   ├── hardware/               硬件说明与规格图片
@@ -30,9 +33,10 @@
 │       └── completed/          已验收归档的计划
 ├── config/
 │   ├── hardware.json           机器可读硬件参数与已知状态
+│   ├── calibration.json        标定输入目录、棋盘格、基线尺度与产物路径
 │   └── offline.json            Middlebury 场景、数据路径与 SGBM 参数
 ├── notebook/environment.ipynb  分步运行和结果展示
-└── src/                        数据模型、算法模块、流程编排及 CLI
+└── src/                        数据模型、标定、校正、算法模块、流程编排及 CLI
 ```
 
 `doc/` 保存说明与记录，`config/` 保存配置，`src/` 保存实现。硬件参数以 [hardware.json](config/hardware.json) 为唯一机器可读来源（schema v2.1）；`document` 记录规格书页码与图片 SHA256，分组 `source` 与 `raw` 保留来源和原文，`uncertainties` 记录 U1–U8 的 `pending` 状态、`target_fields` 与 `resolution` 预留字段，`pending_summary` 汇总未决项，`ai_usage` 给出读取顺序与硬约束。含义、未知项和接入流程见[硬件说明](doc/hardware/hardware.md)。
@@ -55,7 +59,7 @@
 - 标准库：配置解析、路径、CSV/JSON 记录与 PLY 输出。
 - 开发环境：JupyterLab，使用 ipykernel 执行 Python，Matplotlib 显示图像、深度预览与指标。
 
-依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11、OpenCV 4.10.0 和清单中的其他 Python 包可导入；离线 Notebook 已用 `SVP_env` 内核验证。新机器首次创建环境时，在仓库根目录执行：
+依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11 + OpenCV 4.10.0（离线 Notebook）与 Python 3.11.17 + OpenCV 5.0.0（2026-11-15 标定）可导入并通过流程；离线 Notebook 已用 `SVP_env` 内核验证。OpenCV 5 的 `cv2.stereoRectify` 要求平移向量形状为 `(3, 1)`，代码已按此传参，同样适用于 4.x。新机器首次创建环境时，在仓库根目录执行：
 
 ```sh
 conda env create -f environment.yml
@@ -145,6 +149,37 @@ python -m src.cli --split testQ --scene Australia --no-export
 数据位于其他位置时，使用 `--image-root 路径` 和 `--ground-truth-root 路径` 覆盖配置中的根目录。训练场景需使用与图像匹配的真值目录。CLI 路径相对于当前工作目录，JSON 内的相对路径仍以配置文件所在目录为准。当前读取器支持 Middlebury Q 版目录结构。
 
 CLI 打印场景、指标与导出目录的 JSON，跳过导出时 `output_dir` 为 `null`。预览需要交互式 Matplotlib 后端。已验证图像与色条生成及无交互后端的报错，桌面弹窗待实测。退出码与模块职责见 [CLI 指令](ARCHITECTURE.md#cli-指令)。
+
+## 双目标定命令行入口
+
+`--calibrate` 读取 [calibration.json](config/calibration.json)，对目录中的左右拼图依次尝试配置里的标靶、求解内参与相对姿态、构建极线校正，并把产物写入 `output_dir`。配置中的路径同样相对配置文件所在目录解析。
+
+支持的标靶在 `targets` 数组中按顺序尝试，先命中的类型生效：
+
+| 类型 | 字段 | 说明 |
+|---|---|---|
+| `chessboard` | `cols`、`rows`、`square_size_mm` | 内角点列数与行数、格长 |
+| `asymmetric_circle_grid` | `rows`、`max_per_row`、`spacing_mm`、`diameter_mm` | 圆点行数、最多点数/行、行距（半间距）、圆点直径 |
+
+非对称圆点阵列的几何：圆点位于间距 `spacing_mm` 的方点阵的隔点位置，长行（奇数行）有 `max_per_row` 个点、短行少一个并整体右移一个间距；因此行内间距为 `2 × spacing_mm`，相邻行最近点距为 `√2 × spacing_mm`。
+
+| 命令 | 用途 |
+|---|---|
+| `python -m src.cli --calibrate` | 按 `config/calibration.json` 运行标定并导出 |
+| `python -m src.cli --calibrate --baseline-mm 108.8` | 用指定基线（毫米）重设米制尺度 |
+| `python -m src.cli --calibrate --square-mm 21` | 覆盖棋盘格格长（毫米） |
+| `python -m src.cli --calibrate --output-dir 路径` | 覆盖产物目录 |
+
+产物包括 `calibration.npz`（K1、D1、K2、D2、R、T、E、F、逐对误差与标靶类型）、`rectification.npz`（R1、R2、P1、P2、Q、ROI 与重映射表）、`calib.txt`、`metrics.json`、`detections.csv`、`rectified_preview.png` 与 `README.md`。零视差校正下 `doffs = 0`，深度按 `Z = f·B/d` 计算。
+
+米制尺度有两种来源，二选一：
+
+- 配置中 `baseline_mm` 非空时按该基线定标，标靶尺寸只用于构造对象点；
+- `baseline_mm` 为 `null` 时按标靶实测尺寸定标，基线由 `T` 推出（当前配置采用这一种）。
+
+两种做法必须与实物一致，否则深度整体缩放；标靶尺寸每偏差 1%，深度同样偏差 1%。
+
+2026-11-15 的 `标定集2` 结果：20 对全部有效（15 对棋盘格 + 5 对圆点阵列），单目 RMS 0.75 / 0.77 px，双目 RMS 1.01 px，垂直残差 mean / P95 = 1.15 / 2.51 px，基线 108.82 mm。产物在 `data/calibrations/hbvcam-4m2403hd-v22/calib_set2_v2/`（Git 忽略）。同目录下的 `calib_set2_21mm_v1/`（仅棋盘格，基线 107.43 mm）与 `calib_set2_10cm_v1/`（按 100 mm 假设的 provisional 结果）为历史记录，已被 v2 取代。
 
 ## 协作方式
 

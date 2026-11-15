@@ -28,6 +28,98 @@ MiddleburySplit: TypeAlias = Literal["trainingQ", "testQ"]
 
 
 @dataclass(frozen=True)
+class ChessboardSpec:
+    """棋盘格规格，cols 与 rows 为内角点数，格长为米。"""
+
+    cols: int
+    rows: int
+    square_size_m: float
+
+    def __post_init__(self) -> None:
+        if self.cols < 3 or self.rows < 3:
+            raise ValueError("棋盘格内角点行数与列数都必须不小于 3")
+        if not np.isfinite(self.square_size_m) or self.square_size_m <= 0:
+            raise ValueError("棋盘格格长必须为有限正数")
+
+    @property
+    def corner_count(self) -> int:
+        """单张图像应检测到的内角点数量。"""
+        return self.cols * self.rows
+
+    def object_points(self) -> NDArray[np.float32]:
+        """返回 (N, 3) 对象点，单位为米，Z 为 0。"""
+        points: NDArray[np.float32] = np.zeros((self.corner_count, 3), dtype=np.float32)
+        grid: NDArray[np.float32] = np.mgrid[0 : self.cols, 0 : self.rows].T.reshape(-1, 2)
+        points[:, :2] = grid.astype(np.float32) * np.float32(self.square_size_m)
+        return points
+
+
+@dataclass(frozen=True)
+class AsymmetricCircleGridSpec:
+    """非对称圆点阵列，圆点位于边长 spacing_m 的方点阵的隔点位置。
+
+    第 i 行（从 0 开始，按从上到下计）圆点的 y 坐标为 i * spacing_m；
+    奇数行是长行，含 max_per_row 个圆点，x 从 0 开始按 2 * spacing_m
+    递增；偶数行是短行，少一个圆点，整体右移一个 spacing_m。因此行内
+    间距为 2 * spacing_m，相邻行最近点距离为 sqrt(2) * spacing_m。
+    rows 必须为偶数，point_count 为行数与点数交替后的总数。
+    """
+
+    rows: int
+    max_per_row: int
+    spacing_m: float
+    diameter_m: float
+
+    def __post_init__(self) -> None:
+        if self.rows < 2 or self.rows % 2 != 0:
+            raise ValueError("圆点阵列行数必须是大于等于 2 的偶数")
+        if self.max_per_row < 2:
+            raise ValueError("圆点阵列每行点数必须不小于 2")
+        if not np.isfinite(self.spacing_m) or self.spacing_m <= 0:
+            raise ValueError("圆点阵列间距必须为有限正数")
+        if not np.isfinite(self.diameter_m) or self.diameter_m <= 0:
+            raise ValueError("圆点直径必须为有限正数")
+
+    @property
+    def point_count(self) -> int:
+        """整板圆点总数。"""
+        return (self.rows // 2) * (2 * self.max_per_row - 1)
+
+    @property
+    def row_pitch_m(self) -> float:
+        """相邻两行的 y 间距。"""
+        return self.spacing_m
+
+    @property
+    def column_pitch_m(self) -> float:
+        """同一行内相邻圆点的间距。"""
+        return 2.0 * self.spacing_m
+
+    def row_counts(self) -> tuple[int, ...]:
+        """从上到下每一行的圆点数。"""
+        return tuple(
+            self.max_per_row if row % 2 == 1 else self.max_per_row - 1
+            for row in range(self.rows)
+        )
+
+    def object_points(self) -> NDArray[np.float32]:
+        """返回 (N, 3) 对象点，单位为米，Z 为 0，按行优先排列。"""
+        coordinates: list[tuple[float, float, float]] = []
+        for row, count in enumerate(self.row_counts()):
+            offset = 0.0 if row % 2 == 1 else self.spacing_m
+            for column in range(count):
+                coordinates.append(
+                    (offset + 2.0 * self.spacing_m * column, row * self.spacing_m, 0.0)
+                )
+        points: NDArray[np.float32] = np.array(coordinates, dtype=np.float32)
+        return points
+
+
+# 标定靶规格：棋盘格或非对称圆点阵列。
+TargetSpec: TypeAlias = ChessboardSpec | AsymmetricCircleGridSpec
+
+
+@dataclass(frozen=True)
 class SgbmConfig:
     """已校验的 SGBM 参数，视差和窗口边长均以像素为单位。"""
 
