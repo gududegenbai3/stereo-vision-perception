@@ -1,4 +1,4 @@
-"""Middlebury 单场景离线流程的命令行入口。"""
+"""离线重建与双目标定的命令行入口。"""
 
 import argparse
 import json
@@ -9,21 +9,27 @@ from pathlib import Path
 
 import cv2
 
-from .config import OfflineConfig, load_offline_config
+from .calibration_run import CalibrationRunResult, run_calibration
+from .config import CalibrationConfig, OfflineConfig, load_calibration_config, load_offline_config
 from .pipeline import OfflineRunResult, run_offline_pipeline
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """运行离线流程，成功时输出 JSON，运行失败时返回 1。"""
+    """运行离线流程或标定流程，成功时输出 JSON，失败时返回 1。"""
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="python -m src.cli",
-        description="使用 Middlebury 双目图像进行离线重建、评估和导出。",
+        description="Middlebury 离线重建或基于棋盘格的双目标定。",
+    )
+    parser.add_argument(
+        "--calibrate",
+        action="store_true",
+        help="运行双目标定，默认读取 config/calibration.json。",
     )
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("config/offline.json"),
-        help="离线 JSON 配置路径，默认 config/offline.json。",
+        default=None,
+        help="JSON 配置路径；离线默认 config/offline.json，标定默认 config/calibration.json。",
     )
     parser.add_argument(
         "--no-export",
@@ -39,10 +45,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--ground-truth-root", type=Path, help="覆盖训练集真值根目录。")
     parser.add_argument("--split", choices=("trainingQ", "testQ"), help="覆盖数据集划分。")
     parser.add_argument("--scene", help="覆盖场景名，例如 Australia。")
+    parser.add_argument("--square-mm", type=float, help="覆盖棋盘格格长（毫米），仅标定使用。")
+    parser.add_argument("--baseline-mm", type=float, help="覆盖基线（毫米），仅标定使用。")
+    parser.add_argument("--output-dir", type=Path, help="覆盖标定产物目录。")
     args: argparse.Namespace = parser.parse_args(argv)
-    config_path: Path = args.config
-    no_export: bool = args.no_export
+    if args.calibrate:
+        return _run_calibration(args)
+    return _run_offline(args)
 
+
+def _run_offline(args: argparse.Namespace) -> int:
+    """运行 Middlebury 离线流程并输出指标。"""
+    config_path: Path = args.config if args.config is not None else Path("config/offline.json")
     try:
         settings: OfflineConfig = load_offline_config(
             config_path,
@@ -51,7 +65,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             split_override=args.split,
             scene_override=args.scene,
         )
-        if no_export:
+        if args.no_export:
             settings = replace(settings, output_root=None)
         result: OfflineRunResult = run_offline_pipeline(settings)
     except (OSError, ValueError, cv2.error) as error:
@@ -71,6 +85,48 @@ def main(argv: Sequence[str] | None = None) -> int:
         except (ImportError, RuntimeError, OSError) as error:
             print(f"重建已完成，预览窗口无法打开：{error}", file=sys.stderr)
             return 1
+    return 0
+
+
+def _run_calibration(args: argparse.Namespace) -> int:
+    """运行双目标定并输出质量摘要。"""
+    config_path: Path = args.config if args.config is not None else Path("config/calibration.json")
+    try:
+        settings: CalibrationConfig = load_calibration_config(
+            config_path,
+            square_size_mm_override=args.square_mm,
+            baseline_mm_override=args.baseline_mm,
+            output_dir_override=args.output_dir,
+        )
+        result: CalibrationRunResult = run_calibration(settings)
+    except (OSError, ValueError, cv2.error) as error:
+        print(f"标定失败（{config_path}）：{error}", file=sys.stderr)
+        return 1
+
+    calibration = result.calibration
+    summary: dict[str, object] = {
+        "pairs_used": len(calibration.pair_errors),
+        "pairs_total": len(result.records),
+        "image_size": list(calibration.image_size),
+        "targets_used": {
+            name: calibration.pair_targets.count(name) for name in calibration.targets
+        },
+        "baseline_mm": calibration.baseline_m * 1000.0,
+        "scale_source": calibration.scale_source,
+        "rms_stereo_px": calibration.rms_px,
+        "rms_left_px": calibration.left.rms_px,
+        "rms_right_px": calibration.right.rms_px,
+        "vertical_residual_px": {
+            "mean": result.vertical.mean_px,
+            "p95": result.vertical.p95_px,
+            "max": result.vertical.max_px,
+        },
+        "rectified_focal_px": result.rectification.focal_px,
+        "doffs_px": result.rectification.doffs_px,
+        "recommended_ndisp": result.ndisp,
+        "output_dir": str(result.output_dir),
+    }
+    print(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False), flush=True)
     return 0
 
 

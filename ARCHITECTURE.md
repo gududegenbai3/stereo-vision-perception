@@ -1,10 +1,10 @@
 # V0 Python 代码架构
 
-`src/model.py` 已实现共享数据模型，`src/datasets.py` 已实现 Middlebury 离线读取，`src/config.py` 已实现 JSON 配置读取与校验，`src/disparity.py` 已实现 SGBM 匹配，`src/reprojection.py` 已实现米制深度与三维重建，`src/evaluation.py` 已实现离线视差评估，`src/outputs.py` 已实现离线产物导出，`src/pipeline.py` 已串联单场景离线流程，`src/cli.py` 已提供命令行入口。下文定义该模块与后续模块的职责和依赖方向。算法、数据单位与验收指标以 [算法规格](doc/algorithm/algorithm.md) 为准，开发顺序见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
+`src/model.py` 已实现共享数据模型，`src/datasets.py` 已实现 Middlebury 离线读取，`src/config.py` 已实现 JSON 配置读取与校验，`src/calibration.py` 已实现棋盘格与圆点阵列检测及内外参求解，`src/rectification.py` 已实现极线校正与重映射表，`src/calibration_run.py` 已实现标定流程编排与产物导出，`src/disparity.py` 已实现 SGBM 匹配，`src/reprojection.py` 已实现米制深度与三维重建，`src/evaluation.py` 已实现离线视差评估，`src/outputs.py` 已实现离线产物导出，`src/pipeline.py` 已串联单场景离线流程，`src/cli.py` 已提供命令行入口。下文定义该模块与后续模块的职责和依赖方向。算法、数据单位与验收指标以 [算法规格](doc/algorithm/algorithm.md) 为准，开发顺序见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
 
 ## 模块职责
 
-CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相同模块并展示中间结果。采集、真实相机标定和极线校正模块仍待实现。
+CLI 通过 `pipeline.py` 运行单场景离线重建，通过 `calibration_run.py` 运行双目标定；Notebook 逐步调用相同模块并展示中间结果。采集模块仍待实现。
 
 | 模块 | 职责 |
 |---|---|
@@ -12,8 +12,9 @@ CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相�
 | `config.py` | 读取并校验 `config/` 下的运行配置，返回有类型的参数 |
 | `datasets.py` | 读取双目图、标定文件、真值和掩码，检查场景、尺寸和格式，把数据集约定转成内部类型 |
 | `capture.py` | 从相机采集并保存左右图与配对信息 |
-| `calibration.py` | 检测棋盘格角点，计算内参、畸变和双目外参 |
-| `rectification.py` | 构建校正映射和重投影矩阵，对原始图像对应用校正 |
+| `calibration.py` | 读取左右拼图、检测棋盘格或圆点阵列、求解内参与相对姿态，并持久化标定参数 |
+| `rectification.py` | 构建校正映射表与重投影矩阵，对原始图像对应用校正，统计垂直残差 |
+| `calibration_run.py` | 编排标定流程：检测、求解、校正、指标计算与产物导出 |
 | `disparity.py` | 用 SGBM 计算像素单位视差，返回匹配有效性信息 |
 | `reprojection.py` | 根据视差和校正几何计算深度、三维坐标及重建有效掩码 |
 | `evaluation.py` | 根据预测、真值和掩码计算误差与覆盖率 |
@@ -23,7 +24,7 @@ CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相�
 
 其余模块随对应任务落地。函数实现集中在 `src/`，Notebook 中保留实验参数选择、调用与展示。
 
-当前共享模型包括 `RawPair`、`RectifiedPair`、`RectificationGeometry`、`DisparityResult` 和 `ReconstructionResult`。校正几何保留匹配和重建所需的图像尺寸、`Q` 与双侧 ROI。旋转、投影矩阵和重映射表由后续校正模块负责。模型字段带类型和单位约定，调用层负责校验，NumPy 数组按引用传递。
+当前共享模型包括 `ChessboardSpec`、`AsymmetricCircleGridSpec`、`RawPair`、`RectifiedPair`、`RectificationGeometry`、`DisparityResult` 和 `ReconstructionResult`。`ChessboardSpec` 与 `AsymmetricCircleGridSpec` 负责按实测尺寸生成米制对象点，`TargetSpec` 是两者联合类型。校正几何保留匹配和重建所需的图像尺寸、`Q` 与双侧 ROI。标定结果、校正旋转与投影矩阵、重映射表分别由 `calibration.py` 和 `rectification.py` 的类型承载。模型字段带类型和单位约定，调用层负责校验，NumPy 数组按引用传递。
 
 ## CLI 指令
 
@@ -36,6 +37,9 @@ CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相�
 | `python -m src.cli --config config/offline.json` | 显式指定配置，也可传入其他 JSON 路径 |
 | `python -m src.cli --no-export` | 计算重建和指标，跳过文件导出，可与 `--config` 组合 |
 | `python -m src.cli --preview` | 计算完成后打开视差与深度预览窗口，可与 `--no-export` 组合 |
+| `python -m src.cli --calibrate` | 使用 `config/calibration.json` 运行双目标定并导出产物 |
+| `python -m src.cli --calibrate --baseline-mm 100` | 用声明基线（毫米）重设米制尺度 |
+| `python -m src.cli --calibrate --square-mm 28 --output-dir 路径` | 覆盖格长与产物目录 |
 
 可用 `--split trainingQ|testQ` 和 `--scene 场景名` 选择图像对。例如：
 
@@ -45,7 +49,15 @@ python -m src.cli --split testQ --scene Australia --no-export
 
 数据位于其他位置时，使用 `--image-root 路径` 和 `--ground-truth-root 路径` 覆盖配置中的根目录。训练场景需使用与图像匹配的真值目录。CLI 路径相对于当前工作目录，JSON 内的相对路径仍以配置文件所在目录为准。当前读取器支持 Middlebury Q 版目录结构。
 
-`cli.py` 解析参数后调用 `load_offline_config` 和 `run_offline_pipeline`。成功时向标准输出写 JSON，包含场景、指标和导出目录，未导出时目录为 `null`。成功退出码为 0，运行失败为 1，命令行参数错误为 2。错误写到标准错误。配置内的相对路径以配置文件所在目录为准。预览使用交互式 Matplotlib 后端，关闭窗口后命令结束。窗口无法打开时报告预览失败并返回 1，已生成的重建结果仍可用。
+`cli.py` 解析参数后，离线模式调用 `load_offline_config` 与 `run_offline_pipeline`，标定模式调用 `load_calibration_config` 与 `run_calibration`。成功时向标准输出写 JSON：离线模式包含场景、指标和导出目录，未导出时目录为 `null`；标定模式包含有效对数、RMS、基线、尺度来源与产物目录。成功退出码为 0，运行失败为 1，命令行参数错误为 2。错误写到标准错误。配置内的相对路径以配置文件所在目录为准。预览使用交互式 Matplotlib 后端，关闭窗口后命令结束。窗口无法打开时报告预览失败并返回 1，已生成的重建结果仍可用。
+
+## 标定与校正接口
+
+`calibration.py` 不读配置文件，接收已校验的标靶规格（`model.py` 中的 `ChessboardSpec` 与 `AsymmetricCircleGridSpec`）和灰度图。`detect_target_pair` 对一行一对图像按标靶类型选择检测方式：棋盘格先两侧同时尝试 `findChessboardCornersSB`，失败则两侧一起退回经典检测器加 `cornerSubPix`，混用两种检测器会产生不一致的角点顺序；非对称圆点阵列用连通域圆点中心加行列聚类排序，因为 OpenCV 5.0 的 `findCirclesGrid` 在非对称模式下对标准合成板也无法检出。`calibrate_stereo` 接收带对象点的观测，先分别求内参，再以 `CALIB_FIX_INTRINSIC` 求 `R`、`T`、`E`、`F`；对象点为米制，`baseline_m` 为 `None` 时平移直接以米给出，否则按给定基线重设平移尺度。`save_calibration`/`load_calibration` 使用 npz，平移单位为米，图像尺寸顺序为 `(width, height)`。
+
+`rectification.py` 接收 `StereoCalibration`，用 `stereoRectify`（默认 `CALIB_ZERO_DISPARITY`、`alpha=0`）与 `initUndistortRectifyMap` 生成 `R1`、`R2`、`P1`、`P2`、`Q`、双侧 ROI 和 `float32` 重映射表；`rectify_pair` 用 `remap` 输出同尺寸 `RectifiedPair`，`vertical_residual` 在同一批角点上统计校正后的垂直残差。OpenCV 5 要求 `stereoRectify` 的平移向量形状为 `(3, 1)`，模块内部统一 `reshape(3, 1)`，对 4.x 同样有效。
+
+`calibration_run.py` 是标定流程的编排层：按 `CalibrationConfig` 读取左右拼图（左右顺序由拼图分区决定）、按 `targets` 顺序逐对尝试标靶并记录拒绝原因、求解、校正、计算指标，然后写出 `calibration.npz`、`rectification.npz`、`calib.txt`、`metrics.json`、`detections.csv`、`rectified_preview.png` 与 `README.md`。有效对数少于 `min_pairs`、尺寸不一致或求解非有限值时抛出 `ValueError`，目录缺失抛出 `FileNotFoundError`。缺少 JPEG 结束标记的采集文件会在内存中补齐 `FFD9` 后重试解码，像素数据不变。
 
 ## 导入方向
 

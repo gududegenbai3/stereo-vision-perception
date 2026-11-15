@@ -6,7 +6,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import cast
 
-from .model import MiddleburySplit, SgbmConfig
+from .model import (
+    AsymmetricCircleGridSpec,
+    ChessboardSpec,
+    MiddleburySplit,
+    SgbmConfig,
+    TargetSpec,
+)
 
 
 @dataclass(frozen=True)
@@ -19,6 +25,29 @@ class OfflineConfig:
     ground_truth_root: Path | None
     sgbm: SgbmConfig
     output_root: Path | None = None
+
+
+@dataclass(frozen=True)
+class CalibrationConfig:
+    """双目标定运行参数，路径已转换为绝对路径。
+
+    source_dir 存放左右拼图，capture_layout 描述拆分方式。targets 按顺序
+    尝试，先命中的标靶类型生效。baseline_m 非空时按该基线重设平移尺度，
+    否则使用标靶实测尺寸。near_depth_m 只用于推荐视差搜索范围。
+    """
+
+    source_dir: Path
+    output_dir: Path
+    image_glob: str
+    capture_layout: str
+    targets: tuple[TargetSpec, ...]
+    fix_k3: bool
+    baseline_m: float | None
+    min_pairs: int
+    alpha: float
+    zero_disparity: bool
+    near_depth_m: float
+    provisional: bool
 
 
 @dataclass(frozen=True)
@@ -93,6 +122,159 @@ def load_offline_config(
         sgbm=sgbm,
         output_root=output_root,
     )
+
+
+def load_calibration_config(
+    path: Path,
+    *,
+    square_size_mm_override: float | None = None,
+    baseline_mm_override: float | None = None,
+    output_dir_override: Path | None = None,
+) -> CalibrationConfig:
+    """加载双目标定配置，路径相对配置文件所在目录解析。
+
+    显式覆盖值优先，覆盖路径相对当前工作目录。文件不存在时抛出
+    FileNotFoundError；JSON、字段或参数无效时抛出 ValueError。
+    """
+    data: dict[str, object] = _read_json(path)
+    if square_size_mm_override is not None:
+        data["targets"] = _override_square_size(data["targets"], float(square_size_mm_override))
+    if baseline_mm_override is not None:
+        data["baseline_mm"] = float(baseline_mm_override)
+    if output_dir_override is not None:
+        data["output_dir"] = str(output_dir_override.resolve())
+
+    try:
+        base_dir: Path = path.resolve().parent
+        source_dir: Path = _resolve_path(base_dir, data["source_dir"], "source_dir")
+        output_dir: Path = _resolve_path(base_dir, data["output_dir"], "output_dir")
+        image_glob: str = _required_text(data["image_glob"], "image_glob")
+        if any(char in image_glob for char in "/\\\0"):
+            raise ValueError("image_glob 只能是文件名模式，不能包含路径分隔符")
+        layout: str = _required_text(data["capture_layout"], "capture_layout")
+        if layout != "side_by_side":
+            raise ValueError("capture_layout 目前只支持 side_by_side")
+        targets: tuple[TargetSpec, ...] = _parse_targets(data["targets"])
+        distortion: dict[str, object] = _require_object(data["distortion"], "distortion")
+        fix_k3: object = distortion["fix_k3"]
+        if not isinstance(fix_k3, bool):
+            raise ValueError("distortion.fix_k3 必须为布尔值")
+        baseline_value: object = data.get("baseline_mm")
+        baseline_m: float | None = None
+        if baseline_value is not None:
+            if not isinstance(baseline_value, (int, float)) or isinstance(baseline_value, bool):
+                raise ValueError("baseline_mm 必须为正数或 null")
+            baseline_m = float(baseline_value) / 1000.0
+            if not math.isfinite(baseline_m) or baseline_m <= 0:
+                raise ValueError("baseline_mm 必须为有限正数或 null")
+        min_pairs: object = data["min_pairs"]
+        if type(min_pairs) is not int or min_pairs < 3:
+            raise ValueError("min_pairs 必须是不小于 3 的整数")
+        rectify: dict[str, object] = _require_object(data["rectify"], "rectify")
+        alpha: object = rectify["alpha"]
+        if not isinstance(alpha, (int, float)) or isinstance(alpha, bool):
+            raise ValueError("rectify.alpha 必须为数字")
+        if not 0.0 <= float(alpha) <= 1.0:
+            raise ValueError("rectify.alpha 必须位于 [0, 1]")
+        zero_disparity: object = rectify["zero_disparity"]
+        if not isinstance(zero_disparity, bool):
+            raise ValueError("rectify.zero_disparity 必须为布尔值")
+        near_depth: object = data.get("near_depth_m", 0.4)
+        if not isinstance(near_depth, (int, float)) or isinstance(near_depth, bool):
+            raise ValueError("near_depth_m 必须为数字")
+        if not math.isfinite(float(near_depth)) or float(near_depth) <= 0:
+            raise ValueError("near_depth_m 必须为有限正数")
+        provisional: object = data.get("provisional", True)
+        if not isinstance(provisional, bool):
+            raise ValueError("provisional 必须为布尔值")
+    except (KeyError, ValueError) as error:
+        raise ValueError(f"{path}：标定配置无效（{error}）") from error
+
+    return CalibrationConfig(
+        source_dir=source_dir,
+        output_dir=output_dir,
+        image_glob=image_glob,
+        capture_layout=layout,
+        targets=targets,
+        fix_k3=fix_k3,
+        baseline_m=baseline_m,
+        min_pairs=min_pairs,
+        alpha=float(alpha),
+        zero_disparity=zero_disparity,
+        near_depth_m=float(near_depth),
+        provisional=provisional,
+    )
+
+
+def _parse_targets(value: object) -> tuple[TargetSpec, ...]:
+    """解析标靶列表，支持棋盘格与非对称圆点阵列。"""
+    if not isinstance(value, list) or not value:
+        raise ValueError("targets 必须是非空数组")
+    targets: list[TargetSpec] = []
+    for index, item in enumerate(value):
+        entry: dict[str, object] = _require_object(item, f"targets[{index}]")
+        kind: str = _required_text(entry["type"], f"targets[{index}].type")
+        try:
+            if kind == "chessboard":
+                targets.append(_parse_chessboard(entry))
+            elif kind == "asymmetric_circle_grid":
+                targets.append(_parse_circle_grid(entry))
+            else:
+                raise ValueError(f"不支持的标靶类型 {kind!r}")
+        except ValueError as error:
+            raise ValueError(f"targets[{index}] 无效（{error}）") from error
+    return tuple(targets)
+
+
+def _parse_chessboard(data: dict[str, object]) -> ChessboardSpec:
+    cols: object = data["cols"]
+    rows: object = data["rows"]
+    square_mm: object = data["square_size_mm"]
+    if type(cols) is not int or type(rows) is not int:
+        raise ValueError("cols 与 rows 必须为整数")
+    if not isinstance(square_mm, (int, float)) or isinstance(square_mm, bool):
+        raise ValueError("square_size_mm 必须为数字")
+    if not math.isfinite(float(square_mm)) or float(square_mm) <= 0:
+        raise ValueError("square_size_mm 必须为有限正数")
+    return ChessboardSpec(cols=cols, rows=rows, square_size_m=float(square_mm) / 1000.0)
+
+
+def _parse_circle_grid(data: dict[str, object]) -> AsymmetricCircleGridSpec:
+    rows: object = data["rows"]
+    per_row: object = data["max_per_row"]
+    spacing_mm: object = data["spacing_mm"]
+    diameter_mm: object = data["diameter_mm"]
+    if type(rows) is not int or type(per_row) is not int:
+        raise ValueError("rows 与 max_per_row 必须为整数")
+    for name, value in (("spacing_mm", spacing_mm), ("diameter_mm", diameter_mm)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            raise ValueError(f"{name} 必须为数字")
+        if not math.isfinite(float(value)) or float(value) <= 0:
+            raise ValueError(f"{name} 必须为有限正数")
+    return AsymmetricCircleGridSpec(
+        rows=rows,
+        max_per_row=per_row,
+        spacing_m=float(spacing_mm) / 1000.0,
+        diameter_m=float(diameter_mm) / 1000.0,
+    )
+
+
+def _override_square_size(value: object, square_size_mm: float) -> list[object]:
+    """把棋盘格格长覆盖值应用到全部棋盘格标靶。"""
+    if not isinstance(value, list):
+        raise ValueError("targets 必须是非空数组")
+    updated: list[object] = []
+    matched: bool = False
+    for item in value:
+        entry: dict[str, object] = _require_object(item, "targets")
+        if entry.get("type") == "chessboard":
+            entry = dict(entry)
+            entry["square_size_mm"] = square_size_mm
+            matched = True
+        updated.append(entry)
+    if not matched:
+        raise ValueError("配置中没有棋盘格标靶，无法使用 --square-mm")
+    return updated
 
 
 def load_hardware_config(path: Path) -> HardwareConfig:
