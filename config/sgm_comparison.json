@@ -1,0 +1,10 @@
+{
+  "baseline_config": "offline.json",
+  "diagnosis_config": "error_diagnosis.json",
+  "output_root": "../artifacts/sgm_comparison",
+  "scenes": ["Adirondack", "ArtL", "Jadeplant", "Motorcycle", "MotorcycleE", "Piano", "PianoL", "Pipes", "Playroom", "Playtable", "PlaytableP", "Recycle", "Shelves", "Teddy", "Vintage"],
+  "sgm": {"min_disparity": 0, "num_disparities": 128, "p1": 8.0, "p2": 32.0, "lr_tolerance_px": 1.0},
+  "opencv_options": {"uniqueness_ratio": 10, "speckle_window_size": 50, "speckle_range": 2, "disp12_max_diff": 1, "pre_filter_cap": 15},
+  "examples": [{"scene": "Adirondack", "crop_xyxy": [425, 215, 536, 326]}, {"scene": "Shelves", "crop_xyxy": [627, 387, 738, 497]}, {"scene": "PianoL", "crop_xyxy": null}],
+  "protocol": "One predefined run on already-seen diagnostic scenes; no GT parameter tuning. Fixed/adaptive NumPy SGM share pixel BT, eight paths, subpixel interpolation, median and independent LR check. OpenCV comparisons include other implementation differences. No MI, multibaseline fusion or gap filling."
+}

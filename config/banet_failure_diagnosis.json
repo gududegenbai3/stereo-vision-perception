@@ -1,0 +1,11 @@
+{
+  "model_config": "banet_finetuned_model.json",
+  "comparison_config": "banet_sgbm_comparison.json",
+  "output_root": "../artifacts/banet/failure_mechanisms",
+  "inspect_scenes": ["skates2", "bandsaw2", "curule2", "skiboots1"],
+  "far_from_gt_boundary_native_px": 16.0,
+  "gt_jump_native_px": 4.0,
+  "large_error_native_px": 10.0,
+  "point_min_sgbm_agreement_error_native_px": 2.0,
+  "note": "Observed scenes for post-hoc stage diagnosis only; no parameter or checkpoint selection"
+}

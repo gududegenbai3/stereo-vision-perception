@@ -1,0 +1,12 @@
+{
+  "source_root": "../artifacts/banet/upstream/banet-2d/core",
+  "runtime_root": "../artifacts/banet/runtime_core",
+  "checkpoint": "../artifacts/banet/finetuning/eth3d-v1/checkpoint_finetuned.pth",
+  "checkpoint_sha256": "b261f97c6b7902c0eacfd4d61b6a46f3c72dd458838089f72f2e9c89101195f0",
+  "checkpoint_provenance": "../artifacts/banet/finetuning/eth3d-v1/export.json",
+  "max_disparity": 192,
+  "training_protocol": "banet_finetuning.json",
+  "training_steps": 1000,
+  "validation_selected": false,
+  "role": "Experimental final-budget candidate; original pretrained checkpoint remains validation-selected"
+}

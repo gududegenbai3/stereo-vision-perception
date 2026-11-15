@@ -8,6 +8,8 @@
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
 
+本分支另整理了置信度重估计、SGM 对照、BANet 推理/微调与误差诊断。它们是独立研究入口：现有证据不支持稳定替换默认 SGBM。可先阅读[研究成果与审阅入口](doc/algorithm/research_review.md)，其中附逐场景指标及六张随机实图；原理教学继续在会话中进行。
+
 ## 项目结构
 
 ```text
@@ -55,7 +57,7 @@
 - 标准库：配置解析、路径、CSV/JSON 记录与 PLY 输出。
 - 开发环境：JupyterLab，使用 ipykernel 执行 Python，Matplotlib 显示图像、深度预览与指标。
 
-依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。本地已验证 Python 3.11.11、OpenCV 4.10.0 和清单中的其他 Python 包可导入；离线 Notebook 已用 `SVP_env` 内核验证。新机器首次创建环境时，在仓库根目录执行：
+依赖记录在 [environment.yml](environment.yml)，环境名为 `SVP_env`，统一使用 conda-forge。文件限定 Python 3.11 和其他包的版本范围，不是完整锁文件。最初离线 Notebook 已用 `SVP_env` 内核验证；本轮整理实测为 Python 3.11.18、OpenCV 4.13.0、NumPy 2.4.6，基础 CLI 与研究测试通过。新机器首次创建环境时，在仓库根目录执行：
 
 ```sh
 conda env create -f environment.yml
@@ -145,6 +147,65 @@ python -m src.cli --split testQ --scene Australia --no-export
 数据位于其他位置时，使用 `--image-root 路径` 和 `--ground-truth-root 路径` 覆盖配置中的根目录。训练场景需使用与图像匹配的真值目录。CLI 路径相对于当前工作目录，JSON 内的相对路径仍以配置文件所在目录为准。当前读取器支持 Middlebury Q 版目录结构。
 
 CLI 打印场景、指标与导出目录的 JSON，跳过导出时 `output_dir` 为 `null`。预览需要交互式 Matplotlib 后端。已验证图像与色条生成及无交互后端的报错，桌面弹窗待实测。退出码与模块职责见 [CLI 指令](ARCHITECTURE.md#cli-指令)。
+
+## 可选深度学习实验
+
+已在同一Python3.11 `SVP_env`中完成官方[BANet-2D](https://github.com/gangweix/BANet) SceneFlow预训练权重的15场景CUDA推理，后续另完成监督微调。RTX5060 Laptop推理可用，但预训练试跑整体误差高于原SGBM，因此默认CLI仍用SGBM。实际依赖版本、完整比较和限制见[验证记录](doc/exe_plans/completed/banet_inference.md)。
+
+先在现有`SVP_env`执行`python -s -m pip install -r requirements-banet.txt`，将官方源码克隆到`artifacts/banet/upstream`并固定至`config/banet.json`所列提交；从配置所列官方链接获取权重并放到其`checkpoint`位置。依赖为可选增补，原`environment.yml`仍是基础环境来源。代码会核验权重SHA256并严格加载。
+
+```sh
+git clone https://github.com/gangweix/BANet.git artifacts/banet/upstream
+git -C artifacts/banet/upstream checkout 7cb83f7cca99a249e1fcec8ff556e4ac73facd70
+```
+
+```sh
+python -s -m src.banet_experiment
+python -s -m src.banet_plots
+```
+
+实验参数在`config/banet.json`，绘图参数在`config/banet_views.json`；产物位于`artifacts/banet/results/`。完整实验结果存在时拒绝覆盖，重复实验应选新的输出目录。绘图审计需要之前`src.error_diagnosis`生成的原SGBM结果（路径见绘图配置）。
+
+监督微调另用官方[ETH3D](https://www.eth3d.net/datasets)真实双目训练数据，按物理场景冻结14/4/9对训练/验证/本地测试组；官方隐藏真值测试集未用于本地评价。5060已完成1000步batch4训练，峰值allocated约4834MiB，总耗时约3分54秒。固定末步模型测试改善但验证退步，主选择保留预训练模型。配置在`config/banet_finetuning.json`，完整方法和结果见[微调记录](doc/exe_plans/completed/banet_finetuning.md)。同一`SVP_env`运行：
+
+```sh
+python -s -m src.eth3d_prepare
+python -s -m src.banet_training_probe
+python -s -m src.banet_finetuning
+python -s -m src.banet_finetuning_last
+python -s -m src.banet_finetuning_plots
+python -s -m src.banet_checkpoint_export
+```
+
+数据准备校验官方归档SHA256，解压需要支持7z的bsdtar（本机使用Windows自带tar）；训练无需额外Python依赖。参数、数据和源码哈希写入冻结协议，训练保存优化器、调度器及随机数状态，可用`python -s -m src.banet_finetuning --resume`从最近验证点恢复。已经完成测试的运行禁止再次训练覆盖。大数据、权重与checkpoint位于忽略目录，保持默认OpenCV入口。
+
+`banet_finetuning_last`是固定1000步模型的次级诊断，不根据测试结果重选模型。`checkpoint_best.pth`与`checkpoint_finetuned.pth`分别为验证选择及固定末步候选，二者含义不同；后者的路径和校验哈希在`config/banet_finetuned_model.json`，供原`load_banet`接口使用。恢复接口已实现，真实中断后恢复尚未端到端实测。
+
+上述受版本管理的模型配置标识本机已记录的实验，权重不随仓库上传。新机器重新训练后，导出命令会生成被 Git 忽略的 `config/banet_finetuned_model.local.json`，填写本次权重的实际 SHA256；不能假设重训得到逐字节相同的文件。运行扩大比较时，将 `config/banet_sgbm_comparison.json` 复制为同目录 `.local.json`，把 `model_config` 指向该本地模型配置，并选用全新的 `output_root`，再通过 `--config` 传入比较和绘图命令。不要覆盖已记录实验的配置或产物。
+
+微调候选已与原SGBM128、同范围SGBM192完成48对扩大比较，其中24对为新Middlebury2021 mobile外部图，另含ETH3D既有holdout及旧Middlebury开发图。本次训练重放4000裁剪及图像指纹审计未发现训练/验证混入，作者预训练缺少逐样本清单的边界单独记录；新外部集共同像素MAE SGBM6.39/BANet11.68px，尚不支持稳定升级。详见[对照与泄漏审计](doc/exe_plans/completed/banet_sgbm_comparison.md)。
+
+```sh
+python -s -m src.banet_sgbm_prepare
+python -s -m src.banet_sgbm_comparison
+python -s -m src.banet_sgbm_comparison_plots
+```
+
+参数在`config/banet_sgbm_comparison.json`，产物在`artifacts/banet/sgbm_comparison/`，包含全部48对CSV/JSON、数值数组与6个推理前随机抽定的不同场景实图。已冻结比较拒绝覆盖；不在新外部集重选参数或重新训练。
+
+## 研究与验证入口
+
+以下命令从仓库根目录、已激活的 Python 3.11 `SVP_env` 运行；需要先按前文获取对应数据。实验结果存在时遵守各入口的覆盖保护。
+
+| 入口 | 作用与记录 |
+|---|---|
+| `python -s -m src.error_diagnosis` / `src.error_diagnosis_plots` | 原 SGBM 15 场景误差分层及独立复算 |
+| `python -s -m src.confidence_experiment --phase develop`，再依次 `evaluate`、`verify` | 冻结开发候选后评价；[方法与负结果](doc/algorithm/confidence_extension.md) |
+| `python -s -m src.sgm_comparison` / `src.sgm_comparison_plots` | BT/8路径/P2 与 OpenCV 选项对照 |
+| `python -s -m src.banet_failure_diagnosis` / `src.banet_failure_plots` | 已有 BANet 输出的阶段诊断；[证据边界](doc/algorithm/banet_failure_mechanisms.md) |
+| `python -s -m unittest discover -s tests -v` | 合成几何、掩码、分组、训练损失及证据保护测试 |
+
+新训练和扩大比较会自动保存执行源码快照；配置及源文件改变会阻止续跑混用结果。历史置信度实验缺少基线配置哈希，只允许核验已保存数组，不能用旧冻结记录继续评价；新实验需新输出目录。历史数值实验与本轮整理后的保护代码没有伪装成同一次执行，具体见审阅记录。
 
 ## 协作方式
 

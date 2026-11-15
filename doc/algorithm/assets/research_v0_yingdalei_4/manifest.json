@@ -1,0 +1,15 @@
+{
+  "source": "artifacts/banet/sgbm_comparison",
+  "data_credit": "Middlebury 2021 mobile and Middlebury v3 stereo datasets; ETH3D benchmark",
+  "files_sha256": {
+    "random-01-bandsaw1.png": "521af82a7bf89c25547e57e3e87a01362f64ecc5e5ba92297eeb01a79683987f",
+    "random-02-chess2.png": "fcc7ff72505e1aed9aacaa968e013b472d3bffc546e84e0c99680e7d2a290d0f",
+    "random-03-curule2.png": "44ab64d7cda107cfa42ab4eecbad56fbc013ae9c416070c7e048c647e6fd94e4",
+    "random-04-pendulum2.png": "79d3cf4e032527155147a5cee11c3c5350aa1423c89c9c473b7b7114a32ce9df",
+    "random-05-skates2.png": "a24a5e084141360c80656f6613e238728e3eb4cc72c58eaf822d69544d084b77",
+    "random-06-skiboots1.png": "3091a85529fbb7213b61fc2f89f0056af4fdbf836bcdf8dc6ab4e21c74a7c206",
+    "per_scene.csv": "1dbfbfc89eabfb613a240841c28c172b97e834a97ea6f81a63d35911378c86ca"
+  },
+  "original_csv_sha256": "c6c1d0f1d2fe514052ec5571034ac2a7e2e162e92a945d6acdccb559ab35f1f0",
+  "csv_normalization": "CRLF to LF only; rows and values unchanged. Hashes describe repository LF text bytes."
+}

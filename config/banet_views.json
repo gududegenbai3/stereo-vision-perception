@@ -1,0 +1,10 @@
+{
+  "result_root": "../artifacts/banet/results",
+  "baseline_diagnosis_root": "../artifacts/error_diagnosis",
+  "error_display_max_px": 10.0,
+  "figures": [
+    {"scene": "Adirondack", "crop_xyxy": [425, 215, 536, 326]},
+    {"scene": "Shelves", "crop_xyxy": [627, 387, 738, 497]},
+    {"scene": "PianoL", "crop_xyxy": null}
+  ]
+}

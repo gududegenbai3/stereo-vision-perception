@@ -1,0 +1,6 @@
+{
+  "result_root": "../artifacts/banet/finetuning/eth3d-v1",
+  "error_display_max_px": 2.0,
+  "comparison_model": "fixed_last",
+  "samples": ["playground_1s", "terrace_1s"]
+}
