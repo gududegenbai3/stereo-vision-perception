@@ -1,0 +1,20 @@
+{
+  "rig_id": "hbvcam-4m2403hd-v22",
+  "device_name": "USB Camera",
+  "ffmpeg_path": "ffmpeg.exe",
+  "pythonw_path": "pythonw.exe",
+  "frame_wh": [
+    2560,
+    720
+  ],
+  "requested_fps": 30,
+  "preview_wh": [
+    1280,
+    360
+  ],
+  "capture_root": "../data/captures",
+  "ready_file": "../artifacts/hardware/capture_ui_ready.json",
+  "physical_order": "left_half_is_left_camera",
+  "rectified": false,
+  "calibration_file": null
+}

@@ -4,16 +4,21 @@
 
 ## 模块职责
 
-CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相同模块并展示中间结果。采集、真实相机标定和极线校正模块仍待实现。
+CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相同模块并展示中间结果。相机入口独立编排，使用说明见 [camera_demo.md](doc/hardware/camera_demo.md)；已验证拍照、标定及校正，真实米制重建和独立测距待联调。
 
 | 模块 | 职责 |
 |---|---|
 | `model.py` | 声明共享的数据类和数组类型，区分原始图像对、校正图像对、校正几何及重建结果 |
 | `config.py` | 读取并校验 `config/` 下的运行配置，返回有类型的参数 |
 | `datasets.py` | 读取双目图、标定文件、真值和掩码，检查场景、尺寸和格式，把数据集约定转成内部类型 |
-| `capture.py` | 从相机采集并保存左右图与配对信息 |
-| `calibration.py` | 检测棋盘格角点，计算内参、畸变和双目外参 |
+| `capture_ui.py` / `start_capture.ps1` | 原生 FFmpeg + 本机回环传输的按钮拍照入口，保存无损拼图/左右图及配对记录 |
+| `calibration_pattern.py` | 显示屏棋盘生成、双侧完整角点检测，不推测物理格长 |
+| `calibration.py` | 类型化棋盘/角点/参数和纯函数单目/双目求解，不读配置 |
+| `display_calibration.py` / `display_calibration_report.py` | 按预先标记的拟合/独立验证角色求解和复算，保存本机 NPZ、报告及几何选择文件 |
 | `rectification.py` | 构建校正映射和重投影矩阵，对原始图像对应用校正 |
+| `camera_io.py` / `provenance.py` | 采集完整性、固定映射预处理、实验 SGBM、文件身份和执行源码快照；无 Torch 依赖 |
+| `pretrained_stereo.py` | 可选官方 BANet/IGEV 推理适配，全键权重校验和最小兼容副本，不含训练入口 |
+| `camera_comparison.py` / `camera_report.py` | 冻结全部同输入样例、分进程推理及无真值定性图库，不修改默认匹配器 |
 | `disparity.py` | 用 SGBM 计算像素单位视差，返回匹配有效性信息 |
 | `reprojection.py` | 根据视差和校正几何计算深度、三维坐标及重建有效掩码 |
 | `evaluation.py` | 根据预测、真值和掩码计算误差与覆盖率 |
@@ -23,7 +28,7 @@ CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相�
 
 其余模块随对应任务落地。函数实现集中在 `src/`，Notebook 中保留实验参数选择、调用与展示。
 
-当前共享模型包括 `RawPair`、`RectifiedPair`、`RectificationGeometry`、`DisparityResult` 和 `ReconstructionResult`。校正几何保留匹配和重建所需的图像尺寸、`Q` 与双侧 ROI。旋转、投影矩阵和重映射表由后续校正模块负责。模型字段带类型和单位约定，调用层负责校验，NumPy 数组按引用传递。
+当前共享模型包括 `RawPair`、`RectifiedPair`、`RectificationGeometry`、`DisparityResult` 和 `ReconstructionResult`。校正几何保留匹配和重建所需的图像尺寸、`Q` 与双侧 ROI；`rectification.py` 的 `StereoRectification` 另保存旋转、投影矩阵和重映射表。模型字段带类型和单位约定，调用层负责校验，NumPy 数组按引用传递。
 
 ## CLI 指令
 

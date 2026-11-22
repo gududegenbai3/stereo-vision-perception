@@ -1,0 +1,16 @@
+{
+  "rig_id": "hbvcam-4m2403hd-v22",
+  "capture_sessions": [],
+  "target_config": "calibration_capture.local.json",
+  "output_root": "../data/calibrations/hbvcam-4m2403hd-v22/my_calibration",
+  "minimum_fit_pairs": 15,
+  "minimum_validation_pairs": 5,
+  "maximum_iterations": 100,
+  "epsilon": 1e-07,
+  "rectification_alpha": 0.0,
+  "training_rms_warning_px": 1.0,
+  "validation_p95_warning_px": 2.0,
+  "automatic_outlier_removal": false,
+  "physical_distance_accuracy": "not_evaluated",
+  "scope": "Current bracket/focus, 1280x720 per eye, display target with approximately measured scale. Validation never enters parameter fitting; warning thresholds are diagnostics, not a user-approved accuracy specification."
+}

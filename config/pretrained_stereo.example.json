@@ -1,0 +1,24 @@
+{
+  "banet": {
+    "source_root": "../artifacts/banet/upstream/banet-2d/core",
+    "checkpoint": "../artifacts/banet/weights/banet_2d_sceneflow.pth",
+    "checkpoint_sha256": "5d5264db6f1bcad27e59333621c75e04dc529221635627ad8774eb33be334fd1",
+    "upstream_commit": "7cb83f7cca99a249e1fcec8ff556e4ac73facd70",
+    "checkpoint_url": "https://drive.google.com/file/d/1z5QgTU1lMb74SpbHyBA26CEILYrru77O/view",
+    "precision": "float32",
+    "max_disparity": 192,
+    "batch_norm_policy": "running",
+    "upstream_repository": "https://github.com/gangweix/BANet"
+  },
+  "igev": {
+    "source_root": "../artifacts/igev/upstream/IGEV-Stereo/core",
+    "checkpoint": "../artifacts/igev/weights/igev_sceneflow.pth",
+    "checkpoint_sha256": "ce482e600c5c08f647b2728553bec73e212ed965be43f7ec41ac6cfd2b11916d",
+    "upstream_commit": "4a3d937aab788b3ff3ed49b7b5c81340ab46a5eb",
+    "checkpoint_url": "https://drive.google.com/file/d/16e9NR_RfzFdYT5mPaGwpjccplCi82C2e/view",
+    "precision": "float32",
+    "max_disparity": 192,
+    "batch_norm_policy": "running",
+    "upstream_repository": "https://github.com/gangweix/IGEV"
+  }
+}
