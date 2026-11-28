@@ -5,6 +5,8 @@
 - 当前 V0 计划：[V0_stereo_pipeline.md](active/V0_stereo_pipeline.md)。Middlebury 单场景离线流程已验证，真实相机流程和精度验收仍在活动计划中。
 - 相机交付：[按钮采集、显示屏标定与预训练对照](completed/camera_demo_delivery.md)。20 对拟合、6 对独立验证，22 对实拍同输入三方法对照；无绝对测距精度结论。
 
+- 预训练定量对照：[多来源公开实验](completed/stereo_fair_evaluation.md)和[复现命令](../algorithm/pretrained_comparison.md)。15 对用于选参，181 对用于正式比较。
+
 每份计划维护任务状态、依赖、验收依据、当前阻碍和下一步。项目进展以当前活动计划的状态摘要为入口，不另维护重复的 `progress.md`。
 
 任务状态使用“待开始、进行中、已验证、受阻”。有实现但未运行验证的任务仍是“进行中”；硬件没有记录或实测证据时标记“待验证”，不能视为已通过。某项受阻只影响依赖它的任务，其余路线继续推进。

@@ -1,0 +1,5 @@
+# Optional official BANet and IGEV inference on the validated CUDA 12.8 stack.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.7.1+cu128
+torchvision==0.22.1+cu128
+timm==0.6.13

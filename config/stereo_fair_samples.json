@@ -1,0 +1,1700 @@
+[
+  {
+    "dataset": "booster",
+    "scene": "Bathroom",
+    "group": "booster/Bathroom",
+    "role": "evaluation",
+    "sha256": "83b6f8278fab9395e8d5931ff43601bef483eed136ad0500534071a85379d102",
+    "view": "im0.png",
+    "path": "booster/Bathroom/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bathroom",
+    "group": "booster/Bathroom",
+    "role": "evaluation",
+    "sha256": "3f331bfbe1e8a406eca2313bdb3717528b0fb3648839395b69cc0fcdaec00a61",
+    "view": "im1.png",
+    "path": "booster/Bathroom/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bathroom",
+    "group": "booster/Bathroom",
+    "role": "evaluation",
+    "sha256": "88319999407c7a9d5eaa1e457a10f401be23f69c9ed7769fadcec2ac6893ae0e",
+    "view": "im2.png",
+    "path": "booster/Bathroom/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bedroom",
+    "group": "booster/Bedroom",
+    "role": "evaluation",
+    "sha256": "6f775a2fc1356f024ff55539149ae828bb031f1d3fec41a51bdf0254ab42e032",
+    "view": "im0.png",
+    "path": "booster/Bedroom/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bedroom",
+    "group": "booster/Bedroom",
+    "role": "evaluation",
+    "sha256": "6b888d9a1f1843cdd6c4b9993870e9973f337bcf2460054df26f07a87be63152",
+    "view": "im1.png",
+    "path": "booster/Bedroom/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bedroom",
+    "group": "booster/Bedroom",
+    "role": "evaluation",
+    "sha256": "21da2500a4323a269569da2de5e0432c2df4b9d8ca30ca4558264b8ad0a54404",
+    "view": "im2.png",
+    "path": "booster/Bedroom/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottle",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "42b61aa6b3f4d7d48e76acae0ce186df3012d99e43db939497d664e85e19a389",
+    "view": "im0.png",
+    "path": "booster/Bottle/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottle",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "1fe9f50d031338c395e584c43d873efeaf3972db84e5763aeefda556880aa0c3",
+    "view": "im1.png",
+    "path": "booster/Bottle/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottle1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "6ffaf17c517b7d62d5cff77a63e2fbdba1a35101013249c3d0c68a1ca70e3fc4",
+    "view": "im0.png",
+    "path": "booster/Bottle1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottle1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "4699c183835d478024e0be6911aad308f50f4fa111571f86c4317a526e5097b8",
+    "view": "im1.png",
+    "path": "booster/Bottle1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottle1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "8e2f6a064228a51813a2814bceee516a185a486c4dc0fcfd2b993ad51213a33f",
+    "view": "im2.png",
+    "path": "booster/Bottle1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "BottledWater",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "02d5949bc562e4bfe492cfe678511a647665e1dbf536445d026cad18cf5dd204",
+    "view": "im0.png",
+    "path": "booster/BottledWater/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "BottledWater",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "91038e763b8d12b9f282dc38f82e6cccf27e1476e70e51a0fe5a3171e878f385",
+    "view": "im1.png",
+    "path": "booster/BottledWater/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "BottledWater",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "57973fdf59c25dc2b310255af74d4e2d63a11c44b6a0ed030ce636ce9c8496c0",
+    "view": "im2.png",
+    "path": "booster/BottledWater/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottles1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "07ac15b13e258f9f43f88b95a6991df32f8eb5ed4090d22a0c49202d9c9e7f51",
+    "view": "im0.png",
+    "path": "booster/Bottles1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottles1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "d3870fb23ddbcde861f9ed44bf975805e918be7683b24671cc727dc29ec9ac93",
+    "view": "im1.png",
+    "path": "booster/Bottles1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bottles1",
+    "group": "booster/Bottle",
+    "role": "evaluation",
+    "sha256": "7653be8408386ed11fd7897c13949b2ffd814fb90c3a6e4b9a14d5961d40d762",
+    "view": "im2.png",
+    "path": "booster/Bottles1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bucket",
+    "group": "booster/Bucket",
+    "role": "evaluation",
+    "sha256": "629b44fcf2d7621ac7edf1498a4e6cef9bc9838080c757e553a7be0e438768e7",
+    "view": "im0.png",
+    "path": "booster/Bucket/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bucket",
+    "group": "booster/Bucket",
+    "role": "evaluation",
+    "sha256": "ec1fec85eaff6037fe7807584399a448c23d0867018992e684062fa2e75abe0b",
+    "view": "im1.png",
+    "path": "booster/Bucket/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Bucket",
+    "group": "booster/Bucket",
+    "role": "evaluation",
+    "sha256": "c4c80d166b8236142a740bc8bd87c76b530e6b6d882ecda48bd102ab85f3405b",
+    "view": "im2.png",
+    "path": "booster/Bucket/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Canteen",
+    "group": "booster/Canteen",
+    "role": "evaluation",
+    "sha256": "6a2aa3c54f7ada23f0c611fe6b07aa0b2afba064e72aa3e2c684b11f47449454",
+    "view": "im0.png",
+    "path": "booster/Canteen/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Canteen",
+    "group": "booster/Canteen",
+    "role": "evaluation",
+    "sha256": "a0c289d3e66a77dfefda66b14247288358669d5f7c8932a79b9b6ea2d4895552",
+    "view": "im1.png",
+    "path": "booster/Canteen/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Canteen",
+    "group": "booster/Canteen",
+    "role": "evaluation",
+    "sha256": "51c5bcbd38b3d8b327255155a691b4a84c84687f85dfdfd730ee9647b9120c4a",
+    "view": "im2.png",
+    "path": "booster/Canteen/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Case",
+    "group": "booster/Case",
+    "role": "evaluation",
+    "sha256": "7374a84917e8c94d729a2c2e6b4bbe78514d41003caa681948bd222f58afa4d4",
+    "view": "im0.png",
+    "path": "booster/Case/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Case",
+    "group": "booster/Case",
+    "role": "evaluation",
+    "sha256": "8a7269c2538089fa86018beebeae7c44869661044ba67f0ed75ffcbd0c19fe3f",
+    "view": "im1.png",
+    "path": "booster/Case/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Case",
+    "group": "booster/Case",
+    "role": "evaluation",
+    "sha256": "c26532ec1ea8d2cbd1c5bfa9f181f4b47ffc0c75fb1e1649fff5363cd8635fa6",
+    "view": "im2.png",
+    "path": "booster/Case/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CashBox",
+    "group": "booster/CashBox",
+    "role": "evaluation",
+    "sha256": "5902074a622e413d98267b9b9b0c481d53133a261d310141c09d21efdcabb4e0",
+    "view": "im0.png",
+    "path": "booster/CashBox/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CashBox",
+    "group": "booster/CashBox",
+    "role": "evaluation",
+    "sha256": "fa1273b15df93281cfaa952ee505d02ef358a7207907189daca2d338f2f21a9f",
+    "view": "im1.png",
+    "path": "booster/CashBox/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CashBox",
+    "group": "booster/CashBox",
+    "role": "evaluation",
+    "sha256": "f573b902cf760ef6a7081c1dc0f8a10ff76b18b8278c608816122e4b3ed549d1",
+    "view": "im2.png",
+    "path": "booster/CashBox/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CoffeeMaker",
+    "group": "booster/CoffeeMaker",
+    "role": "evaluation",
+    "sha256": "f703c87fb80411c66e88df630b3a3b9a99a96db71d1b65b3106280259f719f4c",
+    "view": "im0.png",
+    "path": "booster/CoffeeMaker/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CoffeeMaker",
+    "group": "booster/CoffeeMaker",
+    "role": "evaluation",
+    "sha256": "7a12c68c3f6101ca60028bb262af9f9bfac9376caf4416d8e08cf3f12b02aa7b",
+    "view": "im1.png",
+    "path": "booster/CoffeeMaker/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "CoffeeMaker",
+    "group": "booster/CoffeeMaker",
+    "role": "evaluation",
+    "sha256": "686c548a374e4597f5c92db1c4a1d64d240e63d08a8036e1186efb264af30c42",
+    "view": "im2.png",
+    "path": "booster/CoffeeMaker/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cooker1",
+    "group": "booster/Cooker1",
+    "role": "evaluation",
+    "sha256": "27239e435c96e460f6a0b416488ab0255ff449ff8c568477d3d83db4db7717fa",
+    "view": "im0.png",
+    "path": "booster/Cooker1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cooker1",
+    "group": "booster/Cooker1",
+    "role": "evaluation",
+    "sha256": "f7ae5bb2796b10ddb0a01634440c6f10a998c2a06ec1e4454e9449493be2ddc5",
+    "view": "im1.png",
+    "path": "booster/Cooker1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cooker1",
+    "group": "booster/Cooker1",
+    "role": "evaluation",
+    "sha256": "dc785c371ecd5cb4f42bce35f5480d9596bf52a1e463b987d79570ee1c278730",
+    "view": "im2.png",
+    "path": "booster/Cooker1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cosmetics",
+    "group": "booster/Cosmetics",
+    "role": "evaluation",
+    "sha256": "e318a8006ffcb8b3e2c7ee0586a831b2eeeba2889bcfd4d309a8328c37086b26",
+    "view": "im0.png",
+    "path": "booster/Cosmetics/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cosmetics",
+    "group": "booster/Cosmetics",
+    "role": "evaluation",
+    "sha256": "26e25a147a9c4bc98b0660b55538a58f112973c4435606c2f6f67c6f2f61b28b",
+    "view": "im1.png",
+    "path": "booster/Cosmetics/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Cosmetics",
+    "group": "booster/Cosmetics",
+    "role": "evaluation",
+    "sha256": "e1e78c0ae30619560161819ce20e0f5c0d8e091e31150bfff780cb1a8e710947",
+    "view": "im2.png",
+    "path": "booster/Cosmetics/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "DogHouse",
+    "group": "booster/DogHouse",
+    "role": "evaluation",
+    "sha256": "52d67738fc51da7260a193c119289c3768d2d36bb9db31b2794904ea764d6d28",
+    "view": "im0.png",
+    "path": "booster/DogHouse/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "DogHouse",
+    "group": "booster/DogHouse",
+    "role": "evaluation",
+    "sha256": "e0ebb98695e2f3e8ac4e0f8cad368d631be69e44dab953723422358c48032597",
+    "view": "im1.png",
+    "path": "booster/DogHouse/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "DogHouse",
+    "group": "booster/DogHouse",
+    "role": "evaluation",
+    "sha256": "93646c3e579fd9c969cf3e4992ca894c33ef64ae3dc6c5c36b55a95141bbcaad",
+    "view": "im2.png",
+    "path": "booster/DogHouse/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Door",
+    "group": "booster/Door",
+    "role": "evaluation",
+    "sha256": "aa3fa3449d7723d098a212948c97b898fa37d70332c598b81bd43defd76d68b1",
+    "view": "im0.png",
+    "path": "booster/Door/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Door",
+    "group": "booster/Door",
+    "role": "evaluation",
+    "sha256": "de26e1bbb9df3b376605653fb2a6996cda464490344f08cd2114b30a1635d82c",
+    "view": "im1.png",
+    "path": "booster/Door/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Door",
+    "group": "booster/Door",
+    "role": "evaluation",
+    "sha256": "8eac4b592ebe01d7c7b9c55419a9e145ed3732166ace6b8569d2e7ad9c5db873",
+    "view": "im2.png",
+    "path": "booster/Door/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "ExtractorFan",
+    "group": "booster/ExtractorFan",
+    "role": "evaluation",
+    "sha256": "c2b42d3a8ae3c6f1b354554ff4046c7d107df08b86bb0f29a55d8ca1b9277daf",
+    "view": "im0.png",
+    "path": "booster/ExtractorFan/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "ExtractorFan",
+    "group": "booster/ExtractorFan",
+    "role": "evaluation",
+    "sha256": "1c3f502a63b286e785effdc97a7861be2419c2c3c2e10d39eb4fb66f9588dfff",
+    "view": "im1.png",
+    "path": "booster/ExtractorFan/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "ExtractorFan",
+    "group": "booster/ExtractorFan",
+    "role": "evaluation",
+    "sha256": "a9e75ce0130d30d47d880ec69cfcf7c857860504b5d6c9e2d0cc1c8e3666eaf1",
+    "view": "im2.png",
+    "path": "booster/ExtractorFan/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Fridge",
+    "group": "booster/Fridge",
+    "role": "evaluation",
+    "sha256": "217884c995276217ac1c7101d8594ef84c0170da557e1871d980c734cceee983",
+    "view": "im0.png",
+    "path": "booster/Fridge/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Fridge",
+    "group": "booster/Fridge",
+    "role": "evaluation",
+    "sha256": "17e7b7a4686ee31c30572ed8eb4865fca2fbe671a525f755cd922d1b0c3b7cef",
+    "view": "im1.png",
+    "path": "booster/Fridge/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Fridge",
+    "group": "booster/Fridge",
+    "role": "evaluation",
+    "sha256": "24011f57f8ee2b74ecf73116555ffd7d62e2638a7dd2e85c9842f7a3c912773a",
+    "view": "im2.png",
+    "path": "booster/Fridge/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Lunch",
+    "group": "booster/Lunch",
+    "role": "evaluation",
+    "sha256": "54a78e2419b163d48d0bc591898b9aa2c6c38f6cdf6c6282299ede22a72a453a",
+    "view": "im0.png",
+    "path": "booster/Lunch/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Microwave",
+    "group": "booster/Microwave",
+    "role": "evaluation",
+    "sha256": "c66cfe583109d8ec5e5ee7b88f83aac0bea19277c1a0670e5eb93a2b460993ad",
+    "view": "im0.png",
+    "path": "booster/Microwave/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Microwave",
+    "group": "booster/Microwave",
+    "role": "evaluation",
+    "sha256": "48a618216201dc1dcf94a7ac89f23d14a0a9566a105478fef5d00572ae2ad002",
+    "view": "im1.png",
+    "path": "booster/Microwave/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Microwave",
+    "group": "booster/Microwave",
+    "role": "evaluation",
+    "sha256": "a55d0c7395a2dfd2888037123b127fea204f17cc668977d13e1ab5aa493e3ca1",
+    "view": "im2.png",
+    "path": "booster/Microwave/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Mirror",
+    "group": "booster/Mirror",
+    "role": "evaluation",
+    "sha256": "287091cec965299dd5f51a8a487d0dad28d588ed7ad19631ffa82b3ba4fc9fca",
+    "view": "im0.png",
+    "path": "booster/Mirror/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Mirror",
+    "group": "booster/Mirror",
+    "role": "evaluation",
+    "sha256": "4a151c414d77747c56d26a9b86e6f8e6ec08d99b651d1a7f4eaaa00a0975f870",
+    "view": "im1.png",
+    "path": "booster/Mirror/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "4c1fef4c86cefe42010b136cd0d90d34541a2dd73414238a09ce0b278a36fb65",
+    "view": "im0.png",
+    "path": "booster/Moka/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "2210db4ac3f1a793dc5319696b30aa1c14f959fb8de2c7ca44ac39c0d4fd59f6",
+    "view": "im1.png",
+    "path": "booster/Moka/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "48bc390336360daf885b9c305f8eb5ef6aa3f26a5a0c17524f286f78628f0d9d",
+    "view": "im2.png",
+    "path": "booster/Moka/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka1",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "d5231507944db0e0dc678769d2d5c2f8113d178a9447b06e4932584540ebcb55",
+    "view": "im0.png",
+    "path": "booster/Moka1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka1",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "14023abff482da815d5d3d268a88bfb8e5ba6a8c87b161be8b8626777ea456c7",
+    "view": "im1.png",
+    "path": "booster/Moka1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Moka1",
+    "group": "booster/Moka",
+    "role": "evaluation",
+    "sha256": "f3a18bec397671f72cede8eaef67eccb46b21411506b0780d96f38f410511b2b",
+    "view": "im2.png",
+    "path": "booster/Moka1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Motorcycle",
+    "group": "booster/Motorcycle",
+    "role": "evaluation",
+    "sha256": "60f9d5178964facc6222bd6ba687620138ce62ecf84a1f53dda3b8a497f133f4",
+    "view": "im0.png",
+    "path": "booster/Motorcycle/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Motorcycle",
+    "group": "booster/Motorcycle",
+    "role": "evaluation",
+    "sha256": "747b1779c458417f92f035ce63917207ea9668dd9baf5aea98936b5e7d1817cd",
+    "view": "im1.png",
+    "path": "booster/Motorcycle/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Motorcycle",
+    "group": "booster/Motorcycle",
+    "role": "evaluation",
+    "sha256": "d1438c675e4cf5d5e1768c48ab224498b464b798aa003685d48478411a4aeda6",
+    "view": "im2.png",
+    "path": "booster/Motorcycle/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Mouthwash",
+    "group": "booster/Mouthwash",
+    "role": "evaluation",
+    "sha256": "552211fc577a3ece234d41aecf6311862a3fdcd7399422ea503e5ae3a6dd8336",
+    "view": "im0.png",
+    "path": "booster/Mouthwash/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Mouthwash",
+    "group": "booster/Mouthwash",
+    "role": "evaluation",
+    "sha256": "996f3974dc6722e3d980dbf24626b356b5d2cfb3cf1e325d85adbf9db70944b1",
+    "view": "im1.png",
+    "path": "booster/Mouthwash/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Mouthwash",
+    "group": "booster/Mouthwash",
+    "role": "evaluation",
+    "sha256": "c63a544b1f0883babd5f7fcd22f15f2e4fd9d92fe603cf33ac896d00b8d51f4a",
+    "view": "im2.png",
+    "path": "booster/Mouthwash/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "OilCan",
+    "group": "booster/OilCan",
+    "role": "evaluation",
+    "sha256": "8a8dacb283358528da4891fe2a6e09bdac19635458040c069a25ba6701856699",
+    "view": "im0.png",
+    "path": "booster/OilCan/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "OilCan",
+    "group": "booster/OilCan",
+    "role": "evaluation",
+    "sha256": "d2532e44f8b10d1ca71d665ec55308eeed43540b98858cdca5b8cfabaa78e2a0",
+    "view": "im1.png",
+    "path": "booster/OilCan/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "OilCan",
+    "group": "booster/OilCan",
+    "role": "evaluation",
+    "sha256": "c63719a2be7c1c4f350d3cd689b84156d6196c67dd6fd8067c72a4a965d4147f",
+    "view": "im2.png",
+    "path": "booster/OilCan/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven1",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "e4a2baafe28d5611a540283c9da4039163b7ac69b15ffa7e18c823bbca702bbf",
+    "view": "im0.png",
+    "path": "booster/Oven1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven1",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "9306f2d89da0523d20c9b051969843c95ff0ccf01f60678ee344fc9807899f54",
+    "view": "im1.png",
+    "path": "booster/Oven1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven1",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "317661c7a8b7308ecb42293a4452d6b011277bcde4867134a9e81148e69d7036",
+    "view": "im2.png",
+    "path": "booster/Oven1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven2",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "175b3a7cf9c736d7f5b6145b80381f80286ce4f85edc5bf5816578174729e16c",
+    "view": "im0.png",
+    "path": "booster/Oven2/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven2",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "5cdd53753c70101fe8a1fb0fcd76732a6fa975c2c5b0daeb62b2d4da3ebccb11",
+    "view": "im1.png",
+    "path": "booster/Oven2/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Oven2",
+    "group": "booster/Oven1",
+    "role": "evaluation",
+    "sha256": "ef51e3b8a5ea3ddd12910f50b3b52ce4f9863d0380f13d47619d8c6438af9221",
+    "view": "im2.png",
+    "path": "booster/Oven2/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Pots1",
+    "group": "booster/Pots1",
+    "role": "evaluation",
+    "sha256": "a91512ab6707ed3b1217f262a02fd01c5a004132ed4205486566ba665eb898d7",
+    "view": "im0.png",
+    "path": "booster/Pots1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Pots1",
+    "group": "booster/Pots1",
+    "role": "evaluation",
+    "sha256": "188f9a0bd44fb2b362a05ff477ae17edd71ab82db2baddbae5ca9490ac9e5be0",
+    "view": "im1.png",
+    "path": "booster/Pots1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Pots1",
+    "group": "booster/Pots1",
+    "role": "evaluation",
+    "sha256": "8e554431a9b96de2df07d4ce14d674c0caee762b083eafe1be6de6973841ee4a",
+    "view": "im2.png",
+    "path": "booster/Pots1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Shower",
+    "group": "booster/Shower",
+    "role": "evaluation",
+    "sha256": "df45d4426306213dec9b52fa7f6e93a6457d6b0cc0f68f87f4722ccaa072ec82",
+    "view": "im0.png",
+    "path": "booster/Shower/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Shower",
+    "group": "booster/Shower",
+    "role": "evaluation",
+    "sha256": "4a93859d312c8bc118af33d3bc19b118400aac5e2d7d6c7cae7c366e0e4a9231",
+    "view": "im1.png",
+    "path": "booster/Shower/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Shower",
+    "group": "booster/Shower",
+    "role": "evaluation",
+    "sha256": "396faac107171bb93eb845b63cc2048d28a090322a928abbcdde494aa1e3e5dd",
+    "view": "im2.png",
+    "path": "booster/Shower/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Sink",
+    "group": "booster/Sink",
+    "role": "evaluation",
+    "sha256": "998b576f13696f918e8c0c9b4384dbf28ab91a3e7f298a832773a4e3d6c7b987",
+    "view": "im0.png",
+    "path": "booster/Sink/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Sink",
+    "group": "booster/Sink",
+    "role": "evaluation",
+    "sha256": "a300b9168ecdb66eddbaef15b14e18284e28e05bf4204cc256250e745d68e640",
+    "view": "im1.png",
+    "path": "booster/Sink/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Sink",
+    "group": "booster/Sink",
+    "role": "evaluation",
+    "sha256": "6ff4664924b2956ac57cdb65a22524aa0c19a71f726e7df173146e4b7a216a74",
+    "view": "im2.png",
+    "path": "booster/Sink/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "SoapDishes",
+    "group": "booster/SoapDishes",
+    "role": "evaluation",
+    "sha256": "1bdd4647d1ab2e99e944e32cddaefd07319fdc94f50dc7ddd53421bebbc54810",
+    "view": "im0.png",
+    "path": "booster/SoapDishes/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "SoapDishes",
+    "group": "booster/SoapDishes",
+    "role": "evaluation",
+    "sha256": "12d167c6a456bf488e6086ae63cc83781482ddc572004523a51e83dcda8c3da3",
+    "view": "im1.png",
+    "path": "booster/SoapDishes/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "SoapDishes",
+    "group": "booster/SoapDishes",
+    "role": "evaluation",
+    "sha256": "77269739d4e433c44baefa44dce8a8e713576fa76da6a31ba6bd3f67ae38bc62",
+    "view": "im2.png",
+    "path": "booster/SoapDishes/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Tablet",
+    "group": "booster/Tablet",
+    "role": "evaluation",
+    "sha256": "dbd71a6e880d28046da9b4004475321656997536a2194f5e447e7aaeef4d60c8",
+    "view": "im0.png",
+    "path": "booster/Tablet/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Tablet",
+    "group": "booster/Tablet",
+    "role": "evaluation",
+    "sha256": "1b3e1df2952c71f08c5ee837ee7d13012314461bc8b5b6031b21d8504c7cbf5b",
+    "view": "im1.png",
+    "path": "booster/Tablet/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Tablet",
+    "group": "booster/Tablet",
+    "role": "evaluation",
+    "sha256": "e01fd5733f4ada1ad167dbb5628f3b46ce43559039095db62d3f9d1370702d2c",
+    "view": "im2.png",
+    "path": "booster/Tablet/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Toilet",
+    "group": "booster/Toilet",
+    "role": "evaluation",
+    "sha256": "ba00418b8a0632e1f4545b8d93c7c5a41d0e69d5773a81c909d40944e09e8c50",
+    "view": "im0.png",
+    "path": "booster/Toilet/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Toilet",
+    "group": "booster/Toilet",
+    "role": "evaluation",
+    "sha256": "6abfeb003107615a2aab411d5934031a29cedf1ec1dcfdc5ec83fd5612c53161",
+    "view": "im1.png",
+    "path": "booster/Toilet/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Toilet",
+    "group": "booster/Toilet",
+    "role": "evaluation",
+    "sha256": "aab5fc395da9cb1497c867b2b67cf4d9db75ca1b64d7921543cee19ba18142a0",
+    "view": "im2.png",
+    "path": "booster/Toilet/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "d77d79f4c800b2459a381449c99c4be1e91cfbe9fef5a725a6c8b628cd6fccd8",
+    "view": "im0.png",
+    "path": "booster/TV/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "175457d6af622b29f0f47bebdca7f8b8ffe383da3febc4c11201006226c0958a",
+    "view": "im1.png",
+    "path": "booster/TV/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "75c3e2f40422d68cf64d36ad7aa1740cc996021dd7ca08fe4212ad6efb1aaf10",
+    "view": "im2.png",
+    "path": "booster/TV/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV1",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "1f095bf6e879845ab8ca68c05e73325c2b4ca00bee1a0932fb3b7d21eb014d53",
+    "view": "im0.png",
+    "path": "booster/TV1/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV1",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "281942f36f92b01c586546c9637fed01afa4e1b563ac17ef8d71ecf4c82bcd1b",
+    "view": "im1.png",
+    "path": "booster/TV1/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV1",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "af71844bb9b5c55f654edaccf5a2bd473d45f3302d79c8da025f1dd2cc12471e",
+    "view": "im2.png",
+    "path": "booster/TV1/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV2",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "d96f3ffce506b00022829de07f93770bf1a486d6255d51c5792eb5f3665ecf68",
+    "view": "im0.png",
+    "path": "booster/TV2/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "TV2",
+    "group": "booster/TV",
+    "role": "evaluation",
+    "sha256": "4d3f1b97df2d800806c95e48f4efe77c64b96f2c66fb0f01b4e53dc37998d3ce",
+    "view": "im1.png",
+    "path": "booster/TV2/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Vodka",
+    "group": "booster/Vodka",
+    "role": "evaluation",
+    "sha256": "4c91d5cff0e2347512123369387e688e8906f2f3ab8ad7595c0f5649dd39b1d6",
+    "view": "im0.png",
+    "path": "booster/Vodka/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Vodka",
+    "group": "booster/Vodka",
+    "role": "evaluation",
+    "sha256": "5af7c4368ad6c6c1dec6316395e4c46011b5f1675de057405f0803c72a9fd53e",
+    "view": "im1.png",
+    "path": "booster/Vodka/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Vodka",
+    "group": "booster/Vodka",
+    "role": "evaluation",
+    "sha256": "3dc77547d6bbbeeae42cada4ac31f6f37de7d4adb31a007a227908dc73dad271",
+    "view": "im2.png",
+    "path": "booster/Vodka/im2.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Washer",
+    "group": "booster/Washer",
+    "role": "evaluation",
+    "sha256": "d88bae975cc79a66e32c989a52fd2161c0482ac2c31590ed5bbc3eb3dd4e09db",
+    "view": "im0.png",
+    "path": "booster/Washer/im0.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Washer",
+    "group": "booster/Washer",
+    "role": "evaluation",
+    "sha256": "ec6d6d3060a3ae56773377eaab2e3746be5975ae6eddf407135bbd3da7c8d5ca",
+    "view": "im1.png",
+    "path": "booster/Washer/im1.npz"
+  },
+  {
+    "dataset": "booster",
+    "scene": "Washer",
+    "group": "booster/Washer",
+    "role": "evaluation",
+    "sha256": "2dee06eef628808fd27a324b124dfd380d1b651e3ea3bd244b6180367dc7f36a",
+    "view": "im2.png",
+    "path": "booster/Washer/im2.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_1l",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "6dc562eeda11a07d4629aecd9e01592b32486ebe5dd13a235a6aacf64692a60a",
+    "path": "eth3d_development/delivery_area_1l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_1s",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "a3b1c7d75304a02049be2e2ebe87a2b3e0287330974c59a184f34adcd7c4eed6",
+    "path": "eth3d_development/delivery_area_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_2l",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "aa76594906c9083f6e7fea966e0b94409065a98a41c691d229b84e31f066fc05",
+    "path": "eth3d_development/delivery_area_2l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_2s",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "e6f8dac66e841cd16efc1e5f83dd3bde1d2511f2f5ed19aa00119bc370b5312d",
+    "path": "eth3d_development/delivery_area_2s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_3l",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "5f9dc10e1cdedd7cf4a585c22e27938846c5c85261487bc951791e2e978cca79",
+    "path": "eth3d_development/delivery_area_3l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "delivery_area_3s",
+    "group": "eth3d_development/delivery_area",
+    "role": "evaluation",
+    "sha256": "905e6c9069e5b1c5ecbe95d1dc56381fa8eb8030198bfa5833c91b122af3a378",
+    "path": "eth3d_development/delivery_area_3s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_1l",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "85225646eb9764539042f3ea5d3af5be24965f64183227fd4ad376f4559758c1",
+    "path": "eth3d_development/electro_1l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_1s",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "bfe636321561dcedd67800993b50918e6a9a88e346d30b9629ed02936f06f1eb",
+    "path": "eth3d_development/electro_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_2l",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "da30606f9507dc0b0b19c7f487ae25a9b3b2766e193d7dcfdb66db29c7714779",
+    "path": "eth3d_development/electro_2l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_2s",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "625bdf8a9c598f923e30626bf07f7d11d7150d193ace97f278d888b49004119f",
+    "path": "eth3d_development/electro_2s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_3l",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "920322489d35c589057d44bd77fdf16dc12e1879de9dc2098858a8368d06f8e7",
+    "path": "eth3d_development/electro_3l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "electro_3s",
+    "group": "eth3d_development/electro",
+    "role": "evaluation",
+    "sha256": "677234b2388bc86e86da4cdecd04a08dadd97490927e9ae2dec5836e1d464eda",
+    "path": "eth3d_development/electro_3s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "facade_1s",
+    "group": "eth3d_development/facade",
+    "role": "evaluation",
+    "sha256": "45c109062302cfd52e58fe4ab417051ec56718d489b0e30c6ad099e6c43fa569",
+    "path": "eth3d_development/facade_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "forest_1s",
+    "group": "eth3d_development/forest",
+    "role": "evaluation",
+    "sha256": "5688b0a4b7c78099b17b4c5a65140f45f297cb55d72e3fa66578fee688c350b7",
+    "path": "eth3d_development/forest_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "forest_2s",
+    "group": "eth3d_development/forest",
+    "role": "evaluation",
+    "sha256": "33c4d599d714248d5e1d072e1c8c25d7b7806d88de5984cc84409cd1db60e1bc",
+    "path": "eth3d_development/forest_2s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_1l",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "4109e31ae3fd29e7540f1e5ca8f3c223c7409f6a20becc2a535bcaa2ee64f79e",
+    "path": "eth3d_development/playground_1l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_1s",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "2fbb9a1dba5e3b57d3db5ce45dcce7b013dbda6d60aaae02948549834a2fc879",
+    "path": "eth3d_development/playground_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_2l",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "f8f3682057314bc5a0a5fd17acc3e7d0a513e42d8f9d2f8f81750f129ae35ca8",
+    "path": "eth3d_development/playground_2l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_2s",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "ab57fcab3dd9048ccab8f95f048f8089d9bb2bbe43a7a0f7de4986a9797e0ab6",
+    "path": "eth3d_development/playground_2s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_3l",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "fee647c861808b3e9ae91b1ed712d3bbd8a6cd78faaa38ab5ba91cf6d7a93c72",
+    "path": "eth3d_development/playground_3l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "playground_3s",
+    "group": "eth3d_development/playground",
+    "role": "evaluation",
+    "sha256": "cc6d186e36cc1a4671325e48f6f1063efe86cdbda3d81df1fc351c14c90d060e",
+    "path": "eth3d_development/playground_3s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrace_1s",
+    "group": "eth3d_development/terrace",
+    "role": "evaluation",
+    "sha256": "9158b6d93ec8fc96498db255145345dd40e03851273ca7b1dd57c1d782aa1326",
+    "path": "eth3d_development/terrace_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrace_2s",
+    "group": "eth3d_development/terrace",
+    "role": "evaluation",
+    "sha256": "92d893b1a074c3a08c7c3e196773e2149a014f1c64e5952a80db47740830b62d",
+    "path": "eth3d_development/terrace_2s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrains_1l",
+    "group": "eth3d_development/terrains",
+    "role": "evaluation",
+    "sha256": "8f3712e22b13efc3d52fdb16653ed70b18e2a321c4e2cef5d37e7db8403b961f",
+    "path": "eth3d_development/terrains_1l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrains_1s",
+    "group": "eth3d_development/terrains",
+    "role": "evaluation",
+    "sha256": "fc4e9b6fa2a0fdba667621c1f0688558999b2bb2a9d9d645d846d337354e92e2",
+    "path": "eth3d_development/terrains_1s.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrains_2l",
+    "group": "eth3d_development/terrains",
+    "role": "evaluation",
+    "sha256": "1ebf108cfe237e419846c7b2a9e4d1a41dec28b622f2083f599a6555d490714c",
+    "path": "eth3d_development/terrains_2l.npz"
+  },
+  {
+    "dataset": "eth3d_development",
+    "scene": "terrains_2s",
+    "group": "eth3d_development/terrains",
+    "role": "evaluation",
+    "sha256": "8e019d4a8a2a58a2ec4e46c33aa60bbf2b046cdd693ee060bef8d47867c308df",
+    "path": "eth3d_development/terrains_2s.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Adirondack",
+    "group": "middlebury_development/Adirondack",
+    "role": "development",
+    "sha256": "8c4be002d20fd0c81d6c8bb5cb574f50b51c2ddfaaee49ef3bc253ace33fd047",
+    "path": "middlebury_development/Adirondack.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "ArtL",
+    "group": "middlebury_development/ArtL",
+    "role": "development",
+    "sha256": "9cb073ca28c9fd8e0590635fc401f440d6ccbba053a7ea4280755c866025f526",
+    "path": "middlebury_development/ArtL.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Jadeplant",
+    "group": "middlebury_development/Jadeplant",
+    "role": "development",
+    "sha256": "4ef3c239e4522f6c99cce66e6c00949c4665bfa71f3d49c28b500f548578002b",
+    "path": "middlebury_development/Jadeplant.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Motorcycle",
+    "group": "middlebury_development/Motorcycle",
+    "role": "development",
+    "sha256": "5ef82df82b9ee05ebe8c3abddb548b613ad84239a183cab447a6508fe38e4665",
+    "path": "middlebury_development/Motorcycle.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "MotorcycleE",
+    "group": "middlebury_development/Motorcycle",
+    "role": "development",
+    "sha256": "2baeaf1c5cd54e7b351baed47cc8ba6d6a56363303721d72f905f9b09acb281b",
+    "path": "middlebury_development/MotorcycleE.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Piano",
+    "group": "middlebury_development/Piano",
+    "role": "development",
+    "sha256": "eb5c04ebdd44680253c7b1441915469aae58dce2f11bc30e7cb0b22b9580f8cc",
+    "path": "middlebury_development/Piano.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "PianoL",
+    "group": "middlebury_development/Piano",
+    "role": "development",
+    "sha256": "cf9c7643a40302aabe475453990be13ce3d2888bffbdb4b76d5906f6415023b7",
+    "path": "middlebury_development/PianoL.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Pipes",
+    "group": "middlebury_development/Pipes",
+    "role": "development",
+    "sha256": "6152e6da6a64a6f4361485f4eb6ae6534db467245447b0ce57626361dda3a161",
+    "path": "middlebury_development/Pipes.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Playroom",
+    "group": "middlebury_development/Playroom",
+    "role": "development",
+    "sha256": "1d6aebf740736cb585c145f8160258c7d6e9427df13ba497517a4b1633f7f96c",
+    "path": "middlebury_development/Playroom.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Playtable",
+    "group": "middlebury_development/Playtable",
+    "role": "development",
+    "sha256": "2cd949007ce8fdb70b9bd63b46a245ab3de479357713e9f1c739f26e00274190",
+    "path": "middlebury_development/Playtable.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "PlaytableP",
+    "group": "middlebury_development/Playtable",
+    "role": "development",
+    "sha256": "df847874b8d417299a899af30c0a2704c7ae2a3202fa96a20b74d17012995e68",
+    "path": "middlebury_development/PlaytableP.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Recycle",
+    "group": "middlebury_development/Recycle",
+    "role": "development",
+    "sha256": "d22b539ee61758eb77c4c63d54b4160c327a0c0fbf5aaa4e491a0431ab6832e6",
+    "path": "middlebury_development/Recycle.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Shelves",
+    "group": "middlebury_development/Shelves",
+    "role": "development",
+    "sha256": "f08fcc32bc79db0e9357a5043b48ba098c89a13d1eb505d1f90d08d509a6e57f",
+    "path": "middlebury_development/Shelves.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Teddy",
+    "group": "middlebury_development/Teddy",
+    "role": "development",
+    "sha256": "4213644414d344b234a0fc53727642e4681f20b041da19a54bd1e42e2d01d5d7",
+    "path": "middlebury_development/Teddy.npz"
+  },
+  {
+    "dataset": "middlebury_development",
+    "scene": "Vintage",
+    "group": "middlebury_development/Vintage",
+    "role": "development",
+    "sha256": "8cbc594a7aaa7def0798928855cd6ec69f94863596516a1a737131e1ca03af47",
+    "path": "middlebury_development/Vintage.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "artroom1",
+    "group": "mobile_development/artroom",
+    "role": "evaluation",
+    "sha256": "e822d266ab778c1097a1e473531a01fcd738e97d6170398b39c1fa240ff2c43b",
+    "path": "mobile_development/artroom1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "artroom2",
+    "group": "mobile_development/artroom",
+    "role": "evaluation",
+    "sha256": "ac0c7743d7c09bd79ea39a6bf6d5754561fd1e78f3dfa9c7a6a5d4f2b6acf3b3",
+    "path": "mobile_development/artroom2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "bandsaw1",
+    "group": "mobile_development/bandsaw",
+    "role": "evaluation",
+    "sha256": "e1fe1981f9a4262d91de7a1421b8c26e70e62e4e25360ec78ec803db7bb0b412",
+    "path": "mobile_development/bandsaw1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "bandsaw2",
+    "group": "mobile_development/bandsaw",
+    "role": "evaluation",
+    "sha256": "33d44d633eab33f6292da60d7f3b7ace2c5265456846a39ba09f36113cb16830",
+    "path": "mobile_development/bandsaw2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "chess1",
+    "group": "mobile_development/chess",
+    "role": "evaluation",
+    "sha256": "8983569283e7901bc7b9744adf89f296c97fff7f3bf01aefd3cff0c543e7634b",
+    "path": "mobile_development/chess1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "chess2",
+    "group": "mobile_development/chess",
+    "role": "evaluation",
+    "sha256": "00b0152d7b5a8eeb89107b687a0cabc7eb5b3d33d3501cf15926f6b1cad36b4f",
+    "path": "mobile_development/chess2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "chess3",
+    "group": "mobile_development/chess",
+    "role": "evaluation",
+    "sha256": "1adc7b39b48996b416876e7374b0c0070588ebfe1e0c5eaef5d283293b7b6021",
+    "path": "mobile_development/chess3.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "curule1",
+    "group": "mobile_development/curule",
+    "role": "evaluation",
+    "sha256": "4caad7342f4009cd1f90bdcc2067cbddc40ee9c6b651ac654954bec1a87942df",
+    "path": "mobile_development/curule1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "curule2",
+    "group": "mobile_development/curule",
+    "role": "evaluation",
+    "sha256": "e75c153c5956807e74e6983219d9b57b56543394260f5eb2bc6fa4c481067d97",
+    "path": "mobile_development/curule2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "curule3",
+    "group": "mobile_development/curule",
+    "role": "evaluation",
+    "sha256": "8d814fc367e8666db4cd4569ff888e8c0a509944c709d0318df6e29913f46204",
+    "path": "mobile_development/curule3.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "ladder1",
+    "group": "mobile_development/ladder",
+    "role": "evaluation",
+    "sha256": "bff724b017c9a9e61389167c986cff8d7611d2df0eff815bc4a9b795c297cd8c",
+    "path": "mobile_development/ladder1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "ladder2",
+    "group": "mobile_development/ladder",
+    "role": "evaluation",
+    "sha256": "206954f881888763883a39732fe65ca495c64c3ca41dcd78bf9f44a8ae3d9396",
+    "path": "mobile_development/ladder2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "octogons1",
+    "group": "mobile_development/octogons",
+    "role": "evaluation",
+    "sha256": "1c6eb08588d0f8870dfad92346cc245451e373f543877c5f3a1f7bef05fde638",
+    "path": "mobile_development/octogons1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "octogons2",
+    "group": "mobile_development/octogons",
+    "role": "evaluation",
+    "sha256": "2092558ff6934b33e97c87532321c1416d59dbfcf0ee2071a77f640237d039e7",
+    "path": "mobile_development/octogons2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "pendulum1",
+    "group": "mobile_development/pendulum",
+    "role": "evaluation",
+    "sha256": "e9e771fccd70c054c3a45be6436d6ab99a7691e0b7063cd7717749e9e2fe7fc9",
+    "path": "mobile_development/pendulum1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "pendulum2",
+    "group": "mobile_development/pendulum",
+    "role": "evaluation",
+    "sha256": "63ec7e7c1a803c37e0059670b3acd4762493e28f9f1b73a08862d238bd6d5bb9",
+    "path": "mobile_development/pendulum2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "podium1",
+    "group": "mobile_development/podium",
+    "role": "evaluation",
+    "sha256": "007dbbfeca5e07161f18b0382ff1a3d3abf1a1af6ca1fbe034a31a069898baa3",
+    "path": "mobile_development/podium1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "skates1",
+    "group": "mobile_development/skates",
+    "role": "evaluation",
+    "sha256": "99e9cc832e5475b345605a13bdff61cf1f212782c5c6e811934173b7f1a14637",
+    "path": "mobile_development/skates1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "skates2",
+    "group": "mobile_development/skates",
+    "role": "evaluation",
+    "sha256": "8a01ad685144776de581e795e77f2f1d1bea9b5e80fb7b55c611f3fd82d3eeb5",
+    "path": "mobile_development/skates2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "skiboots1",
+    "group": "mobile_development/skiboots",
+    "role": "evaluation",
+    "sha256": "6fc752720269d78d154fa3993dc5b6be7458a2ebc40c3acde7ea11840e131264",
+    "path": "mobile_development/skiboots1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "skiboots2",
+    "group": "mobile_development/skiboots",
+    "role": "evaluation",
+    "sha256": "989a029d5f04ea935894fb9791fee6ba85ca3d4e7395e07f8a1fdabb3a0d911c",
+    "path": "mobile_development/skiboots2.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "skiboots3",
+    "group": "mobile_development/skiboots",
+    "role": "evaluation",
+    "sha256": "6d0f5e038b50568440bf4942b813b1a368e40f9f0d0670ab8caa9786222fb7f4",
+    "path": "mobile_development/skiboots3.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "traproom1",
+    "group": "mobile_development/traproom",
+    "role": "evaluation",
+    "sha256": "983128e39fdfc7adf4012d0788c0f83beae6b9b13828f3bf7841bbf18f63d5a7",
+    "path": "mobile_development/traproom1.npz"
+  },
+  {
+    "dataset": "mobile_development",
+    "scene": "traproom2",
+    "group": "mobile_development/traproom",
+    "role": "evaluation",
+    "sha256": "0237bc8315ae02e1c3d790ed9ca612ef9f9f594ba0e73670d6c7cde3ab982f94",
+    "path": "mobile_development/traproom2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Aloe",
+    "group": "middlebury2006_new/Aloe",
+    "role": "evaluation",
+    "sha256": "843ce73d08040e3583ba46b503228e26228d1e1cab74abc3862ccca38312c022",
+    "archive_sha256": "f333f7521b708bd1103ff905d9cbe7884c46739d797c7fd796818a4872e76ce5",
+    "path": "middlebury2006_new/Aloe.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Baby1",
+    "group": "middlebury2006_new/Baby",
+    "role": "evaluation",
+    "sha256": "eebe069dd19dfdc0cf5acd784ff2969eea6bc82a4624bbd8e1d121e2b25c2033",
+    "archive_sha256": "225508efbaf6658beab7d143b4777cc27014c4b414b40a1942cff04bc98d6bd4",
+    "path": "middlebury2006_new/Baby1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Baby2",
+    "group": "middlebury2006_new/Baby",
+    "role": "evaluation",
+    "sha256": "1d000a9976c114b4cbc84bdc8f96dc0483b194a03565d22c02205e7db7af0088",
+    "archive_sha256": "26c9823bbde1b74628cb62bd56e195ef637635b0207918d6a35a13488f785fc4",
+    "path": "middlebury2006_new/Baby2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Baby3",
+    "group": "middlebury2006_new/Baby",
+    "role": "evaluation",
+    "sha256": "2c2f516984152848ada4fcd16df8218770f6f860d8d4396159a4e85432f6e246",
+    "archive_sha256": "a16e3409a6533983e48ced5abd51091055d01423a213362d4a7a0b4543ed8790",
+    "path": "middlebury2006_new/Baby3.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Bowling1",
+    "group": "middlebury2006_new/Bowling",
+    "role": "evaluation",
+    "sha256": "4b6360a17e2a4bf554f2561fac160d759392f737851e80eb31e3c0972c0fff3e",
+    "archive_sha256": "798b2aef798c1a95e5ca68a3471a1674898bc712874461d58eda9140d416b938",
+    "path": "middlebury2006_new/Bowling1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Bowling2",
+    "group": "middlebury2006_new/Bowling",
+    "role": "evaluation",
+    "sha256": "3e5576d7ee3b09ed731e70d4c9ad4afb5726ff011e911fd989d947688e918d09",
+    "archive_sha256": "d5dc1dd8142f27a477641635f4b33b43082892280a15110954c8a013ad93ab9d",
+    "path": "middlebury2006_new/Bowling2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Cloth1",
+    "group": "middlebury2006_new/Cloth",
+    "role": "evaluation",
+    "sha256": "8e814ae3178a93b6a4a654cbf468a8afc05aa3a264dd54674d4adbde8daa7613",
+    "archive_sha256": "cf4a87fc98c3357ee3087abcfd9339149a7f1832a311baaab27b83264d7ed87a",
+    "path": "middlebury2006_new/Cloth1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Cloth2",
+    "group": "middlebury2006_new/Cloth",
+    "role": "evaluation",
+    "sha256": "e521838985556351c491ca36d28b0919bb976b4237cc2dedad342b6cfae3e4b7",
+    "archive_sha256": "e83bc5316358a6f5526c2d85eedc8cc174f6495d2adb2585ef97932a547ef63b",
+    "path": "middlebury2006_new/Cloth2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Cloth3",
+    "group": "middlebury2006_new/Cloth",
+    "role": "evaluation",
+    "sha256": "a414c0d739b71bf8b02f06392c40c752922f2c147a98c5d49f7be5e6f61c660d",
+    "archive_sha256": "5233f9d1608ff96d3c83d6982d527c3ae567612c2d32edadde0d5316a7444930",
+    "path": "middlebury2006_new/Cloth3.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Cloth4",
+    "group": "middlebury2006_new/Cloth",
+    "role": "evaluation",
+    "sha256": "bc4f4e3a34775e4c9746896b5867f019040c373fca188aacc964ca8adff6364e",
+    "archive_sha256": "111be0d7b55723beaca235b490af58fe734172507288ae98e8da3f2ac35ebea4",
+    "path": "middlebury2006_new/Cloth4.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Flowerpots",
+    "group": "middlebury2006_new/Flowerpots",
+    "role": "evaluation",
+    "sha256": "23ad9c1df37a7ad002d3e3412e4475a93d9bccc2306e733e807d050e9bbe88c7",
+    "archive_sha256": "bd00382324bd5f2bb65f49fa17fe5dbd141d0da670b8e358763f706bf128cdf3",
+    "path": "middlebury2006_new/Flowerpots.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Lampshade1",
+    "group": "middlebury2006_new/Lampshade",
+    "role": "evaluation",
+    "sha256": "54a843859a267512a70c7ce56f4bef6272fec22776bb85e83c4e88b8fb1a220b",
+    "archive_sha256": "26c2853bc6c0e94c3872845fb5ae9f9a647f3978d91057ca1686909bd1ab0250",
+    "path": "middlebury2006_new/Lampshade1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Lampshade2",
+    "group": "middlebury2006_new/Lampshade",
+    "role": "evaluation",
+    "sha256": "0f67df1a429154e69d184133e569874416239e62d7fbd18c029ae1c43e991e60",
+    "archive_sha256": "d08a0282084a2e54fffeaa35764a1052ac53af48d2dcf4b4ba2023da8c9553b7",
+    "path": "middlebury2006_new/Lampshade2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Midd1",
+    "group": "middlebury2006_new/Midd",
+    "role": "evaluation",
+    "sha256": "05e45edd6ea65bb0d8761719e156b979b9d168185ea7e0c421d849335ae1d030",
+    "archive_sha256": "b26b13d00ad5108bbee78de1e180879b650d3fa82df74997af7d1b0119da337c",
+    "path": "middlebury2006_new/Midd1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Midd2",
+    "group": "middlebury2006_new/Midd",
+    "role": "evaluation",
+    "sha256": "1ad50f9f3cd1b9977ead269de801097439b4bfe744be239bfd42ee55ff972b58",
+    "archive_sha256": "7160caa5e3ddc808e732d89cae442ec1e093f4ea0471e81b50b35450fcbdace3",
+    "path": "middlebury2006_new/Midd2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Monopoly",
+    "group": "middlebury2006_new/Monopoly",
+    "role": "evaluation",
+    "sha256": "7d039e17bf20de3c854579c85183b3c22b0d4b050e82c450b40a891e1864813b",
+    "archive_sha256": "88e6133b47b8600d26248297f9bc010b0c990ba11b444a0397feb8a96d2150ba",
+    "path": "middlebury2006_new/Monopoly.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Plastic",
+    "group": "middlebury2006_new/Plastic",
+    "role": "evaluation",
+    "sha256": "7929bbcfb081c5453a29050a85339d68e64d42b580dfdc10a142b2c01805c55c",
+    "archive_sha256": "46d1f1040d815d31b6810f6641162698559f07dfb2bacba5e3e0d543e8aeee73",
+    "path": "middlebury2006_new/Plastic.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Rocks1",
+    "group": "middlebury2006_new/Rocks",
+    "role": "evaluation",
+    "sha256": "657e1f6774d6fa60f96cfed500b0b9512af0c8e2bd964c82d4618e2894795ded",
+    "archive_sha256": "036055c494eeb3592221d16625343c3f0b160afb1fe3413c49559d767d2f47be",
+    "path": "middlebury2006_new/Rocks1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Rocks2",
+    "group": "middlebury2006_new/Rocks",
+    "role": "evaluation",
+    "sha256": "df3c16488eadbf503246813781511a2ab6c71e90d86668c41706caa36d4ee34c",
+    "archive_sha256": "a8b130b45cdb6601080de0ddf7fcdb8e55ebfd81a75aca270998a849bede0385",
+    "path": "middlebury2006_new/Rocks2.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Wood1",
+    "group": "middlebury2006_new/Wood",
+    "role": "evaluation",
+    "sha256": "40a02f68c594f0447348b5fa090930a497292395f81cf7be9fde7fdc7e26baa9",
+    "archive_sha256": "a9b55745644a5ba566bc5e5a274336527b193470423fb7ccb7522008306baab1",
+    "path": "middlebury2006_new/Wood1.npz"
+  },
+  {
+    "dataset": "middlebury2006_new",
+    "scene": "Wood2",
+    "group": "middlebury2006_new/Wood",
+    "role": "evaluation",
+    "sha256": "32f9df940a9801bc9e7857aa36e455915b6314c0c4c20ba8ee389b4602fda9f6",
+    "archive_sha256": "21f2be0fde94d2945f00ff942607553f41af272657d1b5a8d4651a57923b7a4f",
+    "path": "middlebury2006_new/Wood2.npz"
+  }
+]

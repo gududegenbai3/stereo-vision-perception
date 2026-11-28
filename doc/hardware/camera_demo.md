@@ -4,7 +4,7 @@
 
 ## 环境与本机配置
 
-继续使用项目 Python 3.11 `SVP_env`。拍照额外使用 Pillow（`PIL`）和 Tk；Windows 本机 FFmpeg 必须支持 DirectShow。SGBM、标定及报告不依赖 Torch。网络推理额外需要 CUDA 版 Torch / torchvision / timm；本次已验证 torch 2.7.1+cu128、torchvision 0.22.1+cu128、timm 0.6.13、RTX 5060 Laptop，没有重新建环境。基础 `environment.yml` 不加入 GPU 依赖；这些可选功能的依赖和外部权重由使用者按本机安装，干净机器尚未完整复现。
+先按[复现指南](../algorithm/pretrained_comparison.md)配置 Python、Pillow/Tk 和两份官方权重。Windows 实拍使用支持 DirectShow 的 FFmpeg。标定和 SGBM 使用 CPU。
 
 将 `config/` 中以下模板复制为同目录的 `.local.json` 后编辑；本机配置自动忽略：
 
@@ -13,7 +13,6 @@
 | `capture_ui.example.json` | `capture_ui.local.json` | 设备名、FFmpeg 和本环境 pythonw 路径 |
 | `calibration_capture.example.json` | `calibration_capture.local.json` | 同上；实测棋盘格长和测量来源 |
 | `display_calibration.example.json` | `display_calibration.local.json` | 完成的标定会话目录、新版本输出目录 |
-| `pretrained_stereo.example.json` | `pretrained_stereo.local.json` | 固定版本上游源码、官方权重路径 |
 | `camera_comparison.example.json` | `camera_comparison.local.json` | 场景会话、新输出目录、确认标定仍适用 |
 
 JSON 相对路径均按配置所在目录解释；拍照启动器中的裸可执行文件名从当前 PATH 查找，也支持绝对路径或相对配置目录的路径。先激活 `SVP_env`；`pythonw.exe` 必须来自同一个环境。
@@ -23,6 +22,12 @@ JSON 相对路径均按配置所在目录解释；拍照启动器中的裸可执
 ```powershell
 ./src/start_capture.ps1
 ./src/start_capture.ps1 -Config config/calibration_capture.local.json
+```
+
+如本机策略禁止执行 PowerShell 脚本文件，可启动两个普通终端。第一个运行 `python -m src.capture_ui --config config/calibration_capture.local.json`（只拍场景时改用 `capture_ui.local.json`）。从配置指定的 `ready_file` 中读此会话的端口，然后在第二个终端运行下列命令。将端口和采集参数替换为本机值。采集完成后关闭窗口，结束 FFmpeg。
+
+```powershell
+ffmpeg -f dshow -video_size 2560x720 -framerate 30 -vcodec mjpeg -i "video=USB Camera" -an -fps_mode passthrough -pix_fmt bgr24 -f rawvideo tcp://127.0.0.1:12345
 ```
 
 窗口按钮或空格拍照，“完成拍摄”结束。保存原始拼图、左右无损 PNG、哈希、配对 CSV 与 `DONE.json`；预览缩放不影响保存像素。主机接收时间不代表传感器曝光同步。
@@ -42,7 +47,7 @@ python -m src.display_calibration_report --config config/display_calibration.loc
 
 ## 三方法同输入对照
 
-按模板中 `upstream_repository`、`upstream_commit` 获取官方源码，放入忽略的 `artifacts/`；按 `checkpoint_url` 下载官方权重并核对 SHA256。模板采用固定 Scene Flow BANet-2D 与 IGEV 权重。代码只生成少量兼容副本，记录原始及副本哈希；全键严格加载，不额外下载编码器权重。此 PR 不包含上游源码、权重、训练或微调入口。
+模型来源、SHA-256 与下载入口见[三模型复现指南](../algorithm/pretrained_comparison.md)。实拍对照和实时程序共用同一组官方权重。
 
 ```powershell
 python -m src.camera_comparison --phase prepare
@@ -55,6 +60,10 @@ python -m src.camera_report
 准备时检查完成会话、左右身份、原图哈希与拼图拆分、标定身份及分辨率，冻结全部样例、展示编号、配置/源码/官方权重哈希。左右使用同一套固定标定映射，不逐对拟合；三方法读取同一份干净校正输入。原生或半尺寸由配置明确选择；192 px 搜索范围、IGEV 32 次迭代固定。两种分辨率须使用不同输出目录；近景在原生尺寸可能超出 192 px，不能忽略这个混杂因素。
 
 报告校验全部输入和预测，生成全样例 `gallery.html` 及汇总。固定色标、共同支持和搜索区域；灰色为比较区域外或无输出。平滑、稠密及视觉轮廓都不等于正确率；没有真值时不输出 MAE、边界误差或模型精度排名。半尺寸视差不能直接套原生 Q 做米制重建。
+
+## 现场实时预览
+
+实时自动启动、帧率对照与同帧深度图见[现场实时试验版](live_demo.md)。
 
 ## 本次已验证与限制
 

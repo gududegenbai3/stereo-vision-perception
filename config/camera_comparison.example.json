@@ -2,7 +2,7 @@
   "training": false,
   "session_root": "../data/captures/YOUR_SESSION",
   "calibration_selector": "current_calibration.local.json",
-  "models_config": "pretrained_stereo.local.json",
+  "models_config": "pretrained_stereo.example.json",
   "output_root": "../artifacts/camera_comparison/YOUR_RUN",
   "image_scale": 0.5,
   "max_disparity": 192,

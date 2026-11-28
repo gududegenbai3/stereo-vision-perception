@@ -19,6 +19,9 @@ CLI 通过 `pipeline.py` 运行单场景离线重建，Notebook 逐步调用相�
 | `camera_io.py` / `provenance.py` | 采集完整性、固定映射预处理、实验 SGBM、文件身份和执行源码快照；无 Torch 依赖 |
 | `pretrained_stereo.py` | 可选官方 BANet/IGEV 推理适配，全键权重校验和最小兼容副本，不含训练入口 |
 | `camera_comparison.py` / `camera_report.py` | 冻结全部同输入样例、分进程推理及无真值定性图库，不修改默认匹配器 |
+| `live_source.py` | 完整拼接帧接收、重连状态及定时视频回放，只保留最新一帧 |
+| `live_depth.py` | 共用校正输入、半尺寸 Q、三个视差预测入口及米制深度，有独立 CUDA 推理进程 |
+| `live_demo.py` / `start_live_demo.cmd` | 实时同帧对照、暂停与恢复、自动回放测速及原生 FFmpeg 启停。部署入口可读出校验后的采集参数，通过本机 TCP 接收外部 FFmpeg 的完整帧。应用托管入口通过标准输出接收 |
 | `disparity.py` | 用 SGBM 计算像素单位视差，返回匹配有效性信息 |
 | `reprojection.py` | 根据视差和校正几何计算深度、三维坐标及重建有效掩码 |
 | `evaluation.py` | 根据预测、真值和掩码计算误差与覆盖率 |
@@ -101,3 +104,10 @@ Middlebury 适配器从校正后的内参与基线构造 `Q`，使用全图作�
 `outputs.py` 接收 `ReconstructionResult`、指标映射、实验参数和目标路径。运行目录在所有文件写完后发布；每次调用生成独立目录。
 
 `run_offline_pipeline` 接收已解析的 `OfflineConfig`，返回匹配、重建、指标和可选导出目录。Notebook 仍可分别调用各阶段来检查中间结果。
+
+## 预训练复现实验
+
+- `prepare_pretrained.py` 按模型配置获取并校验官方推理源码与权重。
+- `stereo_fair_data.py` 和 `stereo_fair_archives.py` 获取公开输入并核验冻结样本。
+- `stereo_fair_evaluation.py` 顺序冻结协议、选取开发集 SGBM 参数、推理与汇总。`stereo_fair_metrics.py` 定义统计域，`stereo_fair_report.py` 复核并绘图。
+- `pretrained_stereo.py` 是公开实验、实拍静态对照和实时窗口共用的推理边界。模型与数据缓存及全部运行产物放在忽略目录。

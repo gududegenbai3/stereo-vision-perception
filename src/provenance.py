@@ -3,6 +3,9 @@
 import hashlib
 from collections.abc import Mapping
 from pathlib import Path
+import shutil
+from tempfile import NamedTemporaryFile
+import urllib.request
 
 
 def file_hashes(paths: Mapping[str, Path]) -> dict[str, str]:
@@ -51,3 +54,29 @@ def verify_recorded_sources(output_root: Path, hashes: Mapping[str, str]) -> lis
         if not relative.exists() or hashlib.sha256(relative.read_bytes()).hexdigest() != expected:
             changed.append(filename)
     return changed
+
+
+def download_checked(url: str, target: Path, expected_sha256: str) -> Path:
+    """Return a verified cached file or atomically install one from its source."""
+    def matches(path: Path) -> bool:
+        with path.open("rb") as stream:
+            return hashlib.file_digest(stream, "sha256").hexdigest() == expected_sha256
+
+    if target.is_file():
+        if not matches(target):
+            raise ValueError(f"Wrong file SHA-256: {target}")
+        return target
+
+    target.parent.mkdir(parents=True, exist_ok=True)
+    request = urllib.request.Request(url, headers={"User-Agent": "Stereo course research"})
+    with NamedTemporaryFile(dir=target.parent, suffix=".download", delete=False) as stream:
+        partial: Path = Path(stream.name)
+    try:
+        with urllib.request.urlopen(request, timeout=90) as response, partial.open("wb") as stream:
+            shutil.copyfileobj(response, stream)
+        if not matches(partial):
+            raise ValueError(f"Downloaded file SHA-256 differs: {url}")
+        partial.replace(target)
+    finally:
+        partial.unlink(missing_ok=True)
+    return target

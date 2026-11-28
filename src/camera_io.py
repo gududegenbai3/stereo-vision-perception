@@ -68,12 +68,14 @@ def capture_inventory(session: Path) -> list[dict[str, Any]]:
 
 def calibrated_inputs(
     left: NDArray[np.uint8], right: NDArray[np.uint8],
-    maps: Mapping[str, NDArray[Any]], scale: float,
+    maps: Mapping[str, NDArray[Any]], scale: float, *,
+    support_masks: Mapping[str, NDArray[np.uint8]] | None = None,
 ) -> dict[str, NDArray[np.uint8]]:
     """Fixed maps -> BGR uint8 images and 0/255 support masks, no scene fitting.
 
     Input HxWx3 must match map HxW. Output uses the same scale for both cameras;
     disparity pixels refer to this output grid. Q is NOT resized by this function.
+    Cached support masks must come from the same maps and scale.
     """
     if scale not in (.5, 1.0):
         raise ValueError("Only native or uniform half size is supported")
@@ -83,7 +85,12 @@ def calibrated_inputs(
     for number, (name, image) in enumerate((("left", left), ("right", right)), 1):
         if image is None or image.shape != (height, width, 3) or image.dtype != np.uint8:
             raise ValueError("Native camera input shape/dtype mismatch")
-        for suffix, source in (("", image), ("_support", np.full((height, width), 255, np.uint8))):
+        sources: tuple[tuple[str, NDArray[np.uint8]], ...] = (("", image),)
+        if support_masks is None:
+            sources += (("_support", np.full((height, width), 255, np.uint8)),)
+        else:
+            result[name + "_support"] = support_masks[name + "_support"]
+        for suffix, source in sources:
             corrected: NDArray[np.uint8] = cv2.remap(source, maps[f"map{number}_x"], maps[f"map{number}_y"], cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
             value: NDArray[np.uint8] = cv2.resize(corrected, size, interpolation=cv2.INTER_AREA) if scale != 1 else corrected
             result[name + suffix] = ((value == 255) * 255).astype(np.uint8) if suffix else value
