@@ -1,0 +1,23 @@
+{
+  "training": false,
+  "session_root": "../data/captures/YOUR_SESSION",
+  "calibration_selector": "current_calibration.local.json",
+  "models_config": "pretrained_stereo.example.json",
+  "output_root": "../artifacts/camera_comparison/YOUR_RUN",
+  "image_scale": 0.5,
+  "max_disparity": 192,
+  "igev_iterations": 32,
+  "memory_limit_fraction": 0.85,
+  "random_seed": 20261122,
+  "display_count": 6,
+  "unchanged_focus_and_inter_camera_pose_confirmed": false,
+  "sgbm": {
+    "block": 5,
+    "input": "gray",
+    "mode": "SGBM",
+    "uniqueness_ratio": 0,
+    "speckle_window_size": 0,
+    "speckle_range": 0,
+    "disp12_max_diff": 0
+  }
+}

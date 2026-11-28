@@ -1,0 +1,45 @@
+{
+  "banet": {
+    "source_root": "../artifacts/banet/upstream/banet-2d/core",
+    "checkpoint": "../artifacts/banet/weights/banet_2d_sceneflow.pth",
+    "checkpoint_sha256": "5d5264db6f1bcad27e59333621c75e04dc529221635627ad8774eb33be334fd1",
+    "upstream_commit": "7cb83f7cca99a249e1fcec8ff556e4ac73facd70",
+    "checkpoint_url": "https://drive.google.com/file/d/1z5QgTU1lMb74SpbHyBA26CEILYrru77O/view",
+    "precision": "float32",
+    "max_disparity": 192,
+    "batch_norm_policy": "running",
+    "upstream_repository": "https://github.com/gangweix/BANet",
+    "upstream_core": "banet-2d/core",
+    "source_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "BANet.py": "5069aeeb201d0eb0b4dac421f4ad5bbbf3bfae5396a459de9ba2148c4ce9ecd0",
+      "fnet.py": "dcc996cf9360aef1bb01601a76de257eb085b6ca968e7f70adce826c86b35926",
+      "aggregation.py": "fd9f953f6cd8e90af9f12a676f6ea190432a967127a35cc0cd3417168e8fe517",
+      "submodule.py": "5647aadc18c1a16b5e80e2e8cdee15f52de3ef01a883764e3d41d06100c00154"
+    },
+    "checkpoint_download_url": "https://drive.usercontent.google.com/download?id=1z5QgTU1lMb74SpbHyBA26CEILYrru77O&export=download&confirm=t"
+  },
+  "igev": {
+    "source_root": "../artifacts/igev/upstream/IGEV-Stereo/core",
+    "checkpoint": "../artifacts/igev/weights/igev_sceneflow.pth",
+    "checkpoint_sha256": "ce482e600c5c08f647b2728553bec73e212ed965be43f7ec41ac6cfd2b11916d",
+    "upstream_commit": "4a3d937aab788b3ff3ed49b7b5c81340ab46a5eb",
+    "checkpoint_url": "https://drive.google.com/file/d/16e9NR_RfzFdYT5mPaGwpjccplCi82C2e/view",
+    "precision": "float32",
+    "max_disparity": 192,
+    "batch_norm_policy": "running",
+    "upstream_repository": "https://github.com/gangweix/IGEV",
+    "upstream_core": "IGEV-Stereo/core",
+    "source_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "igev_stereo.py": "6a61c94e9fc4af1f16a7961bac9ff70b3125207cfaa7c6dfeb47c3a327738206",
+      "extractor.py": "ac15240c47bcf2e19e9668855f6fafb76921373b6fca930a8708ac21ebc1145d",
+      "geometry.py": "e68a54fe858ff1eb0eebf1cc25408ddb1648c04c0ec6a613854e525d37a0071c",
+      "submodule.py": "be0a2df48bae77af4410328126a1965ae69167979a8587dedf101928217d20c4",
+      "update.py": "9682570f3ccb9ef82726267435cebd26f55ce067b0dae36811fc141c1a42bc1e",
+      "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utils/utils.py": "c74e996ce2bfc4a225d82ff4d3ed85e02f36f5089029c9027e04c6e7e94a908f"
+    },
+    "checkpoint_download_url": "https://drive.usercontent.google.com/download?id=16e9NR_RfzFdYT5mPaGwpjccplCi82C2e&export=download&confirm=t"
+  }
+}

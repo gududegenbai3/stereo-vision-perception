@@ -1,0 +1,21 @@
+{
+  "capture_config": "capture_ui.local.json",
+  "calibration_selector": "current_calibration.local.json",
+  "models_config": "pretrained_stereo.example.json",
+  "image_scale": 0.5,
+  "igev_iterations": 8,
+  "replay_file": null,
+  "depth_display_m": [
+    0.4,
+    4.0
+  ],
+  "sgbm": {
+    "block": 5,
+    "input": "gray",
+    "mode": "SGBM",
+    "uniqueness_ratio": 0,
+    "speckle_window_size": 0,
+    "speckle_range": 0,
+    "disp12_max_diff": 0
+  }
+}

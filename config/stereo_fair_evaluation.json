@@ -1,0 +1,81 @@
+{
+  "training": false,
+  "new_data_url": "https://vision.middlebury.edu/stereo/data/scenes2006/HalfSize/zip-2views/",
+  "new_gt_encoding_divisor": 2,
+  "new_gt_lr_tolerance_px": 1,
+  "development_dataset": "middlebury_development",
+  "evaluation_datasets": [
+    "middlebury2006_new",
+    "eth3d_development",
+    "mobile_development",
+    "booster"
+  ],
+  "output_root": "../artifacts/fair_evaluation/pretrained_v1",
+  "max_disparity": 192,
+  "precision": "float32",
+  "primary_igev_iterations": 32,
+  "memory_limit_fraction": 0.85,
+  "sgbm_blocks": [
+    3,
+    5,
+    7
+  ],
+  "sgbm_modes": [
+    "SGBM",
+    "HH"
+  ],
+  "sgbm_inputs": [
+    "gray",
+    "color"
+  ],
+  "sgbm_standard_filters": {
+    "uniqueness_ratio": 5,
+    "speckle_window_size": 100,
+    "speckle_range": 2,
+    "disp12_max_diff": 1
+  },
+  "selection_metric": "development_equal_group_fixed_roi_bad2_or_missing",
+  "capped_error_px": 20,
+  "boundary_jump_px": 2,
+  "boundary_radius_px": 3,
+  "texture_window_px": 5,
+  "texture_std_threshold": 5,
+  "bootstrap_seed": 20261117,
+  "bootstrap_replicates": 10000,
+  "random_display_seed": 20261117,
+  "random_groups_per_dataset": 2,
+  "timing": {
+    "scene": "Adirondack",
+    "crop_hw": [
+      256,
+      512
+    ],
+    "warmup": 3,
+    "repeats": 10
+  },
+  "comparison_scope": "Fixed official Scene Flow pretrained models, no training. New local dataset plus previously examined sources; cannot fully exclude author historical pretraining overlap. No test-driven model or parameter selection.",
+  "samples": "stereo_fair_samples.json",
+  "normalized_root": "../artifacts/fair_evaluation/data/normalized",
+  "input_root": "../artifacts/fair_evaluation/data/sources",
+  "models_config": "pretrained_stereo.example.json",
+  "baseline_config": "offline.json",
+  "canonical_max_width": 1024,
+  "mobile_archive": "https://vision.middlebury.edu/stereo/data/scenes2021/zip/all.zip",
+  "mobile_archive_sha256": "1b60af93fb33811236470c398ed705bd726f8eacb11507ac5d3b66ad8aea42bb",
+  "eth3d_archives": [
+    {
+      "filename": "two_view_training.7z",
+      "url": "https://www.eth3d.net/data/two_view_training.7z",
+      "bytes": 14283045,
+      "sha256": "cb7683a01ba037759f30b5a4f561d302453e20f1f7095cbdc51c8564b218224b"
+    },
+    {
+      "filename": "two_view_training_gt.7z",
+      "url": "https://www.eth3d.net/data/two_view_training_gt.7z",
+      "bytes": 14863383,
+      "sha256": "e440f7ec4444dfd2af33a44495f325a3aed06762432e2419277596ba7dcb9b40"
+    }
+  ],
+  "booster_archive": "https://amsacta.unibo.it/id/eprint/6876/1/booster_gt.zip",
+  "booster_archive_bytes": 19262416889
+}

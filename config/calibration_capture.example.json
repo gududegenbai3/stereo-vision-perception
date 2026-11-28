@@ -1,0 +1,34 @@
+{
+  "rig_id": "hbvcam-4m2403hd-v22",
+  "device_name": "USB Camera",
+  "ffmpeg_path": "ffmpeg.exe",
+  "pythonw_path": "pythonw.exe",
+  "frame_wh": [
+    2560,
+    720
+  ],
+  "requested_fps": 30,
+  "preview_wh": [
+    1280,
+    360
+  ],
+  "capture_root": "../data/captures/calibration_display",
+  "ready_file": "../artifacts/hardware/calibration_capture_ready.json",
+  "physical_order": "left_half_is_left_camera",
+  "rectified": false,
+  "calibration_file": null,
+  "chessboard": {
+    "inner_cols": 9,
+    "inner_rows": 6,
+    "square_size_m": null,
+    "display_square_px": 60,
+    "target_calibration_pairs": 20,
+    "target_validation_pairs": 6,
+    "target_type": "display",
+    "measurement": {
+      "source": null,
+      "approximate": true,
+      "uncertainty_mm": null
+    }
+  }
+}

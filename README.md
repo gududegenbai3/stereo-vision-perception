@@ -4,9 +4,19 @@
 
 ## 当前状态
 
-当前版本为 **V0**。已在本地 `SVP_env` 验证 Middlebury 单场景离线流程，包括读图、SGBM、米制重投影、视差评估与产物导出。CLI 提供一键运行，Notebook 用于逐步检查中间结果。真实设备采集、标定、校正及独立测距仍待联调，具体状态见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
+当前版本为 **V0**。已在本地 `SVP_env` 验证 Middlebury 单场景离线流程，包括读图、SGBM、米制重投影、视差评估与产物导出。CLI 提供一键运行，Notebook 用于逐步检查中间结果。已增加独立相机拍照、显示屏标定、校正及官方预训练对照入口；真实米制重建与独立测距仍待联调，具体状态见 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md)。
 
 最新进展、验收证据、阻碍与下一步以 [V0 执行计划](doc/exe_plans/active/V0_stereo_pipeline.md) 为准。计划完成并通过验收后归入 `completed/`，管理方式见[执行计划索引](doc/exe_plans/README.md)。
+
+相机使用方法见[拍照、标定与三方法对照](doc/hardware/camera_demo.md)。共享配置为 `config/*.example.json`，复制为 `.local.json` 后填写本机参数；照片、标定、权重及产物默认留在忽略目录。该入口不改变默认离线 CLI 或基础环境，网络推理依赖可选安装。
+
+### 三种算法对比
+
+[复现指南](doc/algorithm/pretrained_comparison.md)提供官方权重校验、181 对公开数据的定量对比和无需 USB 的同屏回放。已有默认 Middlebury 入口仍使用 SGBM。
+
+### 现场实时试验版
+
+激活 `SVP_env` 后运行 [start_live_demo.cmd](start_live_demo.cmd) 自动连接双目相机，也可运行 [start_live_replay.cmd](start_live_replay.cmd) 回放本机已配置的视频。窗口默认同屏显示左右目和 SGBM、BANet、IGEV 的同帧结果，支持暂停和切换深度或视差。配置、测速和验证边界见[现场演示说明](doc/hardware/live_demo.md)。
 
 ## 项目结构
 
